@@ -53,7 +53,7 @@ const Comments: FC = () => {
                 Show {data?.length - commentsToShow < 10 ? data?.length - commentsToShow : 10} more comments
               </button>
             )}
-            {commentsToShow > 10 && (
+            {data && commentsToShow > 10 && (
               <button className="rounded bg-black p-3 md:p-5 text-white w-full" onClick={() => setCommentsToShow(10)}>
                 Hide {data.length < commentsToShow ? data.length - 10 : commentsToShow - 10} comments
               </button>

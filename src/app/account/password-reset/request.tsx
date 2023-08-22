@@ -1,8 +1,6 @@
 import Layout from '@/components/Layout'
 import Button from '@/ui/Button'
-import TokenService from '@/services/TokenService'
 import { Formik, FormikHelpers } from 'formik'
-import { GetServerSidePropsContext } from 'next'
 import Head from 'next/head'
 import { FC } from 'react'
 import * as yup from 'yup'

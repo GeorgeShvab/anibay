@@ -164,6 +164,7 @@ declare module 'next-auth' {
     user: {
       id: number
       username: string
+      avatar?: string
     } & DefaultUser
   }
 }

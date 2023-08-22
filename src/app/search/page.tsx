@@ -1,5 +1,4 @@
 import * as types from '@/types'
-import next, { GetServerSidePropsContext } from 'next'
 import { FC } from 'react'
 import SearchBar from '@/components/Header/SearchBar'
 import AnimeCard from '@/components/AnimeCard'
@@ -21,31 +20,8 @@ export interface SearchResponse {
   currentPage: number
 }
 
-export const getServerSideProps = async (context: GetServerSidePropsContext) => {
-  const query = context.query.query ? String(context.query.query) : undefined
-  const page = context.query.page ? Number(context.query.page) : 1
-
-  if (!query || isNaN(page)) {
-    return { notFound: true, props: {} }
-  }
-
-  const resultsPromise = AnimeService.search(query, page < 1 ? 0 : page - 1)
-  const nextPagePromise = AnimeService.search(query, page < 1 ? 1 : page)
-
-  const [results, nextPage] = await Promise.all([resultsPromise, nextPagePromise])
-
-  return {
-    props: {
-      results: serialize(results),
-      query: query,
-      currentPage: page,
-      hasNextPage: !!nextPage.length,
-    },
-  }
-}
-
 const Search: FC<types.PageProps<{}, { query: string; page: string }>> = async ({ searchParams }) => {
-  const session = getServerSession(authOptions)
+  const session = await getServerSession(authOptions)
 
   const query = searchParams.query ? String(searchParams.query) : undefined
   const page = searchParams.page ? Number(searchParams.page) : 1

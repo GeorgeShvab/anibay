@@ -27,6 +27,8 @@ const Comment: FC<Props> = ({
   createdAt,
   updatedAt,
   episodeId,
+  dislikes,
+  isDisliked,
 }) => {
   const [isCommentEditorOpened, setIsCommentEditorOpened] = useState<boolean>(false)
 
@@ -98,11 +100,12 @@ const Comment: FC<Props> = ({
               <div className="w-28 md:w-64">
                 <Actions
                   onComment={() => setIsCommentEditorOpened(true)}
-                  comments={commentsCount}
                   isAuthorized={isAuthorized}
                   likes={likes}
                   isLiked={isLiked}
                   id={id}
+                  dislikes={dislikes}
+                  isDisliked={isDisliked}
                 />
               </div>
               {!!commentsCount && (

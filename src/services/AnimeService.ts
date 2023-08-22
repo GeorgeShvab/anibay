@@ -93,7 +93,7 @@ const AnimeService = {
     return serialize(data) as Anime
   },
 
-  async getRelated({ id, user }: { id: string; user?: string }) {
+  async getRelated({ id, user }: { id: string; user?: number }) {
     const data =
       await prisma.$queryRaw`SELECT a.*, (SELECT id FROM "Bookmark" b WHERE b."animeId" = a.id AND b."userId" = ${user})::boolean as "isBookmarked" 
       FROM "_relations" r JOIN "Anime" a ON a.id = r."B" WHERE r."A" = ${id}`

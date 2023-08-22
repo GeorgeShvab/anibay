@@ -40,10 +40,10 @@ class AnimeController {
   }
 
   @Get('/:id/related')
-  async getRelated(@Param('id') id: string, @Query() { page = '0' }: { page: string }) {
+  async getRelated(@Param('id') id: string, @Query() { page = '0' }: { page: string }, @User() user: JwtUser) {
     if (page && isNaN(Number(page))) throw new BadRequestException()
 
-    const data = await AnimeService.getRelated(id)
+    const data = await AnimeService.getRelated({ id, user: user?.id })
 
     if (!data) throw new NotFoundException()
 

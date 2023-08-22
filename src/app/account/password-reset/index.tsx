@@ -1,7 +1,6 @@
 import Layout from '@/components/Layout'
 import Button from '@/ui/Button'
 import TokenService from '@/services/TokenService'
-import { GetServerSidePropsContext } from 'next'
 import Head from 'next/head'
 import { FC } from 'react'
 import { Formik, FormikHelpers } from 'formik'
@@ -11,39 +10,6 @@ import Link from 'next/link'
 import axios from '@/axios'
 import useMutation from '@/hooks/useMutation'
 import LoadingButton from '@/ui/LoadingButton'
-
-export const getServerSideProps = async (context: GetServerSidePropsContext) => {
-  const token = context.query.token
-
-  if (!token) {
-    context.res.statusCode = 400
-
-    return {
-      props: {
-        error: true,
-      },
-    }
-  }
-
-  try {
-    await TokenService.validateToken(token as string)
-  } catch (e) {
-    context.res.statusCode = 400
-
-    return {
-      props: {
-        tokenError: true,
-      },
-    }
-  }
-
-  return {
-    props: {
-      tokenError: false,
-      token,
-    },
-  }
-}
 
 interface Props {
   tokenError: boolean

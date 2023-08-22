@@ -43,7 +43,7 @@ const Nav: FC = () => {
             <Link href="/account">
               <div className="flex gap-8 items-center">
                 <h4>{session.data?.user?.name}</h4>
-                <Avatar src={session?.data?.user?.avatar} alt={session.data.user.name || 'user'} className="h-8 w-8" />
+                <Avatar src={session?.data?.user.avatar} alt={session.data.user.name || 'user'} className="h-8 w-8" />
               </div>
             </Link>
           </li>

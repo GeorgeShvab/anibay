@@ -1,4 +1,3 @@
-import { GetServerSidePropsContext } from 'next'
 import { getServerSession } from 'next-auth'
 import { FC, useState } from 'react'
 import { redirect } from 'next/dist/server/api-utils'
@@ -9,25 +8,6 @@ import image from '@/assets/auth-image.png'
 import Layout from '@/components/Layout'
 import Form from './Form'
 import { authOptions } from '../api/auth/[...nextauth]/route'
-
-export const getServerSideProps = async (context: GetServerSidePropsContext) => {
-  const session = await getServerSession(context.req, context.res, authOptions)
-
-  if (session) {
-    return {
-      redirect: {
-        destination: '/',
-        permanent: false,
-      },
-    }
-  }
-
-  return {
-    props: {
-      session,
-    },
-  }
-}
 
 const Signin: FC = () => {
   return (
