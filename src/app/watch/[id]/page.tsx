@@ -20,7 +20,6 @@ import Player from '@/components/VideoPlayer/Player'
 import Button from '@/ui/Button'
 import CardsColumn from '@/components/Anime/CardsColumn'
 import MobileDescription from './MobileDescription'
-import Card from '@/app/Card'
 import HorizontalPoster from './HorizontalCard'
 
 const WatchPage: FC<types.PageProps<{ id: string }>> = async ({ params }) => {

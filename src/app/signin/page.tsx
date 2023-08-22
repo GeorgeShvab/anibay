@@ -1,13 +1,7 @@
-import { getServerSession } from 'next-auth'
-import { FC, useState } from 'react'
-import { redirect } from 'next/dist/server/api-utils'
 import Head from 'next/head'
-import Button from '@/ui/Button'
-import Image from 'next/image'
-import image from '@/assets/auth-image.png'
 import Layout from '@/components/Layout'
 import Form from './Form'
-import { authOptions } from '../api/auth/[...nextauth]/route'
+import { FC } from 'react'
 
 const Signin: FC = () => {
   return (
