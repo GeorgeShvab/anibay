@@ -149,10 +149,15 @@ const WatchPage: FC<types.PageProps<{ id: string }>> = async ({ params }) => {
                 </div>
               </div>
               <div className="mb-6 lg:mb-12">
-                <Player episodes={episodes as any} id={anime.id} title={anime.title} type={anime.type} />
+                <Player
+                  episodes={episodes as any}
+                  id={anime.id}
+                  title={anime.title}
+                  type={anime.type as types.AnimeType}
+                />
               </div>
               <div className="block lg:flex gap-8">
-                <Comments comments={comments as types.Comment[]} partisipants={commentPartisipants as types.User[]} />
+                <Comments />
                 <div className="lg:flex-[0_0_365px]">
                   {!!related?.length && (
                     <CardsColumn data={related?.slice(0, 5)} title="Related Anime" className="mb-6" />
@@ -180,6 +185,13 @@ export default WatchPage
 
 export async function generateMetadata({ params }: types.PageProps<{ id: string }>): Promise<Metadata> {
   const anime = await AnimeService.getOne(params.id)
+
+  if (!anime) {
+    return {
+      title: 'Page Not Found',
+      description: 'Current page is not exists',
+    }
+  }
 
   return {
     title: anime?.title,
