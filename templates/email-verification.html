@@ -1,0 +1,40 @@
+{% extends "layout.html" %} {% block body %}
+
+<table style="padding: 60px 0 0 0">
+  <tr>
+    <td align="center">
+      <p style="color: #141414; font-size: 14px">
+        <strong>{{user}}</strong>, thanks for joining Anibay! Click the button below to complete registration.
+      </p>
+    </td>
+  </tr>
+
+  <tr>
+    <td align="center" style="padding: 110px 0">
+      <table border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td align="center">
+            <a
+              href="{{url}}"
+              target="_blank"
+              style="
+                font-size: 16px;
+                font-family: Helvetica, Arial, sans-serif;
+                background-color: #d61336;
+                text-decoration: none;
+                color: #ffffff;
+                border-radius: 5px;
+                padding: 10px 30px;
+                display: inline-block;
+                font-weight: bold;
+              "
+              >Verify Email</a
+            >
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+{% endblock %}

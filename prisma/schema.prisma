@@ -1,0 +1,152 @@
+generator client {
+    provider        = "prisma-client-js"
+    previewFeatures = ["fullTextSearch", "fullTextIndex"]
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("POSTGRESQL_DATABASE_URL")
+}
+
+model Anime {
+    id            String     @id @unique()
+    title         String
+    anilistId     Int
+    malId         Int
+    image         String
+    cover         String?
+    season        String
+    releaseDate   Int
+    duration      Int
+    popularity    Int
+    description   String
+    genres        Genre[]
+    rating        Int
+    status        String
+    synonyms      String[]
+    mappings      Json
+    totalEpisodes Int
+    views         Int
+    type          String
+    createdAt     DateTime   @default(now())
+    updatedAt     DateTime   @updatedAt
+    related       Anime[]    @relation("relations")
+    relatedFrom   Anime[]    @relation("relations")
+    episodes      Episode[]
+    Bookmark      Bookmark[]
+    Rating        Rating[]
+
+    @@index([views(sort: Desc)], map: "views_-1")
+    @@index([releaseDate(sort: Desc)], map: "releaseDate_-1")
+}
+
+model Episode {
+    id        String    @id @unique()
+    createdAt DateTime  @default(now())
+    number    Float
+    sources   Json[]
+    updatedAt DateTime  @updatedAt
+    anime     Anime     @relation(fields: [animeId], references: [id])
+    animeId   String
+    Comment   Comment[]
+    title     String
+}
+
+model User {
+    id                Int              @id @default(autoincrement())
+    createdAt         DateTime         @default(now())
+    email             String
+    name              String
+    password          String?
+    updatedAt         DateTime         @updatedAt
+    username          String
+    emailVerified     DateTime?
+    ratings           Rating[]
+    Bookmark          Bookmark[]
+    VerificationToken Token[]
+    comments          Comment[]
+    commentLikes      CommentLike[]
+    avatar            String?
+    CommentDislike    CommentDislike[]
+}
+
+model Genre {
+    id        String   @id @unique()
+    title     String   @default("hehe")
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    animes    Anime[]
+}
+
+model Rating {
+    id        Int      @id @default(autoincrement())
+    anime     Anime    @relation(fields: [animeId], references: [id])
+    user      User     @relation(fields: [userId], references: [id])
+    animeId   String
+    score     Int
+    userId    Int
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model Bookmark {
+    id        Int      @id @default(autoincrement())
+    anime     Anime    @relation(fields: [animeId], references: [id])
+    user      User     @relation(fields: [userId], references: [id])
+    animeId   String
+    userId    Int
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model Token {
+    id      Int      @id @default(autoincrement())
+    token   String   @unique
+    expires DateTime
+    email   String
+    user    User     @relation(fields: [userId], references: [id])
+    userId  Int
+
+    @@unique([id, token])
+}
+
+model Comment {
+    id        Int      @id @default(autoincrement())
+    text      String
+    episode   Episode  @relation(fields: [episodeId], references: [id])
+    user      User     @relation(fields: [userId], references: [id])
+    episodeId String
+    userId    Int
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    parentId  Int?
+
+    parent         Comment?         @relation("comments-relation", fields: [parentId], references: [id])
+    children       Comment[]        @relation("comments-relation")
+    commentLikes   CommentLike[]
+    CommentDislike CommentDislike[]
+}
+
+model CommentLike {
+    id      Int     @id @default(autoincrement())
+    comment Comment @relation(fields: [commentId], references: [id])
+    user    User    @relation(fields: [userId], references: [id])
+
+    commentId Int
+    userId    Int
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model CommentDislike {
+    id      Int     @id @default(autoincrement())
+    comment Comment @relation(fields: [commentId], references: [id])
+    user    User    @relation(fields: [userId], references: [id])
+
+    commentId Int
+    userId    Int
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}

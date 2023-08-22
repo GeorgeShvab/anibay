@@ -2,26 +2,257 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+    --red: 214 19 54;
+    --red-light: 255 41 79;
+    --red-dark: 184 19 49;
+
+    --dark: 15 15 15;
+    --dark-light: 25 25 25;
+    --dark-dark: 2 2 2;
+
+    --grey: 36 36 36;
+
+    --black: 6 6 6;
+    --card: 22 22 22;
+
+    --header-height: 64px;
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+.container {
+  max-width: 1512px;
+  margin: 0 auto;
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+.main-poster {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  background-image: linear-gradient(#06060600 50%, #060606 100%), var(--main-poster-image);
+}
+
+@media screen and (min-width: 769px) {
+  .main-poster {
+    background-image: linear-gradient(#060606 0%, #06060640 25%, #06060600 50%, #06060640 75%, #060606 100%),
+      var(--main-poster-cover);
+  }
+}
+
+.bg-intro {
+  background-image: linear-gradient(#060606 0%, #060606bf 10%, #06060680 50%, #060606bf 90%, #060606 100%),
+    url('/bg.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.bg-auth {
+  background-image: linear-gradient(#060606 0%, #060606bf 10%, #06060680 50%, #060606bf 90%, #060606 100%),
+    url('/auth-bg.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.auth-image {
+  background-image: linear-gradient(90deg, #0f0f0f80 0%, #0f0f0f80 100%), url('/auth-image.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+@media screen and (min-width: 768px) {
+  :root {
+    --screen-intro: calc(100vh - 88px);
+    --header-height: 92px;
+  }
+
+  .bg-intro {
+    background-image: linear-gradient(#060606 2%, #060606bf 15%, #06060680 50%, #060606bf 85%, #060606 98%),
+      url('/bg.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  height: 0;
+  width: 0;
+  display: none;
+}
+
+@media screen and (min-width: 1024px) {
+  .container {
+    padding-left: 56px;
+    padding-right: 56px;
+  }
+}
+
+.episodes-container::-webkit-scrollbar {
+  width: 8px;
+  background-clip: padding-box;
+}
+
+.episodes-container::-webkit-scrollbar-thumb {
+  background: #303030;
+}
+
+.loader {
+  margin: 0 auto;
+  width: 100px;
+}
+
+.circular {
+  animation: player-rotate 2s linear infinite;
+  height: 100%;
+  transform-origin: center center;
+  width: 100%;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
+.player-path {
+  stroke-dasharray: 1, 200;
+  stroke-dashoffset: 0;
+  animation: player-dash 1.5s ease-in-out infinite;
+  stroke-linecap: round;
+  stroke: #ffffff80;
+}
+
+@keyframes player-rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes player-dash {
+  0% {
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -35px;
+  }
+  100% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -124px;
+  }
+}
+
+*,
+*::before,
+*::after {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.spinner {
+  -webkit-animation: rotator 1.6s linear infinite;
+  animation: rotator 1.6s linear infinite;
+}
+
+@-webkit-keyframes rotator {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(270deg);
+    transform: rotate(270deg);
+  }
+}
+
+@keyframes rotator {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(270deg);
+    transform: rotate(270deg);
+  }
+}
+
+.path {
+  stroke-dasharray: 70;
+  stroke-dashoffset: 0;
+  -webkit-transform-origin: center;
+  -ms-transform-origin: center;
+  transform-origin: center;
+  -webkit-animation: dash 1.6s ease-in-out infinite;
+  animation: dash 1.6s ease-in-out infinite;
+}
+
+@-webkit-keyframes dash {
+  0% {
+    stroke-dashoffset: 70;
+  }
+  50% {
+    stroke-dashoffset: 20;
+    -webkit-transform: rotate(135deg);
+    transform: rotate(135deg);
+  }
+  100% {
+    stroke-dashoffset: 70;
+    -webkit-transform: rotate(450deg);
+    transform: rotate(450deg);
+  }
+}
+@keyframes dash {
+  0% {
+    stroke-dashoffset: 70;
+  }
+  50% {
+    stroke-dashoffset: 20;
+    -webkit-transform: rotate(135deg);
+    transform: rotate(135deg);
+  }
+  100% {
+    stroke-dashoffset: 70;
+    -webkit-transform: rotate(450deg);
+    transform: rotate(450deg);
+  }
+}
+
+.comment:last-child > div > .vertical-path {
+  height: calc(50% + 8px);
+}
+
+.comment:not(:last-child) > div > .vertical-path {
+  left: 6px;
+}
+
+.comment:not(:last-child) > div:first-child {
+  position: static;
+}
+
+.comment:not(:last-child) {
+  position: relative;
+}
+
+.comment-editor:last-child > div > .vertical-path {
+  height: calc(50% + 8px);
+}
+
+@media screen and (min-width: 769px) {
+  .comment:last-child > div > .vertical-path {
+    height: calc(50% + 12px);
+  }
+
+  .comment:not(:last-child) > div > .vertical-path {
+    left: 12px;
+  }
+
+  .comment-editor:last-child > div > .vertical-path {
+    height: calc(50% + 12px);
+  }
 }
