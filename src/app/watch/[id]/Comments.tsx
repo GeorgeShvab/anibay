@@ -45,19 +45,21 @@ const Comments: FC = () => {
             {data?.slice(0, commentsToShow).map((item) => (
               <Comment onDelete={() => {}} key={item.id} isAuthorized={user.status === 'authenticated'} {...item} />
             ))}
-            {data && data.length > commentsToShow && (
-              <button
-                className="rounded bg-black p-3 md:p-5 text-white w-full"
-                onClick={() => setCommentsToShow((prev) => prev + 10)}
-              >
-                Show {data?.length - commentsToShow < 10 ? data?.length - commentsToShow : 10} more comments
-              </button>
-            )}
-            {data && commentsToShow > 10 && (
-              <button className="rounded bg-black p-3 md:p-5 text-white w-full" onClick={() => setCommentsToShow(10)}>
-                Hide {data.length < commentsToShow ? data.length - 10 : commentsToShow - 10} comments
-              </button>
-            )}
+            <div className="flex flex-col gap-3">
+              {data && data.length > commentsToShow && (
+                <button
+                  className="rounded bg-black p-3 md:p-5 text-white w-full"
+                  onClick={() => setCommentsToShow((prev) => prev + 10)}
+                >
+                  Show {data?.length - commentsToShow < 10 ? data?.length - commentsToShow : 10} more comments
+                </button>
+              )}
+              {data && commentsToShow > 10 && (
+                <button className="rounded bg-black p-3 md:p-5 text-white w-full" onClick={() => setCommentsToShow(10)}>
+                  Hide {data.length < commentsToShow ? data.length - 10 : commentsToShow - 10} comments
+                </button>
+              )}
+            </div>
             {!isLoading && data && !data.length ? (
               <div className="py-12 rounded bg-dark px-6">
                 <p className="text-center text-neutral-400">
