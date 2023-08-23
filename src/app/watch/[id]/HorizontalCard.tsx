@@ -5,10 +5,7 @@ import { FC } from 'react'
 const HorizontalPoster: FC<Anime> = (anime) => {
   return (
     <div className="w-full relative">
-      <Link
-        className="h-12 md:h-16 w-12 md:w-16 rounded-full flex items-center justify-center absolute bg-red top-1/2 translate-y-[-50%] right-8 md:right-20 text-white block hover:bg-red-dark hover:scale-105 transition-all"
-        href={`/watch/${anime.id}`}
-      >
+      <Link href={`/watch/${anime.id}`}>
         <div
           className="w-full h-48 px-4 py-4 lg:px-6 lg:py-4 rounded-lg flex flex-col justify-end"
           style={{
