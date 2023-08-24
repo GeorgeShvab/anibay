@@ -1,32 +1,28 @@
-function throttle(
-  fn: (args: any) => void,
-  ms: number,
-  lastExecution?: boolean
-) {
-  let throttled: boolean
+function throttle(fn: (...args: any[]) => void, ms: number = 250) {
+  let throttled: boolean = false
+
   let savedArgs: any
   let savedThis: any
 
-  return function (...args: [any]) {
+  function wrapper(this: any, ...args: any[]) {
     if (throttled) {
       savedArgs = args
-      savedThis = null
+      savedThis = this
 
       return
     }
 
-    throttled = true
+    fn.apply(this, args)
 
-    fn.apply(null, args)
+    throttled = true
 
     setTimeout(() => {
       throttled = false
 
-      if (savedArgs && lastExecution) {
-        fn.apply(savedThis, savedArgs)
+      if (savedArgs) {
+        wrapper.apply(savedThis, savedArgs)
 
         throttled = true
-
         savedArgs = undefined
         savedThis = undefined
 
@@ -36,6 +32,8 @@ function throttle(
       }
     }, ms)
   }
+
+  return wrapper
 }
 
 export default throttle

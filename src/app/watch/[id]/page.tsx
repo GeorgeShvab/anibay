@@ -58,10 +58,6 @@ const WatchPage: FC<types.PageProps<{ id: string }>> = async ({ params }) => {
 
   return (
     <>
-      <Head>
-        <title>{`${anime.title}`}</title>
-        <meta name="description" content={anime.description} />
-      </Head>
       <BackButton />
       <Layout>
         <main className="pb-6 md:pb-10 md:pt-header">
@@ -158,17 +154,27 @@ const WatchPage: FC<types.PageProps<{ id: string }>> = async ({ params }) => {
               <div className="block lg:flex gap-8">
                 <Comments />
                 <div className="lg:flex-[0_0_365px]">
-                  {!!related?.length && (
-                    <CardsColumn data={related?.slice(0, 5)} title="Related Anime" className="mb-6" />
+                  {!!related.length && (
+                    <div className="mb-6">
+                      <h3 className="px-3 mb-3 md:px-2 md:mb-6 text-white md:text-xl lg:text-2xl font-semibold">
+                        Related Anime
+                      </h3>
+                      <div className="flex flex-col gap-4 flex-1">
+                        {related?.slice(0, 5).map((item) => (
+                          <HorizontalPoster key={item.id} {...item} />
+                        ))}
+                      </div>
+                    </div>
                   )}
-                  <div className="grid"></div>
-                  <h3 className="px-3 mb-3 md:px-2 md:mb-6 text-white md:text-xl lg:text-2xl font-semibold">
-                    Popular Anime
-                  </h3>
-                  <div className="flex flex-col gap-4 flex-1">
-                    {popular.slice(0, 10 - Math.min(related.length, 5)).map((item) => (
-                      <HorizontalPoster key={item.id} {...item} />
-                    ))}
+                  <div>
+                    <h3 className="px-3 mb-3 md:px-2 md:mb-6 text-white md:text-xl lg:text-2xl font-semibold">
+                      Popular Anime
+                    </h3>
+                    <div className="flex flex-col gap-4 flex-1">
+                      {popular.slice(0, 10 - Math.min(related.length, 5)).map((item) => (
+                        <HorizontalPoster key={item.id} {...item} />
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -189,18 +195,25 @@ export async function generateMetadata({ params }: types.PageProps<{ id: string 
     return {
       title: 'Page Not Found',
       description: 'Current page is not exists',
+      openGraph: {
+        images: ['/auth-bg.png'],
+        title: 'Page Not Found',
+        description: 'Page Not Found',
+        type: 'website',
+        url: '/watch/' + params.id,
+      },
     }
   }
 
   return {
-    title: anime?.title,
-    description: `Watch ${anime?.title} on Anibay`,
+    title: anime.title,
+    description: `Watch ${anime.title} on Anibay`,
     openGraph: {
-      images: [anime?.image],
+      images: [anime.cover || anime.image],
       title: anime?.title,
-      description: `Watch ${anime?.title} on Anibay`,
+      description: `Watch ${anime.title} on Anibay`,
       type: 'website',
-      url: '/watch/' + anime.id,
+      url: '/watch/' + params.id,
     },
   }
 }

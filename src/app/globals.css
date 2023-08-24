@@ -28,6 +28,21 @@
   padding-right: 12px;
 }
 
+.search-poster {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  background-image: linear-gradient(#06060600 50%, #060606 100%), var(--main-poster-image);
+}
+
+@media screen and (min-width: 769px) {
+  .search-poster {
+    background-image: linear-gradient(#060606 0%, #06060600 50%, #060606 100%),
+      linear-gradient(90deg, #060606 0%, #06060600 100%), var(--main-poster-cover);
+  }
+}
+
 .main-poster {
   background-position: center;
   background-repeat: no-repeat;
@@ -38,8 +53,7 @@
 
 @media screen and (min-width: 769px) {
   .main-poster {
-    background-image: linear-gradient(#060606 0%, #06060640 25%, #06060600 50%, #06060640 75%, #060606 100%),
-      var(--main-poster-cover);
+    background-image: linear-gradient(#060606 0%, #06060600 50%, #060606 100%), var(--main-poster-cover);
   }
 }
 
@@ -255,4 +269,9 @@
   .comment-editor:last-child > div > .vertical-path {
     height: calc(50% + 12px);
   }
+}
+
+.slick-slide {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
 }

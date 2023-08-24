@@ -5,6 +5,7 @@ import Head from 'next/head'
 import { FC } from 'react'
 import { PageProps } from '@/types'
 import Signin from './Signin'
+import { Metadata } from 'next'
 
 const EmailVerificationPage: FC<PageProps<{}, { token: string }>> = async ({ searchParams }) => {
   const token = searchParams.token
@@ -19,10 +20,6 @@ const EmailVerificationPage: FC<PageProps<{}, { token: string }>> = async ({ sea
 
   return (
     <>
-      <Head>
-        <title>Sign Up</title>
-        <meta name="description" content="AniBay - watch world's best anime" />
-      </Head>
       <Layout simpleHeader>
         <main className="h-screen px-3 md:px-6 bg-auth">
           {token && !isError && <Signin token={token} />}
@@ -55,3 +52,15 @@ const EmailVerificationPage: FC<PageProps<{}, { token: string }>> = async ({ sea
 }
 
 export default EmailVerificationPage
+
+export const metadata: Metadata = {
+  title: `Email verification`,
+  description: 'Complete registration by verifying your email',
+  openGraph: {
+    images: ['/auth-bg.png'],
+    title: 'Complete registration by verifying your email',
+    description: 'Complete registration by verifying your email',
+    type: 'website',
+    url: '/',
+  },
+}

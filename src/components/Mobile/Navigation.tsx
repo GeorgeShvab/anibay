@@ -50,10 +50,10 @@ const Navigation: FC = () => {
         show ? 'translate-y-0' : 'translate-y-full'
       }`}
       style={{
-        boxShadow: page.page === 'home' ? 'none' : '0 0 5px 0 rgba(0,0,0,1)',
+        boxShadow: page === 'home' ? 'none' : '0 0 5px 0 rgba(0,0,0,1)',
       }}
     >
-      <Link href="/top" className={`flex-initial px-2 p-1.5 ${page.page === 'top' ? 'text-red' : 'text-white'}`}>
+      <Link href="/top" className={`flex-initial px-2 p-1.5 ${page === 'top' ? 'text-red' : 'text-white'}`}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -69,7 +69,7 @@ const Navigation: FC = () => {
           />
         </svg>
       </Link>
-      <Link href="/" className={`flex-initial px-2 p-1.5 ${page.page === 'search' ? 'text-red' : 'text-white'}`}>
+      <Link href="/" className={`flex-initial px-2 p-1.5 ${page === 'search' ? 'text-red' : 'text-white'}`}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -86,9 +86,9 @@ const Navigation: FC = () => {
         </svg>
       </Link>
       <Link href="/">
-        <Logo className={page.page === 'watch' || page.page === 'home' ? 'text-red' : 'text-white'} />
+        <Logo className={page === 'watch' || page === 'home' ? 'text-red' : 'text-white'} />
       </Link>
-      <Link href="/saved" className={`flex-initial px-2 p-1.5 ${page.page === 'saved' ? 'text-red' : 'text-white'}`}>
+      <Link href="/saved" className={`flex-initial px-2 p-1.5 ${page === 'saved' ? 'text-red' : 'text-white'}`}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -106,7 +106,7 @@ const Navigation: FC = () => {
       </Link>
 
       <AuthClickProtection
-        className={`flex-initial ${page.page === 'saved' ? 'text-red' : 'text-white'}`}
+        className={`flex-initial ${page === 'saved' ? 'text-red' : 'text-white'}`}
         element="div"
         fallback={
           <button className="px-2 p-1.5 text-white">
@@ -127,7 +127,7 @@ const Navigation: FC = () => {
           </button>
         }
       >
-        <Link href="/account" className={`px-2 p-1.5 ${page.page === 'saved' ? 'text-red' : 'text-white'}`}>
+        <Link href="/account" className={`px-2 p-1.5 ${page === 'saved' ? 'text-red' : 'text-white'}`}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"

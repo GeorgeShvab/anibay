@@ -10,11 +10,8 @@ import Link from 'next/link'
 import axios from '@/axios'
 import useMutation from '@/hooks/useMutation'
 import LoadingButton from '@/ui/LoadingButton'
-
-interface Props {
-  tokenError: boolean
-  token: string
-}
+import { Metadata } from 'next'
+import { PageProps } from '@/types'
 
 interface Values {
   password: string
@@ -32,7 +29,17 @@ const initialValues: Values = {
   password: '',
 }
 
-const PasswordResetPage: FC<Props> = ({ token, tokenError }) => {
+const PasswordResetPage: FC<PageProps<{}, { token: string }>> = async ({ searchParams }) => {
+  const token = searchParams.token
+
+  let isError = false
+
+  try {
+    await TokenService.verify(token as string)
+  } catch (e) {
+    isError = true
+  }
+
   const { mutateAsync, isLoading, isSuccess } = useMutation(
     async (data) => await axios.post('/api/user/password-reset', data)
   )
@@ -51,10 +58,6 @@ const PasswordResetPage: FC<Props> = ({ token, tokenError }) => {
 
   return (
     <>
-      <Head>
-        <title>Password reset</title>
-        <meta name="description" content="AniBay - watch world's best anime" />
-      </Head>
       <Layout simpleHeader>
         <main className="h-screen px-3 md:px-6 bg-auth">
           <div className="h-full flex items-center justify-center">
@@ -75,7 +78,7 @@ const PasswordResetPage: FC<Props> = ({ token, tokenError }) => {
                       <p className="text-neutral-400 text-center text-sm">&copy;2023 Anibay. All rights reserved.</p>
                     </div>
                   </>
-                ) : tokenError ? (
+                ) : isError ? (
                   <>
                     <div className="mb-16">
                       <h3 className="text-white text-[26px] md:text-[28px] font-bold whitespace-nowrap text-center mb-3">
@@ -149,3 +152,15 @@ const PasswordResetPage: FC<Props> = ({ token, tokenError }) => {
 }
 
 export default PasswordResetPage
+
+export const metadata: Metadata = {
+  title: `Password reset`,
+  description: 'Reset your password',
+  openGraph: {
+    images: ['/auth-bg.png'],
+    title: 'Reset your password',
+    description: 'Reset your password',
+    type: 'website',
+    url: '/',
+  },
+}

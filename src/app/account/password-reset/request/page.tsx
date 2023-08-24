@@ -9,6 +9,7 @@ import Link from 'next/link'
 import axios from '@/axios'
 import useMutation from '@/hooks/useMutation'
 import LoadingButton from '@/ui/LoadingButton'
+import { Metadata } from 'next'
 
 interface Values {
   email: string
@@ -41,10 +42,6 @@ const ResetPasswordPage: FC = () => {
 
   return (
     <>
-      <Head>
-        <title>Password reset</title>
-        <meta name="description" content="AniBay - watch world's best anime" />
-      </Head>
       <Layout simpleHeader>
         <main className="h-screen px-3 md:px-6 bg-auth">
           <div className="h-full flex items-center justify-center">
@@ -122,3 +119,15 @@ const ResetPasswordPage: FC = () => {
 }
 
 export default ResetPasswordPage
+
+export const metadata: Metadata = {
+  title: `Request password reset`,
+  description: 'Request password reset to gain access to your account',
+  openGraph: {
+    images: ['/auth-bg.png'],
+    title: 'Request password reset to gain access to your account',
+    description: 'Request password reset to gain access to your account',
+    type: 'website',
+    url: '/',
+  },
+}

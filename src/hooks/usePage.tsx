@@ -1,25 +1,20 @@
 'use client'
 
-import { Page } from '@/types'
-import { usePathname, useRouter } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
-interface PageState {
-  page: Page | undefined
-  id: string | undefined
-  episode: string | undefined
-}
-
-const usePage = (): PageState => {
-  const router = useRouter()
-
+const usePage = () => {
   const pathname = usePathname()
 
-  const [page, setPage] = useState<PageState>({
-    page: undefined,
-    id: undefined,
-    episode: undefined,
-  })
+  let initial
+
+  if (typeof window === 'undefined') {
+    initial = 'home'
+  } else {
+    window.location.href.split('/')[1]
+  }
+
+  const [page, setPage] = useState<string>(initial as string)
 
   useEffect(() => {
     if (!pathname) return
@@ -27,17 +22,10 @@ const usePage = (): PageState => {
     const splitedPathname = pathname.split('/')
 
     let page = undefined
-    let id = undefined
-    let episode = undefined
 
-    page = (splitedPathname[1] || 'home') as Page
+    page = (splitedPathname[1] || 'home') as string
 
-    if (splitedPathname[1] === 'watch') {
-      id = splitedPathname[2]
-      episode = splitedPathname[3]
-    }
-
-    setPage({ page, id, episode })
+    setPage(page)
   }, [pathname])
 
   return page

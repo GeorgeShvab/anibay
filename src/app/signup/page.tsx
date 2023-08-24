@@ -2,14 +2,11 @@ import { FC } from 'react'
 import Head from 'next/head'
 import Layout from '@/components/Layout'
 import Form from './Form'
+import { Metadata } from 'next'
 
 const Signin: FC = () => {
   return (
     <>
-      <Head>
-        <title>Sign Up</title>
-        <meta name="description" content="AniBay - watch world's best anime" />
-      </Head>
       <Layout simpleHeader blackFooter>
         <main className="h-screen px-3 md:px-6 bg-auth">
           <div className="h-full flex items-center justify-center">
@@ -26,3 +23,15 @@ const Signin: FC = () => {
 }
 
 export default Signin
+
+export const metadata: Metadata = {
+  title: `Signin`,
+  description: 'Sign in on Anibay',
+  openGraph: {
+    images: ['/auth-bg.png'],
+    title: 'Sign in on Anibay',
+    description: 'Sign in on Anibay',
+    type: 'website',
+    url: '/',
+  },
+}
