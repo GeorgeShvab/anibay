@@ -46,7 +46,7 @@ const SearchBar: FC<{ className?: string }> = ({ className }) => {
       return
     }
 
-    const { data } = await axios.get<Anime[]>(`http://192.168.31.166:3000/api/autocomplete/search?query=${query}`)
+    const { data } = await axios.get<Anime[]>(`/api/autocomplete/search?query=${query}`)
 
     setHint(data.slice(0, 5))
   }, 250)
@@ -63,7 +63,7 @@ const SearchBar: FC<{ className?: string }> = ({ className }) => {
     }
 
     if (query && !hint.length) {
-      const { data } = await axios.get<Anime[]>(`http://192.168.31.166:3000/api/autocomplete/search?query=${query}`)
+      const { data } = await axios.get<Anime[]>(`/api/autocomplete/search?query=${query}`)
 
       setHint(data.slice(0, 5))
     }
