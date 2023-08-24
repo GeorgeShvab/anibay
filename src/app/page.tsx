@@ -9,19 +9,8 @@ import HorizontalPoster from '@/components/Anime/HorizontalPoster'
 import GenreService from '@/services/GenreService'
 import Card from './Card'
 import MainPoster from './MainPoster'
-import Slider from 'react-slick'
 import { Anime } from '@/types'
 import { Metadata } from 'next'
-
-const inter = Inter({ subsets: ['latin'] })
-
-const settings = {
-  dots: true,
-  infinite: true,
-  speed: 500,
-  slidesToShow: 1,
-  slidesToScroll: 1,
-}
 
 const Home: FC = async () => {
   const session = await getServerSession(authOptions)
