@@ -4,7 +4,7 @@ import useOutsideClick from '@/hooks/useOutsideClick'
 import { Anime } from '@/types'
 import removeEpisode from '@/utils/removeEpisode'
 import throttle from '@/utils/throttle'
-import axios from 'axios'
+import axios from '@/axios'
 import Link from 'next/link'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { FC, FocusEvent, FormEvent, useEffect, useRef, useState } from 'react'
@@ -51,7 +51,7 @@ const Search: FC<PropsType> = ({ placeholder = 'Search anime...', className }) =
 
     setShow(true)
 
-    const { data } = await axios.get<Anime[]>(`http://192.168.31.166:3000/api/autocomplete/search?query=${query}`)
+    const { data } = await axios.get<Anime[]>(`/api/autocomplete/search?query=${query}`)
 
     setHint(data.slice(0, 5))
   }, 250)
