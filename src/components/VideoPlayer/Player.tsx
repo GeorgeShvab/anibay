@@ -1,7 +1,7 @@
 'use client'
 
-import { FC, useEffect, useRef } from 'react'
-import ReactPlayer from 'react-player'
+import { FC, LegacyRef, useEffect, useRef } from 'react'
+import ReactPlayerType, { ReactPlayerProps } from 'react-player'
 import Controls from './Controls/Index'
 import { PlayerProvider, usePlayerContext } from './hooks/usePlayerContext'
 import { OnProgressProps } from 'react-player/base'
@@ -11,6 +11,9 @@ import { AnimeType, Episode } from '@/types'
 import Episodes from '@/components/VideoPlayer/Episodes'
 import Hooks from './hooks/Hooks'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import dynamic from 'next/dynamic'
+
+const ReactPlayerWrapper = dynamic(() => import('./ReactPlayerWrapper'), { ssr: false })
 
 interface Props {
   title: string
@@ -40,7 +43,7 @@ const Player: FC<Props> = ({ title, episodes, type, id }) => {
     }
   }, [])
 
-  const playerRef = useRef<ReactPlayer>(null)
+  const playerRef = useRef<ReactPlayerType>(null)
 
   const playerContainerRef = useRef<HTMLDivElement>(null)
 
@@ -64,7 +67,6 @@ const Player: FC<Props> = ({ title, episodes, type, id }) => {
     episode: initialEpisode,
     choosedQuality: defaultQuality,
     container: playerContainerRef,
-    ...getProgress(initialEpisode.id),
   })
 
   const progress = getProgress(value.videoState.episode.id)
@@ -113,31 +115,29 @@ const Player: FC<Props> = ({ title, episodes, type, id }) => {
             >
               <div className="w-full h-full flex justify-center items-center bg-[#000000]">
                 <Hooks />
-                {typeof window !== 'undefined' && (
-                  <ReactPlayer
-                    controls={false}
-                    autoPlay={false}
-                    url={`${process.env.NEXT_PUBLIC_SERVER_ADDRESS}/api/proxy/${
-                      value.videoState.episode.sources.find((item) => item.quality === value.videoState.choosedQuality)
-                        ?.url
-                    }`}
-                    width="100%"
-                    height="100%"
-                    ref={playerRef}
-                    playing={value.videoState.playing}
-                    onPause={value.pause}
-                    onPlay={value.play}
-                    volume={value.videoState.volume}
-                    onReady={handleReady}
-                    onProgress={handleProgress}
-                    style={{
-                      aspectRatio: '1.7777777 / 1',
-                    }}
-                    onDuration={handleDuration}
-                    onEnded={handleEnded}
-                    progressInterval={250}
-                  />
-                )}
+                <ReactPlayerWrapper
+                  controls={false}
+                  autoPlay={false}
+                  url={`${process.env.NEXT_PUBLIC_SERVER_ADDRESS}/api/proxy/${
+                    value.videoState.episode.sources.find((item) => item.quality === value.videoState.choosedQuality)
+                      ?.url
+                  }`}
+                  width="100%"
+                  height="100%"
+                  player={playerRef}
+                  playing={value.videoState.playing}
+                  onPause={value.pause}
+                  onPlay={value.play}
+                  volume={value.videoState.volume}
+                  onReady={handleReady}
+                  onProgress={handleProgress}
+                  style={{
+                    aspectRatio: '1.7777777 / 1',
+                  }}
+                  onDuration={handleDuration}
+                  onEnded={handleEnded}
+                  progressInterval={250}
+                />
               </div>
               <Controls />
             </div>

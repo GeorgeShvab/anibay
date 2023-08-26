@@ -10,12 +10,12 @@ import Button from '@/ui/Button'
 const Card: FC<Anime> = ({ title, id, image, totalEpisodes, releaseDate, isBookmarked, rating, status }) => {
   return (
     <div
-      className={`rounded group hover:scale-[1.025] transition-all shadow-xl bg-dark hover:bg-dark-light transition-all cursor-pointer `}
+      className={`rounded group md:hover:scale-[1.025] transition-all shadow-xl bg-dark md:hover:bg-dark-light transition-all cursor-pointer `}
     >
       <Link href={`/watch/${id}`} className="block">
         <div className="flex flex-col">
           <div
-            className="relative w-full h-72 rounded overflow-hidden shadow-2xl flex flex-col justify-end p-2.5"
+            className="relative w-full h-72 md:h-80 lg:h-[360px] rounded overflow-hidden shadow-2xl flex flex-col justify-end px-2.5 py-2 md:py-3 md:px-3.5"
             style={{
               backgroundImage: `linear-gradient(
                   #06060600 50%,
@@ -28,7 +28,7 @@ const Card: FC<Anime> = ({ title, id, image, totalEpisodes, releaseDate, isBookm
             }}
           >
             <h4 className="text-white font-bold mb-2">{title}</h4>
-            <div className="flex gap-2 md:gap-3 mb-1 items-center">
+            <div className="flex gap-3 mb-1 items-center">
               <div className="flex gap-1.5 items-center">
                 <span className="text-red">
                   <svg
@@ -37,7 +37,7 @@ const Card: FC<Anime> = ({ title, id, image, totalEpisodes, releaseDate, isBookm
                     viewBox="0 0 24 24"
                     strokeWidth={1.5}
                     stroke="currentColor"
-                    className="w-4 md:w-5 h-4 md:h-5"
+                    className="h-4 md:w-5 h-4 md:h-5"
                   >
                     <path
                       strokeLinecap="round"

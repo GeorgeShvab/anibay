@@ -4,21 +4,31 @@ import { Prisma } from '@prisma/client'
 import { Anime } from '@/types'
 
 const AnimeService = {
-  async getOne(id: string) {
-    const data = await prisma.anime.findFirst({
-      where: { id: id },
-      include: {
-        genres: true,
-        related: true,
-        episodes: {
-          orderBy: {
-            number: 'asc',
-          },
-        },
-      },
-    })
+  async getOne({ id, user }: { id: string; user?: string }) {
+    const data = await prisma.$queryRaw`SELECT a.*,
+  (SELECT id FROM "Bookmark" b WHERE b."animeId" = a.id AND b."userId" = ${user})::boolean as "isBookmarked",
+  ARRAY(
+      SELECT DISTINCT JSONB_BUILD_OBJECT('id', g.id, 'title', g.title)
+      FROM "Genre" g
+      JOIN "_AnimeToGenre" ag ON ag."B" = g.id
+      WHERE ag."A" = ${id}
+  ) as genres,
+  ARRAY(
+      SELECT DISTINCT JSONB_BUILD_OBJECT(
+          'id', ra.id, 'title', ra.title, 'description', ra.description, 'image', ra.image, 'cover', ra.cover,
+          'releaseDate', ra."releaseDate", 'status', ra.status, 'totalEpisodes', ra."totalEpisodes",
+          'type', ra.type, 'views', ra.views, 'anilistId', ra."anilistId", 'duration', ra.duration,
+          'malId', ra."malId", 'popularity', ra.popularity, 'rating', ra.rating, 'season', ra.season,
+          'synonyms', ra.synonyms, 'mappings', ra.mappings, 'createdAt', ra."createdAt", 'updatedAt', ra."updatedAt"
+      )
+      FROM "_relations" r
+      JOIN "Anime" ra ON ra.id = r."B"
+      WHERE r."A" = a.id
+  ) as related
+FROM "Anime" a
+WHERE a.id = ${id};`
 
-    return serialize(data)
+    return serialize((data as any)[0]) as Anime
   },
 
   async deleteOne(id: string) {

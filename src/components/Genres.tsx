@@ -1,29 +1,25 @@
-import Genre from '@/components/Genre'
-import * as types from '@/types'
+import { Genre } from '@/types'
+import Link from 'next/link'
 import { FC } from 'react'
 
-interface PropsType {
-  data: types.Genre[]
+interface Props {
   className?: string
+  data: Genre[]
 }
 
-const Genres: FC<PropsType> = ({ data, className = '' }) => {
+const Genres: FC<Props> = ({ data, className = '' }) => {
   return (
     <div className={`flex md:flex-wrap gap-2 w-full overflow-auto no-scrollbar ${className}`}>
-      <span
-        className={`px-4 py-1.5 rounded text-white h-fit whitespace-nowrap hover:bg-red-dark transition-colors bg-red`}
-      >
-        All
-      </span>
       {data.map((item, index) => (
-        <span
+        <Link
           className={`px-4 py-1.5 rounded text-white h-fit whitespace-nowrap hover:bg-red-dark transition-colors ${
             !index ? 'bg-dark' : 'bg-dark'
           }`}
           key={item.id}
+          href={`/genres/${item.id}`}
         >
           {item.title}
-        </span>
+        </Link>
       ))}
     </div>
   )

@@ -1,8 +1,11 @@
 import formatPlayerTime from '@/utils/formatPlayerTime'
 import throttle from '@/utils/throttle'
-import { FC, MouseEvent, TouchEvent, memo, useCallback, useMemo, useRef, useState } from 'react'
-import ReactPlayer from 'react-player'
+import { FC, LegacyRef, MouseEvent, TouchEvent, memo, useCallback, useMemo, useRef, useState, Component } from 'react'
+import ReactPlayerType, { ReactPlayerProps } from 'react-player'
 import { usePlayer } from '../hooks/usePlayerContext'
+import dynamic from 'next/dynamic'
+
+const ReactPlayerWrapper = dynamic(() => import('../ReactPlayerWrapper'), { ssr: false })
 
 const Track: FC = () => {
   const {
@@ -13,7 +16,7 @@ const Track: FC = () => {
 
   let isDown = useRef<boolean>(false)
 
-  const hiddenPlayerRef = useRef<ReactPlayer>(null)
+  const hiddenPlayerRef = useRef<ReactPlayerType>(null)
 
   const [framePreview, setFramePreview] = useState<{ percents: number; seconds: number; isOpened: boolean }>({
     percents: 0,
@@ -25,7 +28,7 @@ const Track: FC = () => {
     (e: MouseEvent) => {
       isDown.current = true
 
-      if (player.current) {
+      if (player.current && e.currentTarget) {
         let position = (e.pageX - e.currentTarget.getClientRects()[0].left) / e.currentTarget.clientWidth
 
         if (position < 0) {
@@ -51,7 +54,7 @@ const Track: FC = () => {
 
   const handleMouseMove = useCallback(
     throttle((e: MouseEvent) => {
-      if (isDown.current && player.current) {
+      if (isDown.current && player.current && e.currentTarget) {
         let position = (e.pageX - e.currentTarget.getClientRects()[0].left) / e.currentTarget.clientWidth
 
         if (position < 0) {
@@ -75,7 +78,7 @@ const Track: FC = () => {
           playedPercentages: position,
         })
       }
-      if (player.current) {
+      if (player.current && e.currentTarget) {
         let position = (e.pageX - e.currentTarget.getClientRects()[0].left) / e.currentTarget.clientWidth
 
         if (position < 0) {
@@ -104,7 +107,7 @@ const Track: FC = () => {
 
   const handleTouchMove = useCallback(
     throttle((e: TouchEvent<HTMLDivElement>) => {
-      if (player.current) {
+      if (player.current && e.currentTarget) {
         let position = (e.touches[0].pageX - e.currentTarget.getClientRects()[0].left) / e.currentTarget.clientWidth
 
         if (position < 0) {
@@ -124,7 +127,7 @@ const Track: FC = () => {
           playedPercentages: position,
         })
       }
-      if (player.current) {
+      if (player.current && e.currentTarget) {
         let position = (e.touches[0].pageX - e.currentTarget.getClientRects()[0].left) / e.currentTarget.clientWidth
 
         if (position < 0) {
@@ -215,25 +218,23 @@ const Track: FC = () => {
             }}
           />
           <div className="invisible absolute">
-            {typeof window !== 'undefined' && (
-              <ReactPlayer
-                controls={false}
-                autoPlay={false}
-                url={`${process.env.NEXT_PUBLIC_SERVER_ADDRESS}/api/proxy/${
-                  episode.sources.find((item) => item.quality === quality)?.url
-                }`}
-                width="100%"
-                height="100%"
-                ref={hiddenPlayerRef}
-                playing={false}
-                style={{
-                  aspectRatio: '1.7777777 / 1',
-                  height: '100px',
-                }}
-                onSeek={extractFrameAndSave}
-                muted
-              />
-            )}
+            <ReactPlayerWrapper
+              controls={false}
+              autoPlay={false}
+              url={`${process.env.NEXT_PUBLIC_SERVER_ADDRESS}/api/proxy/${
+                episode.sources.find((item) => item.quality === quality)?.url
+              }`}
+              width="100%"
+              height="100%"
+              player={hiddenPlayerRef}
+              playing={false}
+              style={{
+                aspectRatio: '1.7777777 / 1',
+                height: '100px',
+              }}
+              onSeek={extractFrameAndSave}
+              muted
+            />
           </div>
         </div>
       </div>

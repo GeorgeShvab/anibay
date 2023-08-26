@@ -9,7 +9,7 @@ const useSaveProgress: () => void = () => {
   const id = episode.id
 
   useEffect(() => {
-    if (typeof window === 'undefined') return
+    if (typeof window === 'undefined' || !playedSeconds) return
 
     try {
       let progress = window.localStorage.getItem('progress')

@@ -32,7 +32,7 @@ class AnimeController {
 
   @Get('/:id')
   async get(@Param('id') id: string) {
-    const data = await AnimeService.getOne(id)
+    const data = await AnimeService.getOne({ id })
 
     if (!data) throw new NotFoundException()
 
@@ -53,7 +53,7 @@ class AnimeController {
   @SetHeader('Access-Control-Allow-Origin', '*')
   @Post('/:id/rate')
   async rate(@Body(ValidationPipe) body: RateAnimeDTO, @Param('id') id: string, @User() user: JwtUser) {
-    const data = await AnimeService.getOne(id)
+    const data = await AnimeService.getOne({ id })
 
     if (!data) throw new NotFoundException()
 
@@ -63,7 +63,7 @@ class AnimeController {
   @SetHeader('Access-Control-Allow-Origin', '*')
   @Post('/:id/bookmark')
   async bookmark(@Param('id') id: string, @User() user: JwtUser) {
-    const data = await AnimeService.getOne(id)
+    const data = await AnimeService.getOne({ id })
 
     if (!data) throw new NotFoundException()
 

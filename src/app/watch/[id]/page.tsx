@@ -16,41 +16,34 @@ import Layout from '@/components/Layout'
 import CommentService from '@/services/CommentService'
 import Comments from './Comments'
 import { authOptions } from '@/app/api/auth/[...nextauth]/route'
-import Player from '@/components/VideoPlayer/Player'
+import Player from '@/components/VideoPlayer'
 import Button from '@/ui/Button'
-import CardsColumn from '@/components/Anime/CardsColumn'
 import MobileDescription from './MobileDescription'
 import HorizontalPoster from './HorizontalCard'
+import Actions from './Actions'
+import BookmarkIcon from '@/components/BookmarkIcon'
+import Card from '@/components/Anime/PosterCard'
+import CardGrid from '@/components/Anime/CardGrid'
+import Title from '@/components/Title'
+import PosterGrid from '@/components/Anime/PosterGrid'
 
 const WatchPage: FC<types.PageProps<{ id: string }>> = async ({ params }) => {
   const id = params.id
 
   const session = await getServerSession(authOptions)
 
-  const animePromise = AnimeService.getOne(`${id.replace(/-episode-[0-9]+/, '')}`)
+  const animePromise = AnimeService.getOne({ id, user: session?.user.id })
 
   const relatedPromise = AnimeService.getRelated({ id, user: session?.user.id })
-
-  const isBookmarkedPromise = session ? BookmarkService.isBookmarked(session.user?.id, id) : false
-
-  const commentsPromise = CommentService.getTopCommentsByEpisode(
-    `${id}-episode-1`,
-    session ? session.user.id : undefined
-  )
-
-  const commentPartisipantsPromise = CommentService.getCommentPartisipantsByEpisode(`${id}-episode-1`)
 
   const episodesPromise = EpisodeService.getEpisodesByAnime(id)
 
   const popularPromise = AnimeService.getRandomPopular(session?.user?.id, 10)
 
-  const [anime, episodes, related, isBookmarked, comments, commentPartisipants, popular] = await Promise.all([
+  const [anime, episodes, related, popular] = await Promise.all([
     animePromise,
     episodesPromise,
     relatedPromise,
-    isBookmarkedPromise,
-    commentsPromise,
-    commentPartisipantsPromise,
     popularPromise,
   ])
 
@@ -58,13 +51,13 @@ const WatchPage: FC<types.PageProps<{ id: string }>> = async ({ params }) => {
 
   return (
     <>
-      <BackButton />
       <Layout>
-        <main className="pb-6 md:pb-10 md:pt-header">
+        <main className="md:pb-16 md:pt-header relative">
           <BackgroundImage url={anime.image} />
+          <Actions isBookmarked={anime.isBookmarked} id={anime.id} />
           <div>
-            <div className="container md:py-8 lg:py-12 md:pt-12 lg:pt-20">
-              <div className="gap-0 mb-3 md:flex lg:gap-12 md:gap-8 lg:mb-12 justify-between">
+            <div className="md:pt-8 lg:pt-12 md:pt-12 lg:pt-20">
+              <div className="container gap-0 mb-3 md:flex lg:gap-12 md:gap-8 lg:mb-12 justify-between">
                 <div className="pt-2 flex-initial md:flex flex-col relative mb-3 md:mb-0">
                   <div>
                     <h1 className="text-2xl font-semibold mb-1 md:mb-2 md:text-5xl text-white">{anime.title}</h1>
@@ -91,59 +84,15 @@ const WatchPage: FC<types.PageProps<{ id: string }>> = async ({ params }) => {
                     dangerouslySetInnerHTML={{ __html: anime.description }}
                   ></p>
                 </div>
-                <div className="w-full flex gap-3 md:hidden">
-                  <Button className="gap-4 flex-[0_0_42.5%] !px-1" color="dark">
-                    <>
-                      <span className="text-white">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="#ffffff"
-                          viewBox="0 0 24 24"
-                          strokeWidth={1.5}
-                          stroke="currentColor"
-                          className="w-5 h-5"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.348a1.125 1.125 0 010 1.971l-11.54 6.347a1.125 1.125 0 01-1.667-.985V5.653z"
-                          />
-                        </svg>
-                      </span>
-                      <span className="text-sm">Watch now</span>
-                    </>
-                  </Button>
-                  <Bookmark isBookmarked={isBookmarked} id={anime.id} key={anime.id + 'bookmark'} className="!px-1" />
-                </div>
-                <div className="flex-[0_0_315px] hidden md:flex flex-col gap-3 items-center">
-                  <Poster alt={anime.title} url={anime.image} />
-                  <div className="w-full flex gap-3">
-                    <Button className="gap-3 flex-[0_0_42.5%] !px-1" color="dark">
-                      <>
-                        <span className="text-white">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="#ffffff"
-                            viewBox="0 0 24 24"
-                            strokeWidth={1.5}
-                            stroke="currentColor"
-                            className="w-5 h-5"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.348a1.125 1.125 0 010 1.971l-11.54 6.347a1.125 1.125 0 01-1.667-.985V5.653z"
-                            />
-                          </svg>
-                        </span>
-                        <span className="text-sm">Watch now</span>
-                      </>
-                    </Button>
-                    <Bookmark isBookmarked={isBookmarked} id={anime.id} key={anime.id + 'bookmark'} className="!px-1" />
+
+                <div className="flex-[0_0_315px] hidden md:block relative">
+                  <div className="absolute right-[calc(100%+12px)]">
+                    <BookmarkIcon id={anime.id} isBookmarked={anime.isBookmarked} />
                   </div>
+                  <Poster alt={anime.title} url={anime.image} />
                 </div>
               </div>
-              <div className="mb-6 lg:mb-12">
+              <div className="container !mb-6 lg:!mb-12">
                 <Player
                   episodes={episodes as any}
                   id={anime.id}
@@ -151,32 +100,15 @@ const WatchPage: FC<types.PageProps<{ id: string }>> = async ({ params }) => {
                   type={anime.type as types.AnimeType}
                 />
               </div>
-              <div className="block lg:flex gap-8">
-                <Comments />
-                <div className="lg:flex-[0_0_365px]">
-                  {!!related.length && (
-                    <div className="mb-6">
-                      <h3 className="px-3 mb-3 md:px-2 md:mb-6 text-white md:text-xl lg:text-2xl font-semibold">
-                        Related Anime
-                      </h3>
-                      <div className="flex flex-col gap-4 flex-1">
-                        {related?.slice(0, 5).map((item) => (
-                          <HorizontalPoster key={item.id} {...item} />
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                  <div>
-                    <h3 className="px-3 mb-3 md:px-2 md:mb-6 text-white md:text-xl lg:text-2xl font-semibold">
-                      Popular Anime
-                    </h3>
-                    <div className="flex flex-col gap-4 flex-1">
-                      {popular.slice(0, 10 - Math.min(related.length, 5)).map((item) => (
-                        <HorizontalPoster key={item.id} {...item} />
-                      ))}
-                    </div>
-                  </div>
+              {!!related.length && (
+                <div className="lg-container mb-6 md:mb-10">
+                  <Title className="px-6 mb-3 md:mb-6">Related Anime</Title>
+                  <CardGrid className="px-3 md:px-0" data={related} mobileSlider />
                 </div>
+              )}
+              <div className="lg-container">
+                <Title className="px-6 mb-3 md:mb-6">Popular Anime</Title>
+                <PosterGrid className="px-3 md:px-0" data={popular} />
               </div>
             </div>
           </div>
@@ -189,7 +121,7 @@ const WatchPage: FC<types.PageProps<{ id: string }>> = async ({ params }) => {
 export default WatchPage
 
 export async function generateMetadata({ params }: types.PageProps<{ id: string }>): Promise<Metadata> {
-  const anime = await AnimeService.getOne(params.id)
+  const anime = await AnimeService.getOne({ id: params.id })
 
   if (!anime) {
     return {

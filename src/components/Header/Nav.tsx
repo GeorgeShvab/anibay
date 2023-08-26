@@ -1,10 +1,12 @@
-'use client'
-
 import usePage from '@/hooks/usePage'
+import { headers } from 'next/headers'
 import Link from 'next/link'
 
 const Nav = () => {
-  const page = usePage()
+  const headersList = headers()
+  const pathname = headersList.get('x-invoke-path') || ''
+
+  const page = pathname.split('/')[1] || 'home'
 
   return (
     <nav>
