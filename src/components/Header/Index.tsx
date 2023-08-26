@@ -1,7 +1,6 @@
 import { FC } from 'react'
 import Logo from '../Logo'
 import HeaderAccount from './HeaderAccount'
-import Link from 'next/link'
 import Nav from './Nav'
 
 const Header: FC = () => {

@@ -7,10 +7,12 @@ import { FC, memo, useEffect, useState } from 'react'
 import Logo from '../Logo'
 import AuthClickProtection from '../AuthClickProtection'
 
-const Navigation: FC = () => {
-  const [show, setShow] = useState<boolean>(true)
+interface Props {
+  page: string
+}
 
-  const page = usePage()
+const Navigation: FC<Props> = ({ page }) => {
+  const [show, setShow] = useState<boolean>(true)
 
   const handleFullscreenChange = () => {
     if (document.fullscreenElement) {
@@ -69,7 +71,7 @@ const Navigation: FC = () => {
           />
         </svg>
       </Link>
-      <Link href="/" className={`flex-initial px-2 p-1.5 ${page === 'search' ? 'text-red' : 'text-white'}`}>
+      <Link href="/search" className={`flex-initial px-2 p-1.5 ${page === 'search' ? 'text-red' : 'text-white'}`}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -88,7 +90,7 @@ const Navigation: FC = () => {
       <Link href="/">
         <Logo className={page === 'watch' || page === 'home' ? 'text-red' : 'text-white'} />
       </Link>
-      <Link href="/saved" className={`flex-initial px-2 p-1.5 ${page === 'saved' ? 'text-red' : 'text-white'}`}>
+      <Link href="/list" className={`flex-initial px-2 p-1.5 ${page === 'saved' ? 'text-red' : 'text-white'}`}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"

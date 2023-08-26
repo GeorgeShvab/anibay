@@ -20,12 +20,30 @@
     --header-height: 64px;
   }
 }
+.mobile-description-gradient {
+  background: linear-gradient(#15151500 0%, #151515e6 50%, #151515 100%);
+}
 
 .container {
   max-width: 1512px;
   margin: 0 auto;
   padding-left: 12px;
   padding-right: 12px;
+}
+
+@media screen and (min-width: 1024px) {
+  .container {
+    padding-left: 56px;
+    padding-right: 56px;
+  }
+
+  .lg-container {
+    max-width: 1512px;
+    margin-right: auto;
+    margin-left: auto;
+    padding-left: 56px;
+    padding-right: 56px;
+  }
 }
 
 .search-poster {
@@ -99,13 +117,6 @@
   height: 0;
   width: 0;
   display: none;
-}
-
-@media screen and (min-width: 1024px) {
-  .container {
-    padding-left: 56px;
-    padding-right: 56px;
-  }
 }
 
 .episodes-container::-webkit-scrollbar {
