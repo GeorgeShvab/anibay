@@ -4,7 +4,6 @@ import { Metadata } from 'next'
 import BackgroundImage from './BackgroundImage'
 import Poster from './Poster'
 import SubTitleText from './SubtitleText'
-import Genres from './Genres'
 import AnimeService from '@/services/AnimeService'
 import EpisodeService from '@/services/EpisodeService'
 import { getServerSession } from 'next-auth'
@@ -18,7 +17,7 @@ import CardGrid from '@/components/Anime/CardGrid'
 import Title from '@/components/Title'
 import PosterGrid from '@/components/Anime/PosterGrid'
 import { cookies } from 'next/headers'
-import { redirect } from 'next/navigation'
+import Genres from '@/components/Genre/Genres'
 
 const getLastWatchedEpisode = (animeId: string): string | undefined => {
   const cookiesStore = cookies()
@@ -80,7 +79,7 @@ const WatchPage: FC<types.PageProps<{ id: string }, { episode?: string }>> = asy
                       status={anime.status}
                       rating={anime.rating}
                     />
-                    <Genres genres={anime.genres} />
+                    <Genres data={anime.genres} className="mb-4 md:mb-8 flex-wrap [&>a]:text-sm" />
                     <div className="rounded bg-dark md:hidden shadow-3xl">
                       {anime.description.length > 100 ? (
                         <MobileDescription description={anime.description} />

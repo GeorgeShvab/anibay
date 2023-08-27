@@ -20,7 +20,7 @@ const Genres: FC<PropsType> = ({ data, query, page, genre = 'all', className = '
           genre === 'all' ? 'bg-red' : 'bg-dark'
         }`}
         href={`/search?${query ? 'query=' + query + '&' : ''}${page ? 'page=' + page + '&' : ''}${
-          genre ? 'genre=' + genre : ''
+          genre ? 'genre=' + 'all' : ''
         }`}
       >
         All
