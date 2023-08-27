@@ -7,12 +7,19 @@ interface PropsType {
 }
 
 const Counter: FC<PropsType> = ({ duration, playedSeconds }) => {
-  const time = `${formatPlayerTime(playedSeconds)} / ${formatPlayerTime(duration)}`
+  const playedTime = formatPlayerTime(playedSeconds)
+  const fullTime = formatPlayerTime(duration)
 
   return (
-    <span className="text-white text-xs lg:text-base" style={{ width: `calc(${time.length} * 0.51em)` }}>
-      {time}
-    </span>
+    <div className="text-white flex items-center gap-1 text-xs lg:text-base">
+      <span className="block" style={{ width: `calc(${playedTime.length} * 0.55em)` }}>
+        {playedTime}
+      </span>
+      <span className="block">/</span>
+      <span className="block" style={{ width: `calc(${fullTime.length} * 0.55em)` }}>
+        {fullTime}
+      </span>
+    </div>
   )
 }
 

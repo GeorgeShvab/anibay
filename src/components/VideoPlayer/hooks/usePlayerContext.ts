@@ -153,7 +153,7 @@ export const usePlayerContext = (
   }
 
   const toEpisode = (id: string) => {
-    router.push(pathname + '?episode=' + id, { scroll: false })
+    //router.push(pathname + '?episode=' + id, { scroll: false })
 
     setVideoState((prev) => {
       let quality
