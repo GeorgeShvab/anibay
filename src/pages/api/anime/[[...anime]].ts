@@ -72,7 +72,7 @@ class AnimeController {
 
   @Get('/search/:query')
   async search(@Param('query') query: string) {
-    const data = await AnimeService.search(query)
+    const data = await AnimeService.search({ query })
 
     return data
   }
