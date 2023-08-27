@@ -180,7 +180,7 @@ const Track: FC = () => {
   )
 
   return (
-    <div className="flex-auto px-2 pl-4 lg:pt-0.5">
+    <div className="flex-auto px-2 pl-2 lg:pt-0.5">
       <div className="relative">
         {framePreview.isOpened && (
           <div

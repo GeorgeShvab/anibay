@@ -39,7 +39,7 @@ const useSaveEpisode = () => {
         isSaved.current = false
       } catch (e) {}
     }
-  }, [Math.round(playedSeconds / 5)])
+  }, [Math.round(playedSeconds)])
 }
 
 export default useSaveEpisode

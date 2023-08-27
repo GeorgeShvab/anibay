@@ -40,13 +40,8 @@ const getLastWatchedEpisode = (animeId: string): string | undefined => {
 
 const WatchPage: FC<types.PageProps<{ id: string }, { episode?: string }>> = async ({ params, searchParams }) => {
   const id = params.id
-  const episodeId = searchParams.episode
 
   const lastEpisode = getLastWatchedEpisode(id)
-
-  if (lastEpisode && !episodeId) {
-    redirect(`/watch/${id}?episode=${lastEpisode}`)
-  }
 
   const session = await getServerSession(authOptions)
 
@@ -64,10 +59,6 @@ const WatchPage: FC<types.PageProps<{ id: string }, { episode?: string }>> = asy
     relatedPromise,
     popularPromise,
   ])
-
-  if (!episodeId) {
-    redirect(`/watch/${id}?episode=${episodes[0].id}`)
-  }
 
   if (!anime) return null
 
@@ -119,6 +110,7 @@ const WatchPage: FC<types.PageProps<{ id: string }, { episode?: string }>> = asy
                   id={anime.id}
                   title={anime.title}
                   type={anime.type as types.AnimeType}
+                  episode={lastEpisode}
                 />
               </div>
               {!!related.length && (

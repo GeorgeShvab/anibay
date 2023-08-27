@@ -21,10 +21,11 @@ interface Props {
   episodes: Episode[]
   type: AnimeType
   id: string
+  episode?: string
 }
 
-const Player: FC<Props> = ({ title, episodes, type, id }) => {
-  const episode = useSearchParams()?.get('episode')
+const Player: FC<Props> = ({ title, episodes, type, id, episode }) => {
+  //const episode = useSearchParams()?.get('episode')
 
   let initialEpisode
 
