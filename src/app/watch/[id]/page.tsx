@@ -5,30 +5,48 @@ import BackgroundImage from './BackgroundImage'
 import Poster from './Poster'
 import SubTitleText from './SubtitleText'
 import Genres from './Genres'
-import BackButton from '@/components/Mobile/BackButton'
-import Head from 'next/head'
 import AnimeService from '@/services/AnimeService'
 import EpisodeService from '@/services/EpisodeService'
 import { getServerSession } from 'next-auth'
-import Bookmark from '../../../components/Bookmark'
-import BookmarkService from '@/services/BookmarkService'
 import Layout from '@/components/Layout'
-import CommentService from '@/services/CommentService'
-import Comments from './Comments'
 import { authOptions } from '@/app/api/auth/[...nextauth]/route'
-import Player from '@/components/VideoPlayer'
-import Button from '@/ui/Button'
+import Player from '@/components/VideoPlayer/Player'
 import MobileDescription from './MobileDescription'
-import HorizontalPoster from './HorizontalCard'
 import Actions from './Actions'
 import BookmarkIcon from '@/components/BookmarkIcon'
-import Card from '@/components/Anime/PosterCard'
 import CardGrid from '@/components/Anime/CardGrid'
 import Title from '@/components/Title'
 import PosterGrid from '@/components/Anime/PosterGrid'
+import { cookies } from 'next/headers'
+import { redirect } from 'next/navigation'
 
-const WatchPage: FC<types.PageProps<{ id: string }>> = async ({ params }) => {
+const getLastWatchedEpisode = (animeId: string): string | undefined => {
+  const cookiesStore = cookies()
+
+  const episodes = cookiesStore.get('episodes')?.value
+
+  const decoded = episodes ? decodeURI(episodes) : undefined
+
+  if (decoded) {
+    try {
+      return JSON.parse(decoded)[animeId] as string
+    } catch {
+      return undefined
+    }
+  }
+
+  return undefined
+}
+
+const WatchPage: FC<types.PageProps<{ id: string }, { episode?: string }>> = async ({ params, searchParams }) => {
   const id = params.id
+  const episodeId = searchParams.episode
+
+  const lastEpisode = getLastWatchedEpisode(id)
+
+  if (lastEpisode && !episodeId) {
+    redirect(`/watch/${id}?episode=${lastEpisode}`)
+  }
 
   const session = await getServerSession(authOptions)
 
@@ -47,6 +65,10 @@ const WatchPage: FC<types.PageProps<{ id: string }>> = async ({ params }) => {
     popularPromise,
   ])
 
+  if (!episodeId) {
+    redirect(`/watch/${id}?episode=${episodes[0].id}`)
+  }
+
   if (!anime) return null
 
   return (
@@ -57,7 +79,7 @@ const WatchPage: FC<types.PageProps<{ id: string }>> = async ({ params }) => {
           <Actions isBookmarked={anime.isBookmarked} id={anime.id} />
           <div>
             <div className="md:pt-8 lg:pt-12 md:pt-12 lg:pt-20">
-              <div className="container gap-0 mb-3 md:flex lg:gap-12 md:gap-8 lg:mb-12 justify-between">
+              <div className="container gap-0 mb-3 md:flex lg:gap-12 md:gap-8 md:mb-12 justify-between">
                 <div className="pt-2 flex-initial md:flex flex-col relative mb-3 md:mb-0">
                   <div>
                     <h1 className="text-2xl font-semibold mb-1 md:mb-2 md:text-5xl text-white">{anime.title}</h1>
@@ -84,7 +106,6 @@ const WatchPage: FC<types.PageProps<{ id: string }>> = async ({ params }) => {
                     dangerouslySetInnerHTML={{ __html: anime.description }}
                   ></p>
                 </div>
-
                 <div className="flex-[0_0_315px] hidden md:block relative">
                   <div className="absolute right-[calc(100%+12px)]">
                     <BookmarkIcon id={anime.id} isBookmarked={anime.isBookmarked} />
@@ -103,12 +124,12 @@ const WatchPage: FC<types.PageProps<{ id: string }>> = async ({ params }) => {
               {!!related.length && (
                 <div className="lg-container mb-6 md:mb-10">
                   <Title className="px-6 mb-3 md:mb-6">Related Anime</Title>
-                  <CardGrid className="px-3 md:px-0" data={related} mobileSlider />
+                  <CardGrid className="px-3 lg:px-0" data={related} mobileSlider />
                 </div>
               )}
               <div className="lg-container">
                 <Title className="px-6 mb-3 md:mb-6">Popular Anime</Title>
-                <PosterGrid className="px-3 md:px-0" data={popular} />
+                <PosterGrid className="px-3 lg:px-0" data={popular} />
               </div>
             </div>
           </div>

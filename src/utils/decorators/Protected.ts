@@ -4,10 +4,7 @@ import { NextFunction, UnauthorizedException, createMiddlewareDecorator } from '
 import { getServerSession } from 'next-auth'
 
 const Protected = createMiddlewareDecorator(async (req: NextApiRequest, res: NextApiResponse, next: NextFunction) => {
-  console.log('ahahaha')
   const session = await getServerSession(req, res, authOptions)
-
-  console.log(session, 'SESSION')
 
   if (!session) {
     throw new UnauthorizedException()

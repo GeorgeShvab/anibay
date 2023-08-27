@@ -5,12 +5,14 @@ import useOutsideClick from '@/hooks/useOutsideClick'
 import { Anime } from '@/types'
 import throttle from '@/utils/throttle'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { ChangeEvent, FC, FormEvent, useCallback, useRef, useState } from 'react'
 import { useMutation } from 'react-query'
 
 const Search: FC = () => {
   const router = useRouter()
+
+  const searchParams = useSearchParams()
 
   const [value, setValue] = useState<string>('')
 
@@ -47,7 +49,11 @@ const Search: FC = () => {
     e.preventDefault()
 
     if (value) {
-      router.push('/search?query=' + value)
+      const search = new URLSearchParams(searchParams?.toString())
+
+      search.set('query', value.trim())
+
+      router.push('/search?' + search.toString())
     }
   }
 

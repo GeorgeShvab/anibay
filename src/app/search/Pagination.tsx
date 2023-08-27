@@ -2,15 +2,14 @@ import Link from 'next/link'
 import { FC } from 'react'
 
 interface PropsType {
-  query: string
+  query: string | undefined
   hasNextPage: boolean
   currentPage: number
   pages: number
+  genre: string | undefined
 }
 
-const Pagination: FC<PropsType> = ({ query, hasNextPage, currentPage, pages }) => {
-  console.log(Math.max(currentPage - 2, 0), Math.min(currentPage + 3, pages), pages, currentPage)
-
+const Pagination: FC<PropsType> = ({ query, hasNextPage, currentPage, pages, genre }) => {
   const initialPagesArray = Array.from({ length: pages }, (_, index) => index + 1)
 
   let firstPageHint = true // First page displays if current pages to display in pagination don't icnlude first page: 1 ... 12 13 14 15 16 ... 30
@@ -36,7 +35,9 @@ const Pagination: FC<PropsType> = ({ query, hasNextPage, currentPage, pages }) =
     <div className="flex gap-2 py-8 md:py-16 md:gap-4 justify-center w-full items-center">
       <div className="flex gap-1 md:gap-2 justify-center items-center">
         <Link
-          href={`/search?query=${query}&page=${currentPage - 1}`}
+          href={`/search?${query ? 'query=' + query + '&' : ''}page=${currentPage - 1}${
+            genre ? '&genre=' + genre : ''
+          }`}
           className={currentPage === 1 ? 'pointer-events-none' : 'text-neutral-100'}
         >
           <div
@@ -58,7 +59,10 @@ const Pagination: FC<PropsType> = ({ query, hasNextPage, currentPage, pages }) =
         </Link>
         {firstPageHint && (
           <>
-            <Link href={`/search?query=${query}&page=1`} className="hidden md:flex">
+            <Link
+              href={`/search?${query ? 'query=' + query + '&' : ''}page=1${genre ? '&genre=' + genre : ''}`}
+              className="hidden md:flex"
+            >
               <div
                 className={`h-10 w-10 rounded text-center flex items-center justify-center bg-dark md:hover:bg-red-dark transition-colors`}
               >
@@ -75,7 +79,10 @@ const Pagination: FC<PropsType> = ({ query, hasNextPage, currentPage, pages }) =
           </>
         )}
         {pagesArray.map((item, index) => (
-          <Link key={index} href={`/search?query=${query}&page=${item}`}>
+          <Link
+            key={index}
+            href={`/search?${query ? 'query=' + query + '&' : ''}page=${item}${genre ? '&genre=' + genre : ''}`}
+          >
             <div
               className={`h-10 w-10 rounded text-center flex items-center justify-center ${
                 item === currentPage ? 'bg-red' : 'bg-dark md:hover:bg-red-dark transition-colors'
@@ -94,7 +101,10 @@ const Pagination: FC<PropsType> = ({ query, hasNextPage, currentPage, pages }) =
                 <span className="text-base text-neutral-100">...</span>
               </div>
             )}
-            <Link href={`/search?query=${query}&page=${pages}`} className="hidden md:flex">
+            <Link
+              href={`/search?${query ? 'query=' + query + '&' : ''}page=${pages}${genre ? '&genre=' + genre : ''}`}
+              className="hidden md:flex"
+            >
               <div
                 className={`h-10 w-10 rounded text-center flex items-center justify-center bg-dark md:hover:bg-red-dark transition-colors`}
               >
@@ -104,7 +114,7 @@ const Pagination: FC<PropsType> = ({ query, hasNextPage, currentPage, pages }) =
           </>
         )}
         <Link
-          href={`/search?query=${query}&page=${currentPage + 1}`}
+          href={`/search?${query ? 'query=' + query + '&' : ''}page=${currentPage + 1}`}
           className={!hasNextPage ? 'pointer-events-none' : ''}
         >
           <div

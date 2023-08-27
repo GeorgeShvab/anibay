@@ -16,7 +16,6 @@ const useMediaQuery = (min: number, max: number) => {
   const [state, setState] = useState<boolean>(initialState)
 
   const handleResize = (e: UIEvent) => {
-    console.log('resize')
     if (window.innerWidth < max && window.innerWidth > min) {
       setState(true)
     } else {
