@@ -5,7 +5,7 @@ const nextConfig = {
     domains: ['gogocdn.net', 's4.anilist.co'],
   },
   env: {
-    SERVER_ADDRESS: 'https://anibay.xyz',
+    SERVER_ADDRESS: '/',
   },
 }
 
