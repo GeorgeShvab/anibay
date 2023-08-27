@@ -33,8 +33,6 @@ const CommentEditor: FC<Props> = ({ onConfirm }) => {
   const handleConfirm = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    console.log('sdfsfasdfasdfasdfas')
-
     onConfirm(value)
     setValue('')
   }

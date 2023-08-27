@@ -12,6 +12,7 @@ import Episodes from '@/components/VideoPlayer/Episodes'
 import Hooks from './hooks/Hooks'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import dynamic from 'next/dynamic'
+import getHighestQuality from './getHighestquality'
 
 const ReactPlayerWrapper = dynamic(() => import('./ReactPlayerWrapper'), { ssr: false })
 
@@ -23,10 +24,6 @@ interface Props {
 }
 
 const Player: FC<Props> = ({ title, episodes, type, id }) => {
-  const pathname = usePathname()
-
-  const router = useRouter()
-
   const episode = useSearchParams()?.get('episode')
 
   let initialEpisode
@@ -37,26 +34,11 @@ const Player: FC<Props> = ({ title, episodes, type, id }) => {
     initialEpisode = episodes[0]
   }
 
-  useEffect(() => {
-    if (!episode) {
-      router.push(pathname + '?episode=' + episodes[0].id, { scroll: false })
-    }
-  }, [])
-
   const playerRef = useRef<ReactPlayerType>(null)
 
   const playerContainerRef = useRef<HTMLDivElement>(null)
 
-  let defaultQuality = episodes[0].sources.reduce<string>((prev, curr) => {
-    if (isNaN(Number(curr.quality.replace('p', '')))) return prev
-    if (isNaN(Number(prev.replace('p', '')))) return curr.quality
-
-    if (Number(curr.quality.replace('p', '')) > Number(prev.replace('p', ''))) {
-      return curr.quality
-    } else {
-      return prev
-    }
-  }, 'default')
+  let defaultQuality = getHighestQuality(initialEpisode.sources)
 
   const value = usePlayerContext({
     title,

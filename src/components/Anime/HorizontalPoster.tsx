@@ -29,7 +29,7 @@ const HorizontalPoster: FC<Anime> = (anime) => {
             #060606aa 0%,
             #06060600 50%
 ),
-url(${anime.cover})`,
+url(${anime.cover || anime.image})`,
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat',
             backgroundSize: 'cover',

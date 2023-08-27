@@ -7,7 +7,7 @@ class AutocompleteController {
   async getAnimeAutocomplete(@Query() { query }: { query: string }) {
     if (!query) return []
 
-    const data = await AnimeService.search(query)
+    const data = await AnimeService.search({ query })
 
     return data.data
   }

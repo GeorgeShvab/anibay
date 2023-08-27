@@ -71,27 +71,44 @@ WHERE a.id = ${id};`
     return serialize(data) as Anime[]
   },
 
-  async search(query: string, page = 0) {
+  async search({ query, page = 0, genre }: { query?: string; page?: number; genre?: string }) {
     const q = `%${query}%`.toLowerCase()
 
-    const dataPromise = prisma.$queryRaw`SELECT a.*, array_agg(JSON_BUILD_OBJECT('id', g.id, 'title', g.title)) as genres
+    const dataPromise = genre
+      ? prisma.$queryRaw`SELECT a.*, array_agg(JSON_BUILD_OBJECT('id', g.id, 'title', g.title)) as genres
+    FROM "Anime" a 
+    INNER JOIN "_AnimeToGenre" ag 
+    ON ag."A" = a.id
+    INNER JOIN "Genre" g
+    ON g.id = ag."B" WHERE ag."B" = ${genre} AND (CASE WHEN ${!!query} = FALSE THEN TRUE ELSE LOWER(a.title) LIKE ${q} OR LOWER(a.description) LIKE ${q} OR LOWER(ARRAY_TO_STRING(a.synonyms, ' ')) LIKE ${q} END) GROUP BY a.id ORDER BY a.popularity DESC OFFSET ${
+          page * 30
+        } LIMIT 30;`
+      : prisma.$queryRaw`SELECT a.*, array_agg(JSON_BUILD_OBJECT('id', g.id, 'title', g.title)) as genres
     FROM "Anime" a 
     INNER JOIN "_AnimeToGenre" ag 
     ON ag."A" = a.id
     INNER JOIN "Genre" g
     ON g.id = ag."B" WHERE LOWER(a.title) LIKE ${q} OR LOWER(a.description) LIKE ${q} OR LOWER(ARRAY_TO_STRING(a.synonyms, ' ')) LIKE ${q} GROUP BY a.id ORDER BY a.popularity DESC OFFSET ${
-      page * 30
-    } LIMIT 30;`
+          page * 30
+        } LIMIT 30;`
 
-    const countPromise = prisma.$queryRaw`SELECT SUM(
-      CASE 
-          WHEN LOWER(a.title) LIKE ${q}
-               OR LOWER(a.description) LIKE ${q}
-               OR LOWER(ARRAY_TO_STRING(a.synonyms, ' ')) LIKE ${q}
-          THEN 1 
-          ELSE 0 
-      END
-  )::int as count FROM "Anime" a;`
+    const countPromise = genre
+      ? prisma.$queryRaw`SELECT SUM(
+        CASE 
+            WHEN ag."B" = ${genre} AND (CASE WHEN ${!!query} = FALSE THEN TRUE ELSE LOWER(a.title) LIKE ${q} OR LOWER(a.description) LIKE ${q} OR LOWER(ARRAY_TO_STRING(a.synonyms, ' ')) LIKE ${q} END)
+            THEN 1 
+            ELSE 0 
+        END
+    )::int as count FROM "Anime" a JOIN "_AnimeToGenre" ag ON ag."A" = a.id;`
+      : prisma.$queryRaw`SELECT SUM(
+        CASE 
+            WHEN LOWER(a.title) LIKE ${q}
+                 OR LOWER(a.description) LIKE ${q}
+                 OR LOWER(ARRAY_TO_STRING(a.synonyms, ' ')) LIKE ${q}
+            THEN 1 
+            ELSE 0 
+        END
+    )::int as count FROM "Anime" a;`
 
     const [data, count] = await Promise.all([dataPromise, countPromise])
 
@@ -119,6 +136,22 @@ WHERE a.id = ${id};`
     WHERE G.id IN (${Prisma.join(genres)})
     GROUP BY A.id
     HAVING COUNT(DISTINCT G.id) >= 3;`
+
+    return serialize(data) as Anime[]
+  },
+
+  async getAnimeByGenre({ id, user }: { id: string; user?: number }) {
+    const data = await prisma.$queryRaw`SELECT a.*,
+    (SELECT id FROM "Bookmark" b WHERE b."animeId" = a.id AND b."userId" = ${user})::boolean as "isBookmarked",
+    ARRAY(
+        SELECT DISTINCT JSONB_BUILD_OBJECT('id', g.id, 'title', g.title)
+        FROM "Genre" g
+        JOIN "_AnimeToGenre" ag ON ag."B" = g.id
+        WHERE ag."A" = ${id}
+    ) as genres
+  FROM "Anime" a
+  JOIN "_AnimeToGenre" ag ON ag."A" = a.id
+  WHERE ag."B" = ${id};`
 
     return serialize(data) as Anime[]
   },

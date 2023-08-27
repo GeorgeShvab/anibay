@@ -37,29 +37,27 @@ const Home: FC = async () => {
   const anime = posterAnime as any as Anime
 
   return (
-    <>
-      <Layout blackFooter>
-        <main className="">
-          <MainPoster {...anime} />
-          <div className="md:mt-[-100px] z-10 relative">
-            <div className="">
-              <div className="lg-container mb-6 md:mb-10">
-                <Title className="px-6 mb-3 md:mb-6">Best Genres</Title>
-                <Genres className="px-3 md:px-0" data={genres} />
-              </div>
-              <div className="lg-container mb-6 md:mb-10">
-                <Title className="px-6 mb-3 md:mb-6">Popular Anime</Title>
-                <CardGrid className="px-3 md:px-0" data={popular} mobileSlider={true} />
-              </div>
-              <div className="lg-container">
-                <Title className="px-6 mb-3 md:mb-6">Top Anime</Title>
-                <PosterGrid className="px-3 md:px-0" data={top} />
-              </div>
+    <Layout blackFooter>
+      <main className="">
+        <MainPoster {...anime} />
+        <div className="md:mt-[-100px] z-10 relative">
+          <div className="">
+            <div className="lg-container mb-6 md:mb-10">
+              <Title className="px-6 mb-3 md:mb-6">Best Genres</Title>
+              <Genres className="px-3 lg:px-0" data={genres} />
+            </div>
+            <div className="lg-container mb-6 md:mb-10">
+              <Title className="px-6 mb-3 md:mb-6">Popular Anime</Title>
+              <CardGrid className="px-3 lg:px-0" data={popular} mobileSlider={true} />
+            </div>
+            <div className="lg-container">
+              <Title className="px-6 mb-3 md:mb-6">Top Anime</Title>
+              <PosterGrid className="px-3 lg:px-0" data={top} />
             </div>
           </div>
-        </main>
-      </Layout>
-    </>
+        </div>
+      </main>
+    </Layout>
   )
 }
 

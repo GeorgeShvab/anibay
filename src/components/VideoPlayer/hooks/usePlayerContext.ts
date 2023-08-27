@@ -4,6 +4,7 @@ import { useState, useMemo, RefObject } from 'react'
 import { createContext, useContext } from 'react'
 import ReactPlayer from 'react-player'
 import { getProgress } from './useGetProgress'
+import getHighestQuality from '../getHighestquality'
 
 export interface VideoState {
   playing: boolean
@@ -154,13 +155,26 @@ export const usePlayerContext = (
   const toEpisode = (id: string) => {
     router.push(pathname + '?episode=' + id, { scroll: false })
 
-    setVideoState((prev) => ({
-      ...prev,
-      episode: prev.episodes.find((item) => item.id === id) || prev.episode,
-      loadedSeconds: 0,
-      loadedPercentages: 0,
-      ...getProgress(id),
-    }))
+    setVideoState((prev) => {
+      let quality
+
+      const newEpisode = prev.episodes.find((item) => item.id === id) || prev.episode
+
+      if (newEpisode.sources.map((item) => item.quality).includes(prev.choosedQuality)) {
+        quality = prev.choosedQuality
+      } else {
+        quality = getHighestQuality(newEpisode.sources)
+      }
+
+      return {
+        ...prev,
+        episode: newEpisode,
+        loadedSeconds: 0,
+        loadedPercentages: 0,
+        choosedQuality: quality,
+        ...getProgress(id),
+      }
+    })
   }
 
   const data = useMemo(() => {

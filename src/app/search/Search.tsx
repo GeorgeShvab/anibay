@@ -17,6 +17,8 @@ const Search: FC = () => {
 
   const containerEl = useRef<HTMLFormElement>(null)
 
+  const searchParams = useSearchParams()
+
   const [value, setValue] = useState<string>(query || '')
 
   const [isAutocompleteShown, setIsAutocompleteShown] = useState<boolean>()
@@ -30,7 +32,11 @@ const Search: FC = () => {
 
     if (!value.trim()) return
 
-    router.push('/search?query=' + value.trim())
+    const search = new URLSearchParams(searchParams?.toString())
+
+    search.set('query', value.trim())
+
+    router.push('/search?' + search.toString())
   }
 
   const queryAutocomplete = useCallback(

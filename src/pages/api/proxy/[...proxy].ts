@@ -24,6 +24,7 @@ const proxy = (req: NextApiRequest, res: NextApiResponse, next: NextFunction) =>
 export const config = {
   api: {
     externalResolver: true,
+    responseLimit: false,
   },
 }
 

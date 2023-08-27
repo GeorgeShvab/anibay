@@ -9,7 +9,7 @@ interface Props {
 
 const PosterGrid: FC<Props> = ({ data, className = '' }) => {
   return (
-    <div className={`grid gap-4 grid-cols-1 md:grid-cols-2 ${className}`}>
+    <div className={`grid gap-4 grid-cols-1 lg:grid-cols-2 ${className}`}>
       {data.map((item) => (
         <HorizontalPoster key={item.id} {...item} />
       ))}
