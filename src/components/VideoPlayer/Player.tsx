@@ -101,7 +101,7 @@ const Player: FC<Props> = ({ title, episodes, type, id, episode }) => {
                 <ReactPlayerWrapper
                   controls={false}
                   autoPlay={false}
-                  url={`${process.env.NEXT_PUBLIC_SERVER_ADDRESS}/api/proxy/${
+                  url={`${
                     value.videoState.episode.sources.find((item) => item.quality === value.videoState.choosedQuality)
                       ?.url
                   }`}
