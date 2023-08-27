@@ -7,7 +7,7 @@ import { Metadata } from 'next'
 const Signin: FC = () => {
   return (
     <>
-      <Layout simpleHeader blackFooter>
+      <Layout simpleHeader>
         <main className="h-screen px-3 md:px-6 bg-auth">
           <div className="h-full flex items-center justify-center">
             <div className="max-w-[400px] w-full overflow-hidden rounded-[18px] bg-dark text-left align-middle shadow-2xl transition-all relative">

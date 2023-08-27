@@ -2,13 +2,9 @@ import { FC } from 'react'
 import Logo from './Logo'
 import Link from 'next/link'
 
-interface Props {
-  black?: boolean
-}
-
-const Footer: FC<Props> = ({ black }) => {
+const Footer: FC = () => {
   return (
-    <footer className={`py-8 md:py-10 overflow-hidden lg:block ${black ? 'bg-black' : 'bg-black md:bg-dark'}`}>
+    <footer className={`py-8 md:py-10 overflow-hidden lg:block bg-black`}>
       <div className="container items-center justify-between block md:flex">
         <div className="flex gap-4 md:gap-10 items-center justify-between md:justify-start md:mb-0">
           <div>
