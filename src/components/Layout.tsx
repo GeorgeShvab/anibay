@@ -8,10 +8,9 @@ import { headers } from 'next/headers'
 interface Props {
   children: ReactElement
   simpleHeader?: boolean
-  blackFooter?: boolean
 }
 
-const Layout: FC<Props> = ({ children, blackFooter = false, simpleHeader = false }) => {
+const Layout: FC<Props> = ({ children, simpleHeader = false }) => {
   const headersList = headers()
   const pathname = headersList.get('x-invoke-path') || ''
 
@@ -24,7 +23,7 @@ const Layout: FC<Props> = ({ children, blackFooter = false, simpleHeader = false
       <Navigation page={page} />
       <LoadingBar className="fixed" />
       {children}
-      <Footer black={blackFooter} />
+      <Footer />
     </div>
   )
 }

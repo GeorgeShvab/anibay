@@ -44,7 +44,7 @@ const Search: FC<types.PageProps<{}, { query: string; page: string; genre: strin
 
   return (
     <>
-      <Layout blackFooter>
+      <Layout>
         <main className="">
           <div
             className="search-poster h-[420px] md:h-[600px] flex flex-col items-center justify-start p-4 md:px-8 lg:py-10 z-0 lg:px-20 mb-6 lg:mb-0 relative !pt-48"

@@ -1,13 +1,9 @@
-import { Inter } from 'next/font/google'
 import { FC } from 'react'
-import Link from 'next/link'
 import { getServerSession } from 'next-auth'
 import AnimeService from '@/services/AnimeService'
 import Layout from '@/components/Layout'
 import { authOptions } from './api/auth/[...nextauth]/route'
-import HorizontalPoster from '@/components/Anime/HorizontalPoster'
 import GenreService from '@/services/GenreService'
-import Card from '@/components/Anime/PosterCard'
 import MainPoster from './MainPoster'
 import { Anime } from '@/types'
 import { Metadata } from 'next'
@@ -22,13 +18,11 @@ const Home: FC = async () => {
   const posterAnimePromise = AnimeService.getOne({ id: 'clfrvc5mj00chkslucw4phc3j' })
 
   const popularPromise = AnimeService.getRandomPopular(session?.user.id, 10)
-  const randomAnimePromise = AnimeService.getRandomTop(session?.user.id, 1)
   const genresPromise = GenreService.getAll()
   const topPropmise = AnimeService.getRandomTop(session?.user.id, 6)
 
-  const [popular, randomAnime, genres, top, posterAnime] = await Promise.all([
+  const [popular, genres, top, posterAnime] = await Promise.all([
     popularPromise,
-    randomAnimePromise,
     genresPromise,
     topPropmise,
     posterAnimePromise,
@@ -37,7 +31,7 @@ const Home: FC = async () => {
   const anime = posterAnime as any as Anime
 
   return (
-    <Layout blackFooter>
+    <Layout>
       <main className="">
         <MainPoster {...anime} />
         <div className="md:mt-[-100px] z-10 relative">

@@ -64,7 +64,7 @@ const WatchPage: FC<types.PageProps<{ id: string }, { episode?: string }>> = asy
   return (
     <>
       <Layout>
-        <main className="md:pb-16 md:pt-header relative">
+        <main className="md:pt-header relative">
           <BackgroundImage url={anime.image} />
           <Actions isBookmarked={anime.isBookmarked} id={anime.id} />
           <div>
@@ -151,11 +151,11 @@ export async function generateMetadata({ params }: types.PageProps<{ id: string 
 
   return {
     title: anime.title,
-    description: `Watch ${anime.title} on Anibay`,
+    description: `${anime.title} on Anibay`,
     openGraph: {
       images: [anime.cover || anime.image],
       title: anime?.title,
-      description: `Watch ${anime.title} on Anibay`,
+      description: `${anime.title} on Anibay`,
       type: 'website',
       url: '/watch/' + params.id,
     },
