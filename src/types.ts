@@ -173,5 +173,6 @@ declare module 'react' {
   interface CSSProperties {
     '--main-poster-image'?: string
     '--main-poster-cover'?: string
+    '--poster'?: string
   }
 }

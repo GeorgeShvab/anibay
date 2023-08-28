@@ -1,12 +1,27 @@
-import usePage from '@/hooks/usePage'
-import { headers } from 'next/headers'
+'use client'
+
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import { FC, useState, useEffect } from 'react'
 
-const Nav = () => {
-  const headersList = headers()
-  const pathname = headersList.get('x-invoke-path') || ''
+interface Props {
+  page: string
+}
 
-  const page = pathname.split('/')[1] || 'home'
+const Nav: FC<Props> = (props) => {
+  const pathname = usePathname()
+
+  const [page, setPage] = useState<string>(props.page)
+
+  useEffect(() => {
+    const newPage = pathname?.split('/')[1].trim()
+
+    if (newPage) {
+      setPage(newPage)
+    }
+  }, [pathname])
+
+  console.log(page)
 
   return (
     <nav>
@@ -35,7 +50,7 @@ const Nav = () => {
           </Link>
           <span
             className={`absolute bg-red rounded-full h-[4px] w-[24px] top-[120%] left-1/2 translate-x-[-50%] ${
-              page === 'series' ? 'block' : 'hidden'
+              page === 'search' ? 'block' : 'hidden'
             }`}
           ></span>
         </li>
