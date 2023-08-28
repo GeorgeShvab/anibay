@@ -41,6 +41,6 @@ export const metadata: Metadata = {
     title: 'Reset your password',
     description: 'Reset your password',
     type: 'website',
-    url: '/',
+    url: '/account/password-reset',
   },
 }

@@ -61,6 +61,6 @@ export const metadata: Metadata = {
     title: 'Complete registration by verifying your email',
     description: 'Complete registration by verifying your email',
     type: 'website',
-    url: '/',
+    url: '/auth/verification',
   },
 }

@@ -69,7 +69,7 @@ const WatchPage: FC<types.PageProps<{ id: string }, { episode?: string }>> = asy
           <Actions isBookmarked={anime.isBookmarked} id={anime.id} />
           <div>
             <div className="md:pt-8 lg:pt-12 md:pt-12 lg:pt-20">
-              <div className="container gap-0 mb-3 md:flex lg:gap-12 md:gap-8 md:mb-12 justify-between">
+              <div className="container gap-0 mb-3 md:flex lg:gap-24 md:gap-8 md:mb-12 justify-between">
                 <div className="pt-2 flex-initial md:flex flex-col relative mb-3 md:mb-0">
                   <div>
                     <h1 className="text-2xl font-semibold mb-1 md:mb-2 md:text-5xl text-white">{anime.title}</h1>
@@ -79,7 +79,7 @@ const WatchPage: FC<types.PageProps<{ id: string }, { episode?: string }>> = asy
                       status={anime.status}
                       rating={anime.rating}
                     />
-                    <Genres data={anime.genres} className="mb-4 md:mb-8 flex-wrap [&>a]:text-sm" />
+                    <Genres data={anime.genres} className="mb-4 md:mb-8 flex-wrap [&>a]:text-sm md:gap-3" />
                     <div className="rounded bg-dark md:hidden shadow-3xl">
                       {anime.description.length > 100 ? (
                         <MobileDescription description={anime.description} />

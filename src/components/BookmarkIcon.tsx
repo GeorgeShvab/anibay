@@ -3,6 +3,7 @@
 import axios from '@/axios'
 import AuthClickProtection from '@/components/AuthClickProtection'
 import IconButton from '@/ui/IconButton'
+import { useRouter } from 'next/navigation'
 import { FC, useState } from 'react'
 
 interface Props {
@@ -11,12 +12,16 @@ interface Props {
 }
 
 const BookmarkIcon: FC<Props> = (props) => {
+  const router = useRouter()
+
   const [isBookmarked, setIsBookmarked] = useState<boolean>(props.isBookmarked)
 
   const handleBookmark = async () => {
     setIsBookmarked(!isBookmarked)
 
     await axios.post(`/api/anime/${props.id}/bookmark`)
+
+    router.prefetch('/list')
   }
 
   return (

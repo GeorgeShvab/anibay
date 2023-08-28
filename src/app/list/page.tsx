@@ -6,81 +6,78 @@ import Layout from '@/components/Layout'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '../api/auth/[...nextauth]/route'
 import GenreService from '@/services/GenreService'
-import SearchBar from './Search'
 import { Metadata } from 'next'
 import { Anime } from '@/types'
 import Title from '@/components/Title'
-import Genres from './Genres'
 import CardGrid from '@/components/Anime/CardGrid'
 import PosterGrid from '@/components/Anime/PosterGrid'
+import Genres from '@/components/Genre/Genres'
+import BackButton from '@/components/Mobile/BackButton'
 
 const Search: FC<types.PageProps<{}, { query: string; page: string; genre: string }>> = async ({ searchParams }) => {
   const session = await getServerSession(authOptions)
 
-  const query = searchParams.query ? String(searchParams.query) : undefined
   const page = searchParams.page ? Number(searchParams.page) : 1
-  const genre = searchParams.genre
 
   const posterAnimePromise = AnimeService.getOne({ id: 'clfrvc5mj00chkslucw4phc3j' })
-  const resultsPromise =
-    query || genre
-      ? AnimeService.search({ query, genre: genre === 'all' ? undefined : genre, page: page < 1 ? 0 : page - 1 })
-      : null
-  const nextPagePromise =
-    query || genre
-      ? AnimeService.search({ query, genre: genre === 'all' ? undefined : genre, page: page < 1 ? 1 : page })
-      : null
+  const bookmarkedAnimePromise = session?.user
+    ? AnimeService.getBookmarkedAnime({ user: session?.user.id, page: page < 1 ? 0 : page - 1 })
+    : null
+  const hasNextPagePromise = session?.user
+    ? AnimeService.getBookmarkedAnime({ user: session?.user.id, page: page < 1 ? 1 : page })
+    : null
 
   const popularPromise = AnimeService.getPopular(session?.user?.id, 10)
   const topPromise = AnimeService.getTop(session?.user?.id, 6)
-  const genresPromise = GenreService.getAll()
 
-  const [results, nextPage, popular, top, posterAnime, genres] = await Promise.all([
-    resultsPromise,
-    nextPagePromise,
+  const [posterAnime, results, nextPage, popular, top] = await Promise.all([
+    posterAnimePromise,
+    bookmarkedAnimePromise,
+    hasNextPagePromise,
     popularPromise,
     topPromise,
-    posterAnimePromise,
-    genresPromise,
   ])
 
   const anime = posterAnime as any as types.Anime
+
+  if (!results) return null
 
   return (
     <>
       <Layout>
         <main className="">
+          <div className="absolute flex gap-8 justify-between items-center w-full md:hidden absolute left-0 top-0 z-10 p-3">
+            <BackButton className="" />
+            <Title className="whitespace-nowrap px-3">
+              <>Your List ({results.count} anime)</>
+            </Title>
+          </div>
+
           <div
-            className="search-poster h-[420px] md:h-[600px] flex flex-col items-center justify-start p-4 md:px-8 lg:py-10 z-0 lg:px-20 mb-6 lg:mb-0 relative !pt-48"
+            className="list-poster pt-header pb-header relative hidden md:block"
             style={{
               '--main-poster-image': `url(${anime.image})`,
               '--main-poster-cover': `url(${anime.cover})`,
             }}
           >
-            <h1 className="text-4xl lg:text-5xl font-bold text-white mb-10">What are you looking for?</h1>
-            <SearchBar />
-          </div>
-          <div className="md:mt-[-100px] md:z-10 md:relative">
-            <div className="lg-container mb-6 md:mb-10">
-              <Title className="px-6 mb-3 md:mb-6">Filter By Genres</Title>
-              <Genres className="px-3 lg:px-0" page={page} genre={genre} query={query} data={genres} />
+            <div className="container">
+              <div className="flex items-center gap-32 mb-8">
+                <Title className="whitespace-nowrap px-3">
+                  <>Your List ({results.count} anime)</>
+                </Title>
+              </div>
             </div>
+          </div>
+          <div className="md:mt-[-100px] md:z-10 md:relative pt-[64px] md:pt-0">
             {!!results?.data.length && (
               <>
                 <div className="lg-container">
-                  <Title className="px-6 mb-3 md:mb-6">
-                    {query
-                      ? `Results for ${query} (${results.count})`
-                      : genre.at(0)?.toUpperCase() + genre.slice(1, genre.length)}
-                  </Title>
                   <CardGrid className="px-3 lg:px-0" data={results.data} />
                 </div>
 
                 <Pagination
                   pages={Math.ceil(results.count / 30)}
                   currentPage={page}
-                  query={query}
-                  genre={genre}
                   hasNextPage={!!nextPage?.data.length}
                 />
               </>
@@ -106,7 +103,7 @@ const Search: FC<types.PageProps<{}, { query: string; page: string; genre: strin
                       </svg>
                     </span>
                     <h1 className="text-neutral-200 font-semibold text-center text-lg">
-                      Nothing was found for {query}
+                      There are no anime in your List
                     </h1>
                   </div>
                 </div>
@@ -130,20 +127,14 @@ const Search: FC<types.PageProps<{}, { query: string; page: string; genre: strin
 
 export default Search
 
-export async function generateMetadata({
-  searchParams,
-}: types.PageProps<{}, { query: string; page: string }>): Promise<Metadata> {
-  const posterAnimePromise = (await AnimeService.getOne({ id: 'clfrvc5mj00chkslucw4phc3j' })) as any as Anime
-
-  return {
-    title: `Search results for ${searchParams.query}`,
-    description: `Search results for ${searchParams.query}`,
-    openGraph: {
-      images: [posterAnimePromise.cover],
-      title: `Search results for ${searchParams.query}`,
-      description: `Search results for ${searchParams.query}`,
-      type: 'website',
-      url: '/search/' + searchParams.query,
-    },
-  }
+export const metadata: Metadata = {
+  title: `Your List`,
+  description: `Anime saved to watch later in your list`,
+  openGraph: {
+    images: ['/auth-bg.png'],
+    title: 'Your List',
+    description: 'Anime saved to watch later in your list',
+    type: 'website',
+    url: '/list',
+  },
 }
