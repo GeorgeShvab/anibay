@@ -29,6 +29,6 @@ export const metadata: Metadata = {
     title: 'Request password reset to gain access to your account',
     description: 'Request password reset to gain access to your account',
     type: 'website',
-    url: '/',
+    url: '/account/password-reset/request',
   },
 }

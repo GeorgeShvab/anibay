@@ -155,6 +155,25 @@ WHERE a.id = ${id};`
 
     return serialize(data) as Anime[]
   },
+
+  async getBookmarkedAnime({ user, page = 0 }: { user: number; page?: number }) {
+    const dataPromise = prisma.bookmark.findMany({
+      where: { userId: user },
+      select: { anime: { include: { genres: true } } },
+      orderBy: { createdAt: 'desc' },
+      skip: page * 30,
+      take: 30,
+    })
+
+    const countPromise = prisma.bookmark.count({ where: { userId: user } })
+
+    const [data, count] = await Promise.all([dataPromise, countPromise])
+
+    return serialize({ data: data.map((item) => ({ ...item.anime, isBookmarked: true })), count }) as any as {
+      data: Anime[]
+      count: number
+    }
+  },
 }
 
 export default AnimeService

@@ -26,27 +26,12 @@ const Nav = () => {
         </li>
         <li className="relative">
           <Link
-            href="/"
+            href="/search"
             className={
-              page === 'movies' ? 'text-white scale-105' : 'text-gray-400 hover:text-gray-200 transition-colors'
+              page === 'search' ? 'text-white scale-105' : 'text-gray-400 hover:text-gray-200 transition-colors'
             }
           >
-            <span>Movies</span>
-          </Link>
-          <span
-            className={`absolute bg-red rounded-full h-[4px] w-[24px] top-[120%] left-1/2 translate-x-[-50%] ${
-              page === 'movies' ? 'block' : 'hidden'
-            }`}
-          ></span>
-        </li>
-        <li className="relative">
-          <Link
-            href="/"
-            className={
-              page === 'series' ? 'text-white scale-105' : 'text-gray-400 hover:text-gray-200 transition-colors'
-            }
-          >
-            <span>Series</span>
+            <span>Search</span>
           </Link>
           <span
             className={`absolute bg-red rounded-full h-[4px] w-[24px] top-[120%] left-1/2 translate-x-[-50%] ${
@@ -56,7 +41,7 @@ const Nav = () => {
         </li>
         <li className="relative">
           <Link
-            href="/"
+            href="/list"
             className={page === 'list' ? 'text-white scale-105' : 'text-gray-400 hover:text-gray-200 transition-colors'}
           >
             <span>My List</span>

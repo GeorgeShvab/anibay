@@ -10,7 +10,7 @@ import { Metadata } from 'next'
 import CardGrid from '@/components/Anime/CardGrid'
 import PosterGrid from '@/components/Anime/PosterGrid'
 import Title from '@/components/Title'
-import Genres from '@/components/Genres'
+import Genres from '@/components/Genre/Genres'
 
 const Home: FC = async () => {
   const session = await getServerSession(authOptions)
