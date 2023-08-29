@@ -50,6 +50,7 @@ const Fields: FC<Props> = ({ values, errors, touched, handleBlur, handleChange, 
               errors.password && touched.password ? 'outline outline-red shadow-red' : ''
             }`}
             name="password"
+            type="password"
             autoComplete="password"
             placeholder="Password"
             value={values.password}
