@@ -81,14 +81,7 @@ const WatchPage: FC<types.PageProps<{ id: string }, { episode?: string }>> = asy
                     />
                     <Genres data={anime.genres} className="mb-4 md:mb-8 flex-wrap [&>a]:text-sm md:gap-3" />
                     <div className="rounded bg-dark md:hidden shadow-3xl">
-                      {anime.description.length > 100 ? (
-                        <MobileDescription description={anime.description} />
-                      ) : (
-                        <p
-                          className="text-neutral-400 text-justify"
-                          dangerouslySetInnerHTML={{ __html: anime.description }}
-                        ></p>
-                      )}
+                      <MobileDescription description={anime.description} />
                     </div>
                   </div>
                   <p

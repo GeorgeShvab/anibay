@@ -59,7 +59,7 @@
   background-repeat: no-repeat;
   background-size: cover;
 
-  background-image: linear-gradient(#06060600 50%, #060606 100%), var(--main-poster-image);
+  background-image: linear-gradient(#060606e6 0%, #060606 100%), var(--main-poster-image);
 }
 
 .anime-poster {
@@ -125,7 +125,7 @@
 @media screen and (min-width: 768px) {
   :root {
     --screen-intro: calc(100vh - 88px);
-    --header-height: 92px;
+    --header-height: 88px;
   }
 
   .bg-intro {
