@@ -13,7 +13,7 @@ if (!SERVICE_EMAIL_PASSWORD) throw new Error('SERVICE_EMAIL_PASSWORD not found')
 if (!SERVICE_EMAIL_HOST) throw new Error('SERVICE_EMAIL_HOST not found')
 if (!SERVICE_EMAIL_PORT) throw new Error('SERVICE_EMAIL_PORT not found')
 
-nunjucks.configure('templates', { autoescape: true })
+nunjucks.configure('src/assets/templates', { autoescape: true })
 
 const MailService = {
   async sendVerificationEmail(email: string, user: string, userId: number) {

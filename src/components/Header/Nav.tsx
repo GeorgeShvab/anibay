@@ -21,8 +21,6 @@ const Nav: FC<Props> = (props) => {
     }
   }, [pathname])
 
-  console.log(page)
-
   return (
     <nav>
       <ul className="flex md:gap-8 lg:gap-16 items-center absolute left-1/2 translate-x-[-50%] top-1/2 translate-y-[-50%]">
