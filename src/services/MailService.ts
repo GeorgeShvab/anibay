@@ -8,31 +8,33 @@ const SERVICE_EMAIL_ADDRESS = process.env.SERVICE_EMAIL_ADDRESS
 const SERVICE_EMAIL_PASSWORD = process.env.SERVICE_EMAIL_PASSWORD
 const SERVICE_EMAIL_HOST = process.env.SERVICE_EMAIL_HOST
 const SERVICE_EMAIL_PORT = process.env.SERVICE_EMAIL_PORT
+const SERVER_ADDRESS = process.env.SERVER_ADDRESS
 
 if (!SERVICE_EMAIL_ADDRESS) throw new Error('SERVICE_EMAIL_ADDRESS not found')
 if (!SERVICE_EMAIL_PASSWORD) throw new Error('SERVICE_EMAIL_PASSWORD not found')
 if (!SERVICE_EMAIL_HOST) throw new Error('SERVICE_EMAIL_HOST not found')
 if (!SERVICE_EMAIL_PORT) throw new Error('SERVICE_EMAIL_PORT not found')
+if (!SERVER_ADDRESS) throw new Error('SERVER_ADDRESS not found')
 
-nunjucks.configure('src/assets/templates', { autoescape: true })
+nunjucks.configure('templates', { autoescape: true })
 
 const MailService = {
   async sendVerificationEmail(email: string, user: string, userId: number) {
-    const token = TokenService.generateToken()
-
-    await TokenService.saveToken(email, token, userId)
-
-    const transporter = nodemailer.createTransport({
-      host: SERVICE_EMAIL_HOST,
-      port: Number(SERVICE_EMAIL_PORT),
-      secure: false,
-      auth: {
-        user: SERVICE_EMAIL_ADDRESS,
-        pass: SERVICE_EMAIL_PASSWORD,
-      },
-    })
-
     try {
+      const token = TokenService.generateToken()
+
+      await TokenService.saveToken(email, token, userId)
+
+      const transporter = nodemailer.createTransport({
+        host: SERVICE_EMAIL_HOST,
+        port: Number(SERVICE_EMAIL_PORT),
+        secure: false,
+        auth: {
+          user: SERVICE_EMAIL_ADDRESS,
+          pass: SERVICE_EMAIL_PASSWORD,
+        },
+      })
+
       var mailOptions = {
         from: '"AniBay Service" anibay.service@hotmail.com',
         to: email,
@@ -40,8 +42,8 @@ const MailService = {
         subject: 'Email verification',
         html: nunjucks.renderString(emailVerification, {
           user,
-          serverAddress: process.env.SERVER_ADDRESS,
-          url: `${process.env.SERVER_ADDRESS}/auth/verification?token=${token}`,
+          serverAddress: SERVER_ADDRESS,
+          url: `${SERVER_ADDRESS}/auth/verification?token=${token}`,
         }),
         text: 'Email verification',
       }
@@ -58,29 +60,29 @@ const MailService = {
   },
 
   async sendPasswordResetEmail(email: string, userId: number) {
-    const token = TokenService.generateToken()
-
-    await TokenService.saveToken(email, token, userId)
-
-    const transporter = nodemailer.createTransport({
-      host: SERVICE_EMAIL_HOST,
-      port: Number(SERVICE_EMAIL_PORT),
-      secure: false,
-      auth: {
-        user: SERVICE_EMAIL_ADDRESS,
-        pass: SERVICE_EMAIL_PASSWORD,
-      },
-    })
-
     try {
+      const token = TokenService.generateToken()
+
+      await TokenService.saveToken(email, token, userId)
+
+      const transporter = nodemailer.createTransport({
+        host: SERVICE_EMAIL_HOST,
+        port: Number(SERVICE_EMAIL_PORT),
+        secure: false,
+        auth: {
+          user: SERVICE_EMAIL_ADDRESS,
+          pass: SERVICE_EMAIL_PASSWORD,
+        },
+      })
+
       var mailOptions = {
         from: '"AniBay Service" anibay.service@hotmail.com',
         to: email,
         name: 'AniBay Service',
         subject: 'Password reset',
         html: nunjucks.renderString(passwordReset, {
-          serverAddress: process.env.SERVER_ADDRESS,
-          url: `${process.env.SERVER_ADDRESS}/account/password-reset?token=${token}`,
+          serverAddress: SERVER_ADDRESS,
+          url: `${SERVER_ADDRESS}/account/password-reset?token=${token}`,
         }),
         text: 'Password reset',
       }
