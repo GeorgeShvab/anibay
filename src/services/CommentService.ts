@@ -15,9 +15,7 @@ interface CommentWithChildren extends Comment {
 
 const CommentService = {
   async create({ text, user, episode, parent }: CommentCreationParams) {
-    const data = await prisma.comment
-      .create({ data: { text, episodeId: episode, userId: user, parentId: parent } })
-      .catch((e) => console.log(e))
+    const data = await prisma.comment.create({ data: { text, episodeId: episode, userId: user, parentId: parent } })
 
     return serialize(data)
   },
