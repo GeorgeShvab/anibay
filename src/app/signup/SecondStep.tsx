@@ -67,6 +67,7 @@ const SecondStep: FC<Props> = ({
             }`}
             name="password"
             autoComplete="new-password"
+            type="password"
             placeholder="Password"
             value={values.password}
             onChange={handleChange}

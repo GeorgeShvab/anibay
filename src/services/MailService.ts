@@ -1,7 +1,8 @@
 import nodemailer from 'nodemailer'
 import nunjucks from 'nunjucks'
 import TokenService from './TokenService'
-import path from 'path'
+import emailVerification from '@/templates/email-verification'
+import passwordReset from '@/templates/password-reset'
 
 const SERVICE_EMAIL_ADDRESS = process.env.SERVICE_EMAIL_ADDRESS
 const SERVICE_EMAIL_PASSWORD = process.env.SERVICE_EMAIL_PASSWORD
@@ -37,7 +38,7 @@ const MailService = {
         to: email,
         name: 'AniBay Service',
         subject: 'Email verification',
-        html: nunjucks.render('email-verification.html', {
+        html: nunjucks.renderString(emailVerification, {
           user,
           serverAddress: process.env.SERVER_ADDRESS,
           url: `${process.env.SERVER_ADDRESS}/auth/verification?token=${token}`,
@@ -77,7 +78,7 @@ const MailService = {
         to: email,
         name: 'AniBay Service',
         subject: 'Password reset',
-        html: nunjucks.render('password-reset.html', {
+        html: nunjucks.renderString(passwordReset, {
           serverAddress: process.env.SERVER_ADDRESS,
           url: `${process.env.SERVER_ADDRESS}/account/password-reset?token=${token}`,
         }),
