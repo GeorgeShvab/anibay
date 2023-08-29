@@ -42,36 +42,43 @@ const Search: FC<types.PageProps<{}, { query: string; page: string; genre: strin
 
   if (!results) return null
 
+  const genres = results?.data
+    .map((item) => item.genres)
+    .flat()
+    .reduce<types.Genre[]>((state, current) => {
+      if (state.findIndex((item) => item.id === current.id) === -1) {
+        return [...state, current]
+      } else {
+        return state
+      }
+    }, [])
+
+  if (!results) return null
+
   return (
     <>
       <Layout>
         <main className="">
-          <div className="absolute flex gap-8 justify-between items-center w-full md:hidden absolute left-0 top-0 z-10 p-3">
-            <BackButton className="" />
-            <Title className="whitespace-nowrap px-3">
-              <>Your List ({results.count} anime)</>
-            </Title>
-          </div>
-
           <div
-            className="list-poster pt-header pb-header relative hidden md:block"
+            className="list-poster h-[420px] flex flex-col items-center justify-start p-4 md:px-8 lg:py-10 z-0 lg:px-20 relative !pt-48"
             style={{
               '--main-poster-image': `url(${anime.image})`,
               '--main-poster-cover': `url(${anime.cover})`,
             }}
-          >
-            <div className="container">
-              <div className="flex items-center gap-32 mb-8">
-                <Title className="whitespace-nowrap px-3">
-                  <>Your List ({results.count} anime)</>
-                </Title>
-              </div>
+          ></div>
+          <div className="mt-[calc(420px*-1)] md:mt-[calc(calc(420px-var(--header-height))*-1)] z-10 relative md:pt-0 pt-3">
+            <div className="lg-container mb-6 md:mb-10">
+              <Title className="px-6 mb-3 md:mb-6">
+                <>Genres ({genres.length})</>
+              </Title>
+              <Genres className="px-3 lg:px-0" data={genres} />
             </div>
-          </div>
-          <div className="md:mt-[-100px] md:z-10 md:relative pt-[64px] md:pt-0">
             {!!results?.data.length && (
               <>
                 <div className="lg-container">
+                  <Title className="px-6 mb-3 md:mb-6">
+                    <>Anime ({results.count})</>
+                  </Title>
                   <CardGrid className="px-3 lg:px-0" data={results.data} />
                 </div>
 

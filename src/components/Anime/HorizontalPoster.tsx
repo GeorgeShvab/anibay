@@ -4,7 +4,7 @@ import { FC } from 'react'
 
 const HorizontalPoster: FC<Anime> = (anime) => {
   return (
-    <Link href={`/watch/${anime.id}`} className="w-full">
+    <Link href={`/watch/${anime.id}`} className="w-full md:hover:scale-[1.025] transition-all">
       <div className="w-full relative">
         <div className="hidden md:flex h-12 md:h-16 w-12 md:w-16 rounded-full flex items-center justify-center absolute bg-red top-1/2 translate-y-[-50%] right-8 md:right-20 text-white block hover:bg-red-dark hover:scale-105 transition-all opacity-80">
           <svg
