@@ -5,19 +5,12 @@ import AnimeService from '@/services/AnimeService'
 import Layout from '@/components/Layout'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '../api/auth/[...nextauth]/route'
-import GenreService from '@/services/GenreService'
 import { Metadata } from 'next'
-import { Anime } from '@/types'
 import Title from '@/components/Title'
 import CardGrid from '@/components/Anime/CardGrid'
 import PosterGrid from '@/components/Anime/PosterGrid'
-import Genres from '@/components/Genre/Genres'
 import BackButton from '@/components/Mobile/BackButton'
-import Image from 'next/image'
-import bg from '@/assets/big-image.png'
 import Link from 'next/link'
-import IconButton from '@/ui/IconButton'
-import Button from '@/ui/Button'
 import Clear from './ClearButton'
 
 const Search: FC<types.PageProps<{}, { query: string; page: string; genre: string }>> = async ({ searchParams }) => {
@@ -25,7 +18,6 @@ const Search: FC<types.PageProps<{}, { query: string; page: string; genre: strin
 
   const page = searchParams.page ? Number(searchParams.page) : 1
 
-  const posterAnimePromise = AnimeService.getOne({ id: 'clfrvc5mj00chkslucw4phc3j' })
   const bookmarkedAnimePromise = session?.user
     ? AnimeService.getBookmarkedAnime({ user: session?.user.id, page: page < 1 ? 0 : page - 1 })
     : null
@@ -36,28 +28,12 @@ const Search: FC<types.PageProps<{}, { query: string; page: string; genre: strin
   const popularPromise = AnimeService.getPopular(session?.user?.id, 10)
   const topPromise = AnimeService.getTop(session?.user?.id, 6)
 
-  const [posterAnime, results, nextPage, popular, top] = await Promise.all([
-    posterAnimePromise,
+  const [results, nextPage, popular, top] = await Promise.all([
     bookmarkedAnimePromise,
     hasNextPagePromise,
     popularPromise,
     topPromise,
   ])
-
-  const anime = posterAnime as any as types.Anime
-
-  if (!results) return null
-
-  const genres = results?.data
-    .map((item) => item.genres)
-    .flat()
-    .reduce<types.Genre[]>((state, current) => {
-      if (state.findIndex((item) => item.id === current.id) === -1) {
-        return [...state, current]
-      } else {
-        return state
-      }
-    }, [])
 
   if (!results) return null
 
@@ -88,7 +64,6 @@ const Search: FC<types.PageProps<{}, { query: string; page: string; genre: strin
             </h1>
             <Clear />
           </div>
-
           <div className="z-10 relative ">
             {/*<div className="lg-container mb-6 md:mb-10">
               <Title className="px-6 mb-3 md:mb-6">

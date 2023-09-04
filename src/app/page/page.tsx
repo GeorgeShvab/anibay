@@ -6,7 +6,10 @@ const Page: FC = async () => {
 
   return (
     <main className="h-screen w-screen">
-      <img src={posterAnimePromise.cover} style={{ width: '100%', height: '75%', objectFit: 'cover' }} />
+      <img
+        src={posterAnimePromise.cover || posterAnimePromise.image}
+        style={{ width: '100%', height: '75%', objectFit: 'cover' }}
+      />
     </main>
   )
 }

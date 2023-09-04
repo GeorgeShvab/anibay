@@ -4,11 +4,10 @@ import { Anime } from '@/types'
 import Link from 'next/link'
 import { FC } from 'react'
 import Image from 'next/image'
-import Button from '@/ui/Button'
 import Bookmark from '@/components/Bookmark'
 import IconButton from '@/ui/IconButton'
 
-const HorizontalCard: FC<Anime> = ({
+const HorizontalCard: FC<Anime<{ isBookmarked: boolean }>> = ({
   id,
   title,
   releaseDate,
@@ -17,7 +16,6 @@ const HorizontalCard: FC<Anime> = ({
   status,
   rating,
   isBookmarked,
-  type,
 }) => {
   return (
     <div

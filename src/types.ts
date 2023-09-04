@@ -1,7 +1,4 @@
 import { DefaultUser } from 'next-auth'
-import { RefObject } from 'react'
-import ReactPlayer from 'react-player'
-
 export interface Source {
   url: string
   quality: string
@@ -55,23 +52,24 @@ export interface StreamingResponse {
   sources: { url: string; isM3U8: boolean; quality: string }[]
 }
 
-export type AnimeType = 'MOVIE' | 'SERIAL'
+export type AnimeType = 'ONA' | 'MOVIE' | 'OVA' | 'TV_SHORT' | 'SPECIAL' | 'TV'
 
 export type Page = 'watch' | 'home' | 'search' | 'top' | 'movies' | 'genres' | 'account' | 'saved'
 
-export interface Anime {
+export type Anime<T extends Object = {}> = AnimeInterface & T
+
+interface AnimeInterface {
   id: string
   title: string
   anilistId: number
   malId: number
   image: string
-  cover: string
+  cover: string | null
   season: string
   releaseDate: number
   duration: number
   popularity: number
   description: string
-  genres: Genre[]
   rating: number
   status: string
   synonyms: string[]
@@ -91,8 +89,8 @@ export interface Anime {
   type: string
   createdAt: string
   updatedAt: string
-  isBookmarked: boolean
 }
+
 export interface Source {
   url: string
   isM3U8: boolean

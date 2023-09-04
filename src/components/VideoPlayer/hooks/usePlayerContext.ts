@@ -62,7 +62,7 @@ const initialVideoState: VideoState = {
   title: '',
   episodes: [],
   choosedQuality: '',
-  type: 'SERIAL',
+  type: 'TV',
   id: '',
   isLoading: false,
   isControlsShown: true,

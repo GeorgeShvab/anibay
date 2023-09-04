@@ -15,7 +15,6 @@ const HorizontalPoster: FC<Anime> = ({ rating, title, image, id, totalEpisodes, 
         alt={title}
         className={`w-full h-full`}
         style={{ objectFit: 'cover', width: '100%', height: '100%' }}
-        objectFit="contain"
         fill
       />
       <div className="card-image absolute left-0 right-0 top-0 bottom-0 px-4 py-3 pr-20 lg:px-6 lg:py-6 lg:pr-40 rounded-lg flex flex-col justify-end">

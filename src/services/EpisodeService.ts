@@ -1,3 +1,4 @@
+import { Anime, Episode } from '@/types'
 import prisma from '../../prisma/prisma'
 import serialize from '@/utils/serialize'
 
@@ -24,7 +25,7 @@ const EpisodeService = {
       take: amount,
     })
 
-    return serialize(data)
+    return serialize(data) as any as (Episode & { anime: Anime })[]
   },
 }
 
