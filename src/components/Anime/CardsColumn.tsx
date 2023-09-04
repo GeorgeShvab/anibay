@@ -3,7 +3,7 @@ import { Anime } from '@/types'
 import { FC } from 'react'
 
 interface Props {
-  data: Anime[]
+  data: Anime<{ isBookmarked: boolean }>[]
   title: string
   className?: string
 }

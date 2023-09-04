@@ -18,7 +18,6 @@ const Episode: FC<Props> = ({ number, anime }) => {
         alt={anime.title}
         className={`w-full h-full`}
         style={{ objectFit: 'cover', width: '100%', height: '100%' }}
-        objectFit="contain"
         fill
       />
       <div className="absolute left-1/2 top-1/2 text-white translate-x-[-50%] translate-y-[-50%] h-10 w-10 bg-red/75 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">

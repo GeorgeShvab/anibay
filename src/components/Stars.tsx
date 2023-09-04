@@ -10,7 +10,7 @@ const Stars: FC<Props> = ({ className = '', iconContainerClassName = '', rating 
   return (
     <div className={`flex gap-2 items-center ${className}`}>
       {new Array(5).fill(null).map((item, index) => (
-        <span className={`${index >= rating / 20 ? 'text-dark' : 'text-red'} ${iconContainerClassName}`}>
+        <span key={index} className={`${index >= rating / 20 ? 'text-dark' : 'text-red'} ${iconContainerClassName}`}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="currentColor"

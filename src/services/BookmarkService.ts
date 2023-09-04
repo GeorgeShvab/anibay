@@ -1,5 +1,4 @@
 import prisma from '../../prisma/prisma'
-import serialize from '@/utils/serialize'
 
 const BookmarkService = {
   async bookmark(user: number, anime: string) {

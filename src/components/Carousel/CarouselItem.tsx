@@ -1,7 +1,6 @@
 import { Anime } from '@/types'
-import { FC, useEffect, useState } from 'react'
+import { FC } from 'react'
 import Image from 'next/image'
-import Link from 'next/link'
 import Stars from '../Stars'
 import PlayButton from '../PlayButton'
 
@@ -37,15 +36,13 @@ const CarouselItem: FC<Props> = ({
           alt={title}
           className={`w-full h-full md:hidden`}
           style={{ objectFit: 'cover', width: '100%', height: '100%' }}
-          objectFit="contain"
           fill
         />
         <Image
-          src={cover}
+          src={cover || image}
           alt={title}
           className={`w-full h-full hidden md:block`}
           style={{ objectFit: 'cover', width: '100%', height: '100%' }}
-          objectFit="contain"
           fill
         />
         <div

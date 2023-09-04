@@ -1,7 +1,7 @@
 import prisma from '../../prisma/prisma'
 import serialize from '@/utils/serialize'
 import { Prisma } from '@prisma/client'
-import { Anime } from '@/types'
+import { Anime, Genre } from '@/types'
 
 const AnimeService = {
   async getOne({ id, user }: { id: string; user?: string }) {
@@ -28,7 +28,7 @@ const AnimeService = {
 FROM "Anime" a
 WHERE a.id = ${id};`
 
-    return serialize((data as any)[0]) as Anime
+    return serialize((data as any)[0]) as Anime<{ isBookmarked: boolean; genres: Genre[] }>
   },
 
   async deleteOne(id: string) {
@@ -45,7 +45,7 @@ WHERE a.id = ${id};`
     const data =
       await prisma.$queryRaw`SELECT a.*, (SELECT id FROM "Bookmark" b WHERE b."animeId" = a.id AND b."userId" = ${user})::boolean as "isBookmarked" FROM "Anime" a ORDER BY a."popularity" DESC LIMIT ${amount};`
 
-    return serialize(data) as Anime[]
+    return serialize(data) as Anime<{ isBookmarked: boolean }>[]
   },
 
   async getRandomPopular(user: number | undefined, amount: number = 5) {
@@ -53,14 +53,14 @@ WHERE a.id = ${id};`
       await prisma.$queryRaw`SELECT a.* FROM (SELECT a.*, (SELECT id FROM "Bookmark" b WHERE b."animeId" = a.id AND b."userId" = ${user})::boolean as "isBookmarked" FROM "Anime" a ORDER BY a."popularity" DESC
        LIMIT 100) AS a ORDER BY RANDOM() LIMIT ${amount};`
 
-    return serialize(data) as Anime[]
+    return serialize(data) as Anime<{ isBookmarked: boolean }>[]
   },
 
   async getTop(user: number | undefined, amount: number = 5) {
     const data =
       await prisma.$queryRaw`SELECT a.*, (SELECT id FROM "Bookmark" b WHERE b."animeId" = a.id AND b."userId" = ${user})::boolean as "isBookmarked" FROM "Anime" a ORDER BY a."rating" DESC LIMIT ${amount};`
 
-    return serialize(data) as Anime[]
+    return serialize(data) as Anime<{ isBookmarked: boolean }>[]
   },
 
   async getRandomTop(user: number | undefined, amount: number = 5) {
@@ -68,7 +68,7 @@ WHERE a.id = ${id};`
       await prisma.$queryRaw`SELECT a.* FROM (SELECT a.*, (SELECT id FROM "Bookmark" b WHERE b."animeId" = a.id AND b."userId" = ${user})::boolean as "isBookmarked" FROM "Anime" a ORDER BY a."rating" DESC
        LIMIT 100) AS a ORDER BY RANDOM() LIMIT ${amount};`
 
-    return serialize(data) as Anime[]
+    return serialize(data) as Anime<{ isBookmarked: boolean }>[]
   },
 
   async search({ query, page = 0, genre }: { query?: string; page?: number; genre?: string }) {
@@ -112,7 +112,10 @@ WHERE a.id = ${id};`
 
     const [data, count] = await Promise.all([dataPromise, countPromise])
 
-    return serialize({ data: data as Anime[], count: (count as [{ count: number }])[0].count })
+    return serialize({
+      data: data as Anime<{ isBookmarked: boolean; genres: Genre[] }>[],
+      count: (count as [{ count: number }])[0].count,
+    })
   },
 
   async getOneRandom() {
@@ -125,7 +128,7 @@ WHERE a.id = ${id};`
       await prisma.$queryRaw`SELECT a.*, (SELECT id FROM "Bookmark" b WHERE b."animeId" = a.id AND b."userId" = ${user})::boolean as "isBookmarked" 
       FROM "_relations" r JOIN "Anime" a ON a.id = r."B" WHERE r."A" = ${id}`
 
-    return serialize(data) as Anime[]
+    return serialize(data) as Anime<{ isBookmarked: boolean }>[]
   },
 
   async getRelatedByGenres(genres: string[]): Promise<Anime[]> {
@@ -153,7 +156,7 @@ WHERE a.id = ${id};`
   JOIN "_AnimeToGenre" ag ON ag."A" = a.id
   WHERE ag."B" = ${id};`
 
-    return serialize(data) as Anime[]
+    return serialize(data) as Anime<{ isBookmarked: boolean; genres: Genre[] }>[]
   },
 
   async getBookmarkedAnime({ user, page = 0, amount = 30 }: { user: number; page?: number; amount?: number }) {
@@ -161,8 +164,8 @@ WHERE a.id = ${id};`
       where: { userId: user },
       select: { anime: { include: { genres: true } } },
       orderBy: { createdAt: 'desc' },
-      skip: page * 30,
-      take: 30,
+      skip: page * amount,
+      take: amount,
     })
 
     const countPromise = prisma.bookmark.count({ where: { userId: user } })
@@ -170,7 +173,7 @@ WHERE a.id = ${id};`
     const [data, count] = await Promise.all([dataPromise, countPromise])
 
     return serialize({ data: data.map((item) => ({ ...item.anime, isBookmarked: true })), count }) as any as {
-      data: Anime[]
+      data: Anime<{ isBookmarked: boolean; genres: Genre[] }>[]
       count: number
     }
   },
@@ -184,7 +187,7 @@ WHERE a.id = ${id};`
       take: amount,
     })
 
-    return serialize(data)
+    return serialize(data) as any as Anime[]
   },
 
   async getSeries({ orderBy = 'popularity', amount = 10 }: { orderBy?: 'popularity' | 'rating'; amount?: number }) {
@@ -196,7 +199,7 @@ WHERE a.id = ${id};`
       take: amount,
     })
 
-    return serialize(data)
+    return serialize(data) as any as Anime[]
   },
 }
 

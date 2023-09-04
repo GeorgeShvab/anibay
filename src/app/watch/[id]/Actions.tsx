@@ -1,11 +1,9 @@
 'use client'
 
-import axios from '@/axios'
-import AuthClickProtection from '@/components/AuthClickProtection'
 import BookmarkIcon from '@/components/BookmarkIcon'
 import IconButton from '@/ui/IconButton'
 import { useRouter } from 'next/navigation'
-import { FC, useState } from 'react'
+import { FC } from 'react'
 
 interface Props {
   id: string

@@ -5,10 +5,9 @@ import Link from 'next/link'
 import { FC } from 'react'
 import Image from 'next/image'
 import IconButton from '@/ui/IconButton'
-import Bookmark from '../Bookmark'
 import Button from '@/ui/Button'
 
-const Card: FC<Anime> = ({ title, id, image, totalEpisodes, releaseDate, isBookmarked, rating, status }) => {
+const Card: FC<Anime> = ({ title, id, image, totalEpisodes, releaseDate, rating, status }) => {
   return (
     <div
       className={`rounded group hover:scale-[1.025] transition-all shadow-xl bg-dark hover:bg-dark-light transition-all cursor-pointer `}

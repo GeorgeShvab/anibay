@@ -53,6 +53,7 @@ const Search: FC<types.PageProps<{}, { query: string; page: string; genre: strin
               src={bg}
               alt="Background"
               className="w-full h-full"
+              quality={50}
               style={{
                 objectFit: 'cover',
               }}
@@ -142,7 +143,7 @@ export async function generateMetadata({
     title: `Search results for ${searchParams.query}`,
     description: `Search results for ${searchParams.query}`,
     openGraph: {
-      images: [posterAnimePromise.cover],
+      images: [posterAnimePromise?.cover || posterAnimePromise.image],
       title: `Search results for ${searchParams.query}`,
       description: `Search results for ${searchParams.query}`,
       type: 'website',
