@@ -13,6 +13,8 @@ import Title from '@/components/Title'
 import Genres from './Genres'
 import CardGrid from '@/components/Anime/CardGrid'
 import PosterGrid from '@/components/Anime/PosterGrid'
+import Image from 'next/image'
+import bg from '@/assets/big-image.png'
 
 const Search: FC<types.PageProps<{}, { query: string; page: string; genre: string }>> = async ({ searchParams }) => {
   const session = await getServerSession(authOptions)
@@ -21,7 +23,6 @@ const Search: FC<types.PageProps<{}, { query: string; page: string; genre: strin
   const page = searchParams.page ? Number(searchParams.page) : 1
   const genre = searchParams.genre
 
-  const posterAnimePromise = AnimeService.getOne({ id: 'clfrvc5mj00chkslucw4phc3j' })
   const resultsPromise =
     query || genre
       ? AnimeService.search({ query, genre: genre === 'all' ? undefined : genre, page: page < 1 ? 0 : page - 1 })
@@ -35,32 +36,34 @@ const Search: FC<types.PageProps<{}, { query: string; page: string; genre: strin
   const topPromise = AnimeService.getTop(session?.user?.id, 6)
   const genresPromise = GenreService.getAll()
 
-  const [results, nextPage, popular, top, posterAnime, genres] = await Promise.all([
+  const [results, nextPage, popular, top, genres] = await Promise.all([
     resultsPromise,
     nextPagePromise,
     popularPromise,
     topPromise,
-    posterAnimePromise,
     genresPromise,
   ])
-
-  const anime = posterAnime as any as types.Anime
 
   return (
     <>
       <Layout>
         <main className="">
-          <div
-            className="search-poster h-[420px] md:h-[600px] flex flex-col items-center justify-start p-4 md:px-8 lg:py-10 z-0 lg:px-20 mb-6 lg:mb-0 relative !pt-48"
-            style={{
-              '--main-poster-image': `url(${anime.image})`,
-              '--main-poster-cover': `url(${anime.cover})`,
-            }}
-          >
+          <div className="h-[420px] md:h-[650px] w-full absolute z-[-1]">
+            <Image
+              src={bg}
+              alt="Background"
+              className="w-full h-full"
+              style={{
+                objectFit: 'cover',
+              }}
+            />
+            <div className="search-gradient w-full h-full absolute inset-0"></div>
+          </div>
+          <div className="search-poster h-[370px] md:h-[600px] flex flex-col items-center justify-center px-3">
             <h1 className="text-4xl lg:text-5xl font-bold text-white mb-10">What are you looking for?</h1>
             <SearchBar />
           </div>
-          <div className="md:mt-[-100px] md:z-10 md:relative">
+          <div className="">
             <div className="lg-container mb-6 md:mb-10">
               <Title className="px-6 mb-3 md:mb-6">Filter By Genres</Title>
               <Genres className="px-3 lg:px-0" page={page} genre={genre} query={query} data={genres} />

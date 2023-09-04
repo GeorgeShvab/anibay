@@ -15,7 +15,7 @@ const MainPoster: FC<Anime> = (anime) => {
 
   return (
     <div
-      className="main-poster h-[420px] md:h-[600px] flex flex-col md:items-center md:flex-row md:justify-between justify-end p-4 md:px-8 lg:py-10 z-0 lg:px-20 lg:pr-48 mb-6 lg:mb-0 relative md:justify-start"
+      className="md:hidden main-poster h-[420px] md:h-[600px] flex flex-col md:items-center md:flex-row md:justify-between justify-end p-4 md:px-8 lg:py-10 z-0 lg:px-20 lg:pr-48 mb-6 lg:mb-0 relative md:justify-start"
       style={{
         '--main-poster-image': `url(${anime.image})`,
         '--main-poster-cover': `url(${anime.cover})`,

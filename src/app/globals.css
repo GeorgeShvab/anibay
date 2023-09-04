@@ -73,7 +73,7 @@
 @media screen and (min-width: 769px) {
   .search-poster {
     background-image: linear-gradient(#060606 0%, #06060600 50%, #060606 100%),
-      linear-gradient(90deg, #060606 0%, #06060600 100%), var(--main-poster-cover);
+      linear-gradient(90deg, #060606 0%, #06060640 50%, #060606 100%), var(--main-poster-cover);
   }
 
   .list-poster {
@@ -96,6 +96,16 @@
 @media screen and (min-width: 769px) {
   .main-poster {
     background-image: linear-gradient(#060606 0%, #06060600 50%, #060606 100%), var(--main-poster-cover);
+  }
+}
+
+.main-poster-gradient {
+  background: linear-gradient(#06060600 0%, #06060600 60%, #06060640 75%, #060606 100%);
+}
+
+@media screen and (min-width: 769px) {
+  .main-poster-gradient {
+    background: linear-gradient(45deg, #060606bf 0%, #06060640 25%, #06060600 60%, #06060600 100%);
   }
 }
 
@@ -309,4 +319,19 @@
 .slick-slide {
   padding-left: 0.5rem;
   padding-right: 0.5rem;
+}
+
+.card-image {
+  background: linear-gradient(10deg, #060606bf 0%, #06060640 25%, #06060600 40%, #06060600 100%);
+}
+
+@media screen and (min-width: 769px) {
+  .card-image {
+    background: linear-gradient(45deg, #060606bf 0%, #06060640 25%, #06060600 60%, #06060600 100%);
+  }
+}
+
+.search-gradient {
+  background: linear-gradient(#060606 0%, #06060600 50%, #060606 100%),
+    linear-gradient(90deg, #060606 0%, #06060640 50%, #060606 100%);
 }
