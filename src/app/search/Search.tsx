@@ -76,7 +76,7 @@ const Search: FC = () => {
         onInput={handleInput}
         value={value}
       />
-      <IconButton className="block h-10 w-10 flex-[0_0_40px]">
+      <IconButton className="block h-10 w-10 flex-[0_0_40px]" aria-label="Submit">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"

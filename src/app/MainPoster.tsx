@@ -1,8 +1,6 @@
 'use client'
 
-import useMediaQuery from '@/hooks/useMediaQuery'
 import { Anime } from '@/types'
-import Button from '@/ui/Button'
 import Link from 'next/link'
 import { FC } from 'react'
 

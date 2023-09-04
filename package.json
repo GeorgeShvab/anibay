@@ -40,6 +40,7 @@
     "react-query": "^3.39.3",
     "react-responsive-carousel": "^3.2.23",
     "react-slick": "^0.29.0",
+    "sharp": "^0.32.5",
     "tailwindcss": "3.3.3",
     "ts-node": "^10.9.1",
     "typescript": "5.1.6",

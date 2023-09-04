@@ -19,7 +19,7 @@ const Actions: FC<Props> = (props) => {
 
   return (
     <div className="absolute p-3 top-0 left-0 w-full flex justify-between md:hidden">
-      <IconButton className="" color="dark" onClick={handleBack}>
+      <IconButton className="" color="dark" onClick={handleBack} aria-label="Back">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"

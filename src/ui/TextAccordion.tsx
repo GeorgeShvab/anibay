@@ -38,6 +38,7 @@ const TextAccordion: FC<{
       <button
         onClick={handleClick}
         className={`absolute bottom-0 w-full flex justify-center text-neutral-600 right-1/2 translate-x-2/4 p-1 rounded-full`}
+        aria-label={isCollapsed ? 'Close' : 'Show'}
       >
         <div>
           {isCollapsed ? (

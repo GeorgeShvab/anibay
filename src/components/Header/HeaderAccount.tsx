@@ -18,7 +18,7 @@ const HeaderAccount: FC = () => {
           <Search />
         </li>
         <li className="">
-          <button className="h-10 w-10 text-white">
+          <button className="h-10 w-10 text-white" aria-label="Account">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"

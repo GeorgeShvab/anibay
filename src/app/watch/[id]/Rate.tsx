@@ -4,7 +4,6 @@ import { FC, MouseEvent, Fragment } from 'react'
 import IconButton from '@/ui/IconButton'
 import { Popover, Transition } from '@headlessui/react'
 import { useState } from 'react'
-import { usePopper } from 'react-popper'
 import axios from '@/axios'
 import AuthProtection from '@/components/AuthClickProtection'
 
@@ -24,7 +23,7 @@ const Rate: FC<{ id: string; userRating?: number }> = ({ id, userRating }) => {
   return (
     <AuthProtection
       fallback={
-        <IconButton color="dark" element="div" className="text-white">
+        <IconButton color="dark" element="div" className="text-white" aria-label="Rate">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -45,8 +44,13 @@ const Rate: FC<{ id: string; userRating?: number }> = ({ id, userRating }) => {
       <Popover className="relative">
         {({ open, close }) => (
           <>
-            <Popover.Button className="outline-none">
-              <IconButton color="dark" element="div" className={userRating ? '!text-red' : 'text-white'}>
+            <Popover.Button as={Fragment}>
+              <IconButton
+                color="dark"
+                element="div"
+                className={userRating ? '!text-red' : 'text-white'}
+                aria-label="Rate"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
