@@ -19,6 +19,10 @@ const BookmarkService = {
   async isBookmarked(user: number, anime: string) {
     return !!(await prisma.bookmark.findFirst({ where: { userId: user, animeId: anime } }))
   },
+
+  async clearAll(user: number) {
+    await prisma.bookmark.deleteMany({ where: { userId: user } })
+  },
 }
 
 export default BookmarkService

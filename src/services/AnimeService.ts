@@ -156,7 +156,7 @@ WHERE a.id = ${id};`
     return serialize(data) as Anime[]
   },
 
-  async getBookmarkedAnime({ user, page = 0 }: { user: number; page?: number }) {
+  async getBookmarkedAnime({ user, page = 0, amount = 30 }: { user: number; page?: number; amount?: number }) {
     const dataPromise = prisma.bookmark.findMany({
       where: { userId: user },
       select: { anime: { include: { genres: true } } },
@@ -173,6 +173,30 @@ WHERE a.id = ${id};`
       data: Anime[]
       count: number
     }
+  },
+
+  async getMovies({ orderBy = 'popularity', amount = 10 }: { orderBy?: 'popularity' | 'rating'; amount?: number }) {
+    const data = await prisma.anime.findMany({
+      where: { type: 'MOVIE' },
+      orderBy: {
+        [orderBy]: 'desc',
+      },
+      take: amount,
+    })
+
+    return serialize(data)
+  },
+
+  async getSeries({ orderBy = 'popularity', amount = 10 }: { orderBy?: 'popularity' | 'rating'; amount?: number }) {
+    const data = await prisma.anime.findMany({
+      where: { NOT: { type: 'MOVIE' } },
+      orderBy: {
+        [orderBy]: 'desc',
+      },
+      take: amount,
+    })
+
+    return serialize(data)
   },
 }
 

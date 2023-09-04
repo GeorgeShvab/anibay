@@ -16,6 +16,16 @@ const EpisodeService = {
     const data = await prisma.episode.findMany({ where: { animeId: id }, orderBy: { number: 'asc' } })
     return serialize(data)
   },
+
+  async getLatestEpisodes(amount: number = 10) {
+    const data = await prisma.episode.findMany({
+      orderBy: { createdAt: 'desc' },
+      include: { anime: true },
+      take: amount,
+    })
+
+    return serialize(data)
+  },
 }
 
 export default EpisodeService

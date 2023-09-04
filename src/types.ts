@@ -27,6 +27,8 @@ export interface Episode {
   number: number
   sources: Source[]
   title: string
+  createdAt: string
+  updatedAt: string
 }
 
 export interface AnimeDataResponse {

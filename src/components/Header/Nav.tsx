@@ -23,7 +23,7 @@ const Nav: FC<Props> = (props) => {
 
   return (
     <nav>
-      <ul className="flex md:gap-8 lg:gap-16 items-center absolute left-1/2 translate-x-[-50%] top-1/2 translate-y-[-50%]">
+      <ul className="flex md:gap-8 lg:gap-14 items-center absolute left-1/2 translate-x-[-50%] top-1/2 translate-y-[-50%]">
         <li className="relative">
           <Link
             href="/"
@@ -49,6 +49,36 @@ const Nav: FC<Props> = (props) => {
           <span
             className={`absolute bg-red rounded-full h-[4px] w-[24px] top-[120%] left-1/2 translate-x-[-50%] ${
               page === 'search' ? 'block' : 'hidden'
+            }`}
+          ></span>
+        </li>
+        <li className="relative">
+          <Link
+            href="/movies"
+            className={
+              page === 'movies' ? 'text-white scale-105' : 'text-gray-400 hover:text-gray-200 transition-colors'
+            }
+          >
+            <span>Movies</span>
+          </Link>
+          <span
+            className={`absolute bg-red rounded-full h-[4px] w-[24px] top-[120%] left-1/2 translate-x-[-50%] ${
+              page === 'movies' ? 'block' : 'hidden'
+            }`}
+          ></span>
+        </li>
+        <li className="relative">
+          <Link
+            href="/series"
+            className={
+              page === 'series' ? 'text-white scale-105' : 'text-gray-400 hover:text-gray-200 transition-colors'
+            }
+          >
+            <span>TV Series</span>
+          </Link>
+          <span
+            className={`absolute bg-red rounded-full h-[4px] w-[24px] top-[120%] left-1/2 translate-x-[-50%] ${
+              page === 'series' ? 'block' : 'hidden'
             }`}
           ></span>
         </li>
