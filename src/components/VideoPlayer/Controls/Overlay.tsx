@@ -71,6 +71,7 @@ const Overlay: FC = () => {
               type="button"
               onDoubleClick={handleDoubleClickLeft}
               className="focus:outline-none font-medium text-sm p-2 lg:p-6 text-center inline-flex items-center"
+              aria-label="Rewind 10 seconds back"
             >
               <div className="p-4 text-white bg-white/25 rounded-full">
                 <svg
@@ -88,7 +89,6 @@ const Overlay: FC = () => {
                   />
                 </svg>
               </div>
-              <span className="sr-only">Back</span>
             </button>
           </div>
           <div className="absolute right-1/3 bottom-1/2 translate-x-2/3 translate-y-1/2 z-50 p-8 opacity-20 lg:hidden">
@@ -96,6 +96,7 @@ const Overlay: FC = () => {
               type="button"
               onDoubleClick={handleDoubleClickRight}
               className="focus:outline-none font-medium text-sm p-2 lg:p-6 text-center inline-flex items-center"
+              aria-label="Rewind 10 seconds forward"
             >
               <div className="p-4 text-white bg-white/25 rounded-full">
                 <svg
@@ -113,7 +114,6 @@ const Overlay: FC = () => {
                   />
                 </svg>
               </div>
-              <span className="sr-only">Forward</span>
             </button>
           </div>
         </>
@@ -121,7 +121,7 @@ const Overlay: FC = () => {
       <div className="absolute right-1/2 bottom-1/2 translate-x-1/2 translate-y-1/2 z-50">
         {playing ? (
           isLoading ? (
-            <div className="loader">
+            <div className="loader" aria-hidden="true">
               <svg className="circular" viewBox="25 25 50 50">
                 <circle
                   className="player-path"
@@ -139,6 +139,7 @@ const Overlay: FC = () => {
               type="button"
               onClick={handleButtonClick}
               className="p-5 text-white bg-white/25 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 lg:p-6 text-center inline-flex items-center"
+              aria-label="Pause"
             >
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
                 <path
@@ -147,7 +148,6 @@ const Overlay: FC = () => {
                   clipRule="evenodd"
                 />
               </svg>
-              <span className="sr-only">Pause</span>
             </button>
           )
         ) : (
@@ -155,6 +155,7 @@ const Overlay: FC = () => {
             type="button"
             onClick={handleButtonClick}
             className="p-5 text-white bg-white/25 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 lg:p-6 text-center inline-flex items-center"
+            aria-label="Play"
           >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
               <path
@@ -163,7 +164,6 @@ const Overlay: FC = () => {
                 clipRule="evenodd"
               />
             </svg>
-            <span className="sr-only">Play</span>
           </button>
         )}
       </div>

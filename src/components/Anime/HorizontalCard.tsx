@@ -57,7 +57,7 @@ const HorizontalCard: FC<Anime<{ isBookmarked: boolean }>> = ({
               {status === 'Ongoing' ? <p className="text-red text-xs md:text-sm">Ongoing</p> : null}
             </div>
             <div className="flex gap-3 w-full">
-              <IconButton color="black">
+              <IconButton color="black" aria-hidden="true">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="#ffffff"

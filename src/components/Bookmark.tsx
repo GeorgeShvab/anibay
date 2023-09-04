@@ -24,7 +24,7 @@ const Bookmark: FC<Props> = ({ id, isBookmarked, className }) => {
   return (
     <AuthClickProtection
       fallback={
-        <Button className={`gap-4 md:gap-3 ${className}`}>
+        <Button className={`gap-4 md:gap-3 ${className}`} aria-label="Add to List">
           <>
             <span className="text-white">
               <svg
@@ -43,7 +43,7 @@ const Bookmark: FC<Props> = ({ id, isBookmarked, className }) => {
         </Button>
       }
     >
-      <Button onClick={handleBookmark} className={`gap-4 md:gap-3 ${className}`}>
+      <Button onClick={handleBookmark} className={`gap-4 md:gap-3 ${className}`} aria-label="Add to List">
         {bookmarked ? (
           <>
             <span className="text-white">

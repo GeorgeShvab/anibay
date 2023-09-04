@@ -80,7 +80,12 @@ const Search: FC = () => {
           />
         </div>
       )}
-      <button className="text-white h-10 w-10" type="button" onClick={handleClick}>
+      <button
+        className="text-white h-10 w-10"
+        type="button"
+        onClick={handleClick}
+        aria-label={isOpened ? 'Submit' : 'Search'}
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"

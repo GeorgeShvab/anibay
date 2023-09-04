@@ -88,7 +88,7 @@ const SearchBar: FC<{ className?: string }> = ({ className }) => {
           defaultValue={query || ''}
         />
       </form>
-      <button type="submit" className="flex-initial px-2 text-white p-1.5">
+      <button type="submit" className="flex-initial px-2 text-white p-1.5" aria-label="Submit">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"

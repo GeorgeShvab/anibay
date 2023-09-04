@@ -16,7 +16,7 @@ const BackButton: FC<Props> = ({ className }) => {
   }
 
   return (
-    <IconButton className={className} color="dark" onClick={handleBack}>
+    <IconButton className={className} color="dark" onClick={handleBack} aria-label="Back">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"

@@ -87,7 +87,7 @@ const Search: FC<PropsType> = ({ placeholder = 'Search anime...', className }) =
           onBlur={handleBlur}
           defaultValue={query || ''}
         />
-        <button type="submit" className="flex-initial px-2">
+        <button type="submit" className="flex-initial px-2" aria-label="Submit">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"

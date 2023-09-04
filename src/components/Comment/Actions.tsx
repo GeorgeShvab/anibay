@@ -56,7 +56,7 @@ const Actions: FC<Props> = ({ isLiked, id, isAuthorized, likes, dislikes, onComm
     <>
       <AuthClickProtection>
         <div className="flex items-center gap-6">
-          <button className="flex gap-2 items-center" onClick={handleLike}>
+          <button className="flex gap-2 items-center" onClick={handleLike} aria-label="Like comment">
             {state.isLiked ? (
               <span className="text-red">
                 <svg viewBox="0 0 24 24" fill="currentColor" className="h-5 w-5">
@@ -72,7 +72,7 @@ const Actions: FC<Props> = ({ isLiked, id, isAuthorized, likes, dislikes, onComm
             )}
             <span className="text-white text-xs">{state.likes}</span>
           </button>
-          <button className="flex gap-2 items-center" onClick={handleDislike}>
+          <button className="flex gap-2 items-center" onClick={handleDislike} aria-label="Dislike comment">
             {state.isDisliked ? (
               <span className="text-red">
                 <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">

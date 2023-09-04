@@ -22,6 +22,7 @@ const SettingsContainer: FC = () => {
           <Popover.Button
             ref={setReferenceElement as any}
             className="text-white hover:bg-gray-200/25 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-1.5 lg:p-2 text-center inline-flex items-center"
+            aria-label="Show settings"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"

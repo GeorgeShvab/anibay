@@ -16,7 +16,10 @@ const Card: FC<Anime> = ({ title, id, image, totalEpisodes, releaseDate, rating,
         <div className="h-full flex flex-col">
           <div className="relative h-64 w-full rounded-t overflow-hidden shadow-2xl">
             <div className="absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] z-20">
-              <button className="bg-red rounded-full h-16 w-16 flex justify-center items-center text-white opacity-0 group-hover:opacity-100 transition-opacity">
+              <button
+                className="bg-red rounded-full h-16 w-16 flex justify-center items-center text-white opacity-0 group-hover:opacity-100 transition-opacity"
+                aria-hidden="true"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="#ffffff"
@@ -72,7 +75,7 @@ const Card: FC<Anime> = ({ title, id, image, totalEpisodes, releaseDate, rating,
               {status === 'Ongoing' ? <p className="text-red text-xs md:text-sm">Ongoing</p> : null}
             </div>
             <div className="flex gap-2.5 w-full hidden">
-              <Button className="gap-3 flex-1" color="black">
+              <Button className="gap-3 flex-1" color="black" aria-hidden="true">
                 <>
                   <span className="text-white">
                     <svg
@@ -93,7 +96,7 @@ const Card: FC<Anime> = ({ title, id, image, totalEpisodes, releaseDate, rating,
                   <span className="text-sm">Watch now</span>
                 </>
               </Button>
-              <IconButton>
+              <IconButton aria-label="Add to List">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"

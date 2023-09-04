@@ -13,6 +13,7 @@ const PlayButton: FC<Props> = ({ href, className, iconClassName }) => {
       <Link
         className={`h-10 w-10 rounded-full opacity-80 md:opacity-90 bg-red block flex justify-center items-center text-white ${className}`}
         href={href}
+        aria-label="To watch page"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -34,6 +35,7 @@ const PlayButton: FC<Props> = ({ href, className, iconClassName }) => {
     return (
       <span
         className={`h-10 w-10 rounded-full opacity-80 md:opacity-90 bg-red block flex justify-center items-center text-white ${className}`}
+        aria-hidden="true"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

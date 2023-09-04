@@ -68,7 +68,11 @@ const Navigation: FC<Props> = (props) => {
       }}
     >
       <nav className={`w-full flex justify-between p-2 px-4`}>
-        <Link href="/" className={`flex-initial px-2 p-1.5 ${page === 'home' ? 'text-red' : 'text-white'}`}>
+        <Link
+          href="/"
+          className={`flex-initial px-2 p-1.5 ${page === 'home' ? 'text-red' : 'text-white'}`}
+          aria-label="To home page"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -84,7 +88,11 @@ const Navigation: FC<Props> = (props) => {
             />
           </svg>
         </Link>
-        <Link href="/movies" className={`flex-initial px-2 p-1.5 ${page === 'movies' ? 'text-red' : 'text-white'}`}>
+        <Link
+          href="/movies"
+          className={`flex-initial px-2 p-1.5 ${page === 'movies' ? 'text-red' : 'text-white'}`}
+          aria-label="To movies page"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -100,8 +108,11 @@ const Navigation: FC<Props> = (props) => {
             />
           </svg>
         </Link>
-
-        <Link href="/search" className={`flex-initial px-2 p-1.5 ${page === 'search' ? 'text-red' : 'text-white'}`}>
+        <Link
+          href="/search"
+          className={`flex-initial px-2 p-1.5 ${page === 'search' ? 'text-red' : 'text-white'}`}
+          aria-label="To search page"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -117,7 +128,11 @@ const Navigation: FC<Props> = (props) => {
             />
           </svg>
         </Link>
-        <Link href="/list" className={`flex-initial px-2 p-1.5 ${page === 'list' ? 'text-red' : 'text-white'}`}>
+        <Link
+          href="/list"
+          className={`flex-initial px-2 p-1.5 ${page === 'list' ? 'text-red' : 'text-white'}`}
+          aria-label="To list page"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -137,7 +152,7 @@ const Navigation: FC<Props> = (props) => {
           className={`flex-initial ${page === 'account' ? 'text-red' : 'text-white'}`}
           element="div"
           fallback={
-            <button className="px-2 p-1.5 text-white">
+            <button className="px-2 p-1.5 text-white" aria-label="To account page">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -155,7 +170,11 @@ const Navigation: FC<Props> = (props) => {
             </button>
           }
         >
-          <Link href="/account" className={`px-2 p-1.5 ${page === 'saved' ? 'text-red' : 'text-white'}`}>
+          <Link
+            href="/account"
+            className={`px-2 p-1.5 ${page === 'saved' ? 'text-red' : 'text-white'}`}
+            aria-label="To account page"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"

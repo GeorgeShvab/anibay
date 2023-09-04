@@ -23,7 +23,7 @@ const Clear: FC = () => {
 
   return (
     <>
-      <IconButton className="md:hidden" onClick={handleClick}>
+      <IconButton className="md:hidden" onClick={handleClick} aria-label="Clear List">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -40,7 +40,7 @@ const Clear: FC = () => {
         </svg>
       </IconButton>
       <Button className="hidden md:flex !w-fit ml-auto flex-0" onClick={handleClick}>
-        Clear All
+        Clear List
       </Button>
       <Dialog
         open={isDialogOpened}

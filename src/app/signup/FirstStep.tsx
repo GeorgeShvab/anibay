@@ -45,6 +45,7 @@ const FirstStep: FC<Props> = ({ values, errors, handleBlur, handleChange, touche
         type="button"
         className="absolute top-3 left-3 text-white rounded-full transition-colors p-2 hover:bg-black"
         onClick={() => setSection('greeting')}
+        aria-label="Back"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

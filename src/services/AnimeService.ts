@@ -201,6 +201,12 @@ WHERE a.id = ${id};`
 
     return serialize(data) as any as Anime[]
   },
+
+  async getAll() {
+    const data = await prisma.anime.findMany({ where: {}, orderBy: { createdAt: 'asc' } })
+
+    return serialize(data) as any as Anime[]
+  },
 }
 
 export default AnimeService
