@@ -30,7 +30,7 @@ const Dropdown: FC<Props> = ({ data, children, className, btnWrapperClassName })
       >
         <Menu.Items
           ref={setPopperElement as any}
-          className={`absolute z-30 rounded-lg bg-dark-dark shadow flex flex-col overflow-hidden ${className}`}
+          className={`absolute z-30 rounded-lg bg-dark shadow flex flex-col overflow-hidden ${className}`}
           style={styles.popper}
           {...attributes.popper}
         >
