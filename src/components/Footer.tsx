@@ -13,23 +13,33 @@ const Footer: FC = () => {
           <hr className="w-px block bg-neutral-600 h-14 border-none hidden md:block" />
           <div className="text-xs md:text-sm text-neutral-500">
             <ul className="flex gap-2 w-64 flex-wrap mb-2 justify-end md:justify-start">
-              <Link href="/">
-                <li className="hover:text-neutral-200 transition-colors">Home</li>
-              </Link>
-              <Link href="/about">
-                <li className="hover:text-neutral-200 transition-colors">About Us</li>
-              </Link>
-              <Link href="/help">
-                <li className="hover:text-neutral-200 transition-colors">Help</li>
-              </Link>
+              <li>
+                <Link href="/" className="hover:text-neutral-200 transition-colors">
+                  Home
+                </Link>
+              </li>
+              <li>
+                <Link href="/about" className="hover:text-neutral-200 transition-colors">
+                  About Us
+                </Link>
+              </li>
+              <li>
+                <Link href="/help" className="hover:text-neutral-200 transition-colors">
+                  Help
+                </Link>
+              </li>
             </ul>
             <p className="text-xs md:text-sm text-right md:text-left">&copy;2023 Anibay. All rights reserved.</p>
           </div>
         </div>
         <div className="md:ml-auto w-full hidden md:block md:w-auto">
           <ul className="text-neutral-500 flex gap-2.5 mb-3 justify-center md:justify-end">
-            <Link href="https://facebook.com">
-              <li className="transition-colors hover:text-neutral-200">
+            <li className="transition-colors hover:text-neutral-200">
+              <Link
+                href="https://facebook.com"
+                className="transition-colors hover:text-neutral-200"
+                aria-label="Our Facebook page"
+              >
                 <svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path
                     fillRule="evenodd"
@@ -38,10 +48,14 @@ const Footer: FC = () => {
                     fill="currentColor"
                   />
                 </svg>
-              </li>
-            </Link>
-            <Link href="https://instagram.com">
-              <li className="transition-colors hover:text-neutral-200">
+              </Link>
+            </li>
+            <li className="transition-colors hover:text-neutral-200">
+              <Link
+                href="https://instagram.com"
+                className="transition-colors hover:text-neutral-200"
+                aria-label="Our Instagram page"
+              >
                 <svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path
                     fillRule="evenodd"
@@ -60,10 +74,14 @@ const Footer: FC = () => {
                     fill="currentColor"
                   />
                 </svg>
-              </li>
-            </Link>
-            <Link href="https://twitter.com">
-              <li className="transition-colors hover:text-neutral-200">
+              </Link>
+            </li>
+            <li className="transition-colors hover:text-neutral-200">
+              <Link
+                href="https://twitter.com"
+                className="transition-colors hover:text-neutral-200"
+                aria-label="Our Twitter page"
+              >
                 <svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path
                     fillRule="evenodd"
@@ -72,10 +90,14 @@ const Footer: FC = () => {
                     fill="currentColor"
                   />
                 </svg>
-              </li>
-            </Link>
-            <Link href="https://youtube.com">
-              <li className="transition-colors hover:text-neutral-200">
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="https://youtube.com"
+                className="transition-colors hover:text-neutral-200"
+                aria-label="Our Youtube page"
+              >
                 <svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path
                     fillRule="evenodd"
@@ -85,8 +107,8 @@ const Footer: FC = () => {
                   />
                   <path d="M21.6 28.8V20.8L28 24.8001L21.6 28.8Z" fill="currentColor" />
                 </svg>
-              </li>
-            </Link>
+              </Link>
+            </li>
           </ul>
           <p className="text-neutral-500 transition-colors hover:text-neutral-200 text-sm text-center">
             <Link href="mailto:support@anibay.com">support@anibay.com</Link>

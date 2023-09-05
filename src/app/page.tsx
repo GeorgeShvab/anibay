@@ -45,6 +45,15 @@ const Home: FC = async () => {
         <div className="hidden">
           <MainPoster {...random[0]} />
         </div>
+        <div className="container mb-5 md:mb-8">
+          <p className="bg-dark text-gray-300 rounded-lg p-4 leading-7">
+            <span className="text-red font-bold">AniBay</span> is your top spot for free online anime streaming, with a
+            wide range of high-quality subtitled anime titles to enjoy. We make sure to keep you up-to-date with daily
+            episode releases, so you never miss the latest developments in your favorite series. Dive into the world of
+            anime magic right at your fingertips with <span className="text-red font-bold">AniBay</span> and start your
+            anime journey today!
+          </p>
+        </div>
         <div className="z-10 relative">
           <div className="lg-container mb-5 md:mb-8 block md:flex gap-8">
             <div className="flex-[3_0_72%] mb-6 md:mb-0">
@@ -73,7 +82,11 @@ const Home: FC = async () => {
           <div className="lg-container mb-5 md:mb-0">
             <div className="px-6 mb-3 md:mb-4 flex justify-between items-center">
               <Title className="!text-lg !font-semibold">Popular Movies</Title>
-              <Link href="/movies" className="text-gray-400 text-sm md:text-base hover:text-gray-200 transition-colors">
+              <Link
+                href="/movies"
+                className="text-gray-400 text-sm md:text-base hover:text-gray-200 transition-colors"
+                aria-label="To movies page"
+              >
                 More
               </Link>
             </div>
@@ -82,7 +95,11 @@ const Home: FC = async () => {
           <div className="lg-container md:hidden">
             <div className="px-6 mb-3 md:mb-4 flex justify-between items-center">
               <Title className="!text-lg !font-semibold">Popular series</Title>
-              <Link href="/series" className="text-gray-400 text-sm md:text-base hover:text-gray-200 transition-colors">
+              <Link
+                href="/series"
+                className="text-gray-400 text-sm md:text-base hover:text-gray-200 transition-colors"
+                aria-label="To series page"
+              >
                 More
               </Link>
             </div>
@@ -98,11 +115,13 @@ export default Home
 
 export const metadata: Metadata = {
   title: `Anibay`,
-  description: 'Anibay - anime streaming platform',
+  description:
+    'Anibay: Your daily dose of premium anime content, made by fans, for fans. Explore thousands of top-quality titles today!',
   openGraph: {
     images: ['/auth-bg.png'],
-    title: 'Anibay - anime streaming platform',
-    description: 'Anibay - anime streaming platform',
+    title: 'Anibay',
+    description:
+      'Anibay: Your daily dose of premium anime content, made by fans, for fans. Explore thousands of top-quality titles today!',
     type: 'website',
     url: '/',
   },
