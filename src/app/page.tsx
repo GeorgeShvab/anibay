@@ -45,7 +45,7 @@ const Home: FC = async () => {
         <div className="hidden">
           <MainPoster {...random[0]} />
         </div>
-        <div className="container mb-5 md:mb-8">
+        <div className="container !mb-5 md:mb-8 hidden md:block">
           <p className="bg-dark text-gray-300 rounded-lg p-4 leading-7">
             <span className="text-red font-bold">AniBay</span> is your top spot for free online anime streaming, with a
             wide range of high-quality subtitled anime titles to enjoy. We make sure to keep you up-to-date with daily
@@ -87,12 +87,12 @@ const Home: FC = async () => {
                 className="text-gray-400 text-sm md:text-base hover:text-gray-200 transition-colors"
                 aria-label="To movies page"
               >
-                More
+                More movies
               </Link>
             </div>
             <PosterGrid className="px-3 lg:px-0" data={popularMovies.data} />
           </div>
-          <div className="lg-container md:hidden">
+          <div className="lg-container md:hidden mb-5 md:mb-0">
             <div className="px-6 mb-3 md:mb-4 flex justify-between items-center">
               <Title className="!text-lg !font-semibold">Popular series</Title>
               <Link
@@ -100,10 +100,19 @@ const Home: FC = async () => {
                 className="text-gray-400 text-sm md:text-base hover:text-gray-200 transition-colors"
                 aria-label="To series page"
               >
-                More
+                More series
               </Link>
             </div>
             <CardGrid className="px-3 lg:px-0" data={series.data} mobileSlider={true} />
+          </div>
+          <div className="container md:hidden">
+            <p className="bg-dark text-gray-300 rounded-lg p-4 leading-7">
+              <span className="text-red font-bold">AniBay</span> is your top spot for free online anime streaming, with
+              a wide range of high-quality subtitled anime titles to enjoy. We make sure to keep you up-to-date with
+              daily episode releases, so you never miss the latest developments in your favorite series. Dive into the
+              world of anime magic right at your fingertips with <span className="text-red font-bold">AniBay</span> and
+              start your anime journey today!
+            </p>
           </div>
         </div>
       </main>
