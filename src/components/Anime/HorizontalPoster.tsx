@@ -8,7 +8,7 @@ const HorizontalPoster: FC<Anime> = ({ rating, title, image, id, totalEpisodes, 
   return (
     <Link
       href={`/watch/${id}`}
-      className="w-full md:hover:scale-[1.015] relative transition-all h-36 md:h-64 rounded-lg overflow-hidden"
+      className="w-full md:hover:scale-[1.015] relative transition-all h-40 md:h-64 rounded-lg overflow-hidden"
     >
       <Image
         src={cover || image}
