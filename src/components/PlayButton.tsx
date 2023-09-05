@@ -1,19 +1,20 @@
 import Link from 'next/link'
-import { FC } from 'react'
+import { AnchorHTMLAttributes, FC } from 'react'
 
-interface Props {
+interface Props extends AnchorHTMLAttributes<HTMLAnchorElement> {
   href?: string
   className?: string
   iconClassName?: string
 }
 
-const PlayButton: FC<Props> = ({ href, className, iconClassName }) => {
+const PlayButton: FC<Props> = ({ href, className, iconClassName, ...rest }) => {
   if (href) {
     return (
       <Link
         className={`h-10 w-10 rounded-full opacity-80 md:opacity-90 bg-red block flex justify-center items-center text-white ${className}`}
         href={href}
         aria-label="To watch page"
+        {...rest}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -36,6 +37,7 @@ const PlayButton: FC<Props> = ({ href, className, iconClassName }) => {
       <span
         className={`h-10 w-10 rounded-full opacity-80 md:opacity-90 bg-red block flex justify-center items-center text-white ${className}`}
         aria-hidden="true"
+        {...rest}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

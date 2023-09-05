@@ -70,6 +70,7 @@ const CarouselItem: FC<Props> = ({
                 className="h-16 w-16 md:!h-[80px] md:!w-[80px] hover:scale-105 transition-all"
                 iconClassName="h-8 w-8 md:h-10 md:w-10"
                 href={`/watch/${id}`}
+                aria-label={`Watch ${title}`}
               />
             </div>
           </div>
