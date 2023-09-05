@@ -178,28 +178,58 @@ WHERE a.id = ${id};`
     }
   },
 
-  async getMovies({ orderBy = 'popularity', amount = 10 }: { orderBy?: 'popularity' | 'rating'; amount?: number }) {
-    const data = await prisma.anime.findMany({
+  async getMovies({
+    orderBy = 'popularity',
+    amount = 30,
+    page = 0,
+  }: {
+    orderBy?: 'popularity' | 'rating'
+    amount?: number
+    page?: number
+  }) {
+    const dataPromise = prisma.anime.findMany({
       where: { type: 'MOVIE' },
       orderBy: {
         [orderBy]: 'desc',
       },
       take: amount,
+      skip: page * amount,
     })
 
-    return serialize(data) as any as Anime[]
+    const countPromise = prisma.anime.count({
+      where: { type: 'MOVIE' },
+    })
+
+    const [count, data] = await Promise.all([countPromise, dataPromise])
+
+    return { data: serialize(data), count } as { data: any[]; count: number } as { data: Anime[]; count: number }
   },
 
-  async getSeries({ orderBy = 'popularity', amount = 10 }: { orderBy?: 'popularity' | 'rating'; amount?: number }) {
-    const data = await prisma.anime.findMany({
+  async getSeries({
+    orderBy = 'popularity',
+    amount = 30,
+    page = 0,
+  }: {
+    orderBy?: 'popularity' | 'rating'
+    amount?: number
+    page?: number
+  }) {
+    const dataPromise = await prisma.anime.findMany({
       where: { NOT: { type: 'MOVIE' } },
       orderBy: {
         [orderBy]: 'desc',
       },
       take: amount,
+      skip: page * amount,
     })
 
-    return serialize(data) as any as Anime[]
+    const countPromise = prisma.anime.count({
+      where: { NOT: { type: 'MOVIE' } },
+    })
+
+    const [count, data] = await Promise.all([countPromise, dataPromise])
+
+    return { data: serialize(data), count } as { data: any[]; count: number } as { data: Anime[]; count: number }
   },
 
   async getAll() {

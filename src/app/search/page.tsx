@@ -1,6 +1,6 @@
 import * as types from '@/types'
 import { FC } from 'react'
-import Pagination from './Pagination'
+import Pagination from '@/components/Pagination'
 import AnimeService from '@/services/AnimeService'
 import Layout from '@/components/Layout'
 import { getServerSession } from 'next-auth'
@@ -15,6 +15,8 @@ import CardGrid from '@/components/Anime/CardGrid'
 import PosterGrid from '@/components/Anime/PosterGrid'
 import Image from 'next/image'
 import bg from '@/assets/big-image.png'
+import generateParamsString from '@/utils/generateParamsString'
+import CenterMessage from '@/components/CenterMessage'
 
 const Search: FC<types.PageProps<{}, { query: string; page: string; genre: string }>> = async ({ searchParams }) => {
   const session = await getServerSession(authOptions)
@@ -57,6 +59,7 @@ const Search: FC<types.PageProps<{}, { query: string; page: string; genre: strin
               style={{
                 objectFit: 'cover',
               }}
+              priority
             />
             <div className="search-gradient w-full h-full absolute inset-0"></div>
           </div>
@@ -75,47 +78,19 @@ const Search: FC<types.PageProps<{}, { query: string; page: string; genre: strin
                   <Title className="px-6 mb-3 md:mb-6">
                     {query
                       ? `Results for ${query} (${results.count})`
-                      : genre.at(0)?.toUpperCase() + genre.slice(1, genre.length)}
+                      : 'Genre: ' + genre.at(0)?.toUpperCase() + genre.slice(1, genre.length)}
                   </Title>
                   <CardGrid className="px-3 lg:px-0" data={results.data} />
                 </div>
-
                 <Pagination
                   pages={Math.ceil(results.count / 30)}
                   currentPage={page}
-                  query={query}
-                  genre={genre}
                   hasNextPage={!!nextPage?.data.length}
+                  params={generateParamsString(searchParams)}
                 />
               </>
             )}
-            {results?.count === 0 && (
-              <div className="container">
-                <div className="mb-8 md:py-12">
-                  <div className="py-8 md:py-12 rounded-lg px-4 md:px-24 bg-dark flex flex-col items-center gap-8">
-                    <span className="text-neutral-200">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth={1.5}
-                        stroke="currentColor"
-                        className="w-16 h-16"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
-                        />
-                      </svg>
-                    </span>
-                    <h1 className="text-neutral-200 font-semibold text-center text-lg">
-                      Nothing was found for {query}
-                    </h1>
-                  </div>
-                </div>
-              </div>
-            )}
+            {results?.count === 0 && <CenterMessage title="Nothing" subtitle={`Nothing was found for ${query}`} />}
             <div className="lg-container mb-6 md:mb-8 md:hidden">
               <Title className="px-6 mb-3 md:mb-6">Popular Anime</Title>
               <CardGrid className="px-3 lg:px-0" data={popular} mobileSlider />

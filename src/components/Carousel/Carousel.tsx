@@ -34,7 +34,7 @@ const Carousel: FC<Props> = ({ data }) => {
   }, [selected])
 
   return (
-    <div className="md:flex md:gap-2 h-[450px] md:h-auto">
+    <div className="md:flex md:gap-2 h-[500px] md:h-auto">
       {items.map((item) => (
         <CarouselItem
           key={item.id}

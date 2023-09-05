@@ -4,9 +4,12 @@ import axios from '@/axios'
 import Dialog from '@/components/Dialog'
 import Button from '@/ui/Button'
 import IconButton from '@/ui/IconButton'
+import { useRouter } from 'next/navigation'
 import { FC, useState } from 'react'
 
 const Clear: FC = () => {
+  const router = useRouter()
+
   const [isDialogOpened, setIsDialogOpened] = useState<boolean>(false)
 
   const handleClick = () => {
@@ -19,6 +22,8 @@ const Clear: FC = () => {
 
   const handleConfirmClear = async () => {
     await axios.delete('/api/bookmark/clear')
+
+    router.refresh()
   }
 
   return (
@@ -39,14 +44,26 @@ const Clear: FC = () => {
           />
         </svg>
       </IconButton>
-      <Button className="hidden md:flex !w-fit ml-auto flex-0" onClick={handleClick}>
-        Clear List
+      <Button className="hidden md:flex !w-fit ml-auto flex-0 items-center gap-3" onClick={handleClick}>
+        <>
+          <span>Clear List</span>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="w-6 h-6"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </>
       </Button>
       <Dialog
         open={isDialogOpened}
         onClose={handleCloseDialog}
-        title="Delete all anime in your List?"
-        text="List will be deleted forever"
+        title="Delete your List?"
+        text="This action cannot be undone"
         severity="danger"
         onConfirm={handleConfirmClear}
       />

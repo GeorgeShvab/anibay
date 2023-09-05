@@ -20,6 +20,7 @@
     --header-height: 64px;
   }
 }
+
 .mobile-description-gradient {
   background: linear-gradient(#15151500 0%, #151515e6 50%, #151515 100%);
 }

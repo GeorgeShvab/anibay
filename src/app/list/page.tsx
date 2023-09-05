@@ -1,6 +1,6 @@
 import * as types from '@/types'
 import { FC } from 'react'
-import Pagination from './Pagination'
+import Pagination from '@/components/Pagination'
 import AnimeService from '@/services/AnimeService'
 import Layout from '@/components/Layout'
 import { getServerSession } from 'next-auth'
@@ -12,6 +12,8 @@ import PosterGrid from '@/components/Anime/PosterGrid'
 import BackButton from '@/components/Mobile/BackButton'
 import Link from 'next/link'
 import Clear from './ClearButton'
+import generateParamsString from '@/utils/generateParamsString'
+import CenterMessage from '@/components/CenterMessage'
 
 const Search: FC<types.PageProps<{}, { query: string; page: string; genre: string }>> = async ({ searchParams }) => {
   const session = await getServerSession(authOptions)
@@ -38,95 +40,53 @@ const Search: FC<types.PageProps<{}, { query: string; page: string; genre: strin
   if (!results) return null
 
   return (
-    <>
-      <Layout>
-        <main className="md:pt-header">
-          <div className="container flex gap-8 py-4 px-6 md:py-0 md:!mb-8 items-center justify-between md:justify-start relative">
-            <Link
-              href="/"
-              className="text-neutral-400 flex items-center gap-3 hover:text-neutral-100 transition-colors rounded-full hidden md:flex pl-3"
+    <Layout>
+      <main className="md:pt-header">
+        <div className="container flex gap-8 py-4 px-6 md:py-0 md:!mb-8 items-center justify-between md:justify-start relative">
+          <Link
+            href="/"
+            className="text-neutral-400 flex items-center gap-3 hover:text-neutral-100 transition-colors rounded-full hidden md:flex pl-3"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-4 h-4"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-4 h-4"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
-              </svg>
-              <span className="text-xs hidden md:block">Back</span>
-            </Link>
-            <BackButton className="md:hidden" />
-            <h1 className="text-lg md:text-xl font-bold text-white pr-3 md:pr-0 tracking-wide absolute md:static top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] md:translate-x-0 md:translate-y-0">
-              Your List ({results.count})
-            </h1>
-            <Clear />
-          </div>
-          <div className="z-10 relative ">
-            {/*<div className="lg-container mb-6 md:mb-10">
-              <Title className="px-6 mb-3 md:mb-6">
-                <>Genres ({genres.length})</>
-              </Title>
-              <Genres className="px-3 lg:px-0" data={genres} />
-            </div>*/}
-            {!!results?.data.length && (
-              <>
-                <div className="lg-container">
-                  {/*<Title className="px-6 mb-3 md:mb-6">
-                    <>Anime ({results.count})</>
-            </Title>*/}
-                  <PosterGrid className="px-3 lg:px-0" data={results.data} />
-                </div>
-
-                <Pagination
-                  pages={Math.ceil(results.count / 30)}
-                  currentPage={page}
-                  hasNextPage={!!nextPage?.data.length}
-                />
-              </>
-            )}
-            {results?.count === 0 && (
-              <div className="container">
-                <div className="mb-8 md:py-12">
-                  <div className="py-8 md:py-12 rounded-lg px-4 md:px-24 bg-dark flex flex-col items-center gap-8">
-                    <span className="text-neutral-200">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth={1.5}
-                        stroke="currentColor"
-                        className="w-16 h-16"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
-                        />
-                      </svg>
-                    </span>
-                    <h1 className="text-neutral-200 font-semibold text-center text-lg">
-                      There are no anime in your List
-                    </h1>
-                  </div>
-                </div>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+            </svg>
+            <span className="text-xs hidden md:block">Back</span>
+          </Link>
+          <BackButton className="md:hidden" />
+          <h1 className="text-lg md:text-xl font-bold text-white pr-3 md:pr-0 tracking-wide absolute md:static top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] md:translate-x-0 md:translate-y-0">
+            Your List ({results.count})
+          </h1>
+          <Clear />
+        </div>
+        <div className="z-10 relative ">
+          {!!results?.data.length && (
+            <>
+              <div className="lg-container">
+                <PosterGrid className="px-3 lg:px-0" data={results.data} />
               </div>
-            )}
-            <div className="lg-container mb-6 md:mb-8 md:hidden">
-              <Title className="px-6 mb-3 md:mb-6">Popular Anime</Title>
-              <CardGrid className="px-3 lg:px-0" data={popular} mobileSlider />
-            </div>
-
-            <div className="lg-container">
-              <Title className="px-6 mb-3 md:mb-6">Top Anime</Title>
-              <PosterGrid className="px-3 lg:px-0" data={top} />
-            </div>
+              <Pagination
+                pages={Math.ceil(results.count / 30)}
+                currentPage={page}
+                hasNextPage={!!nextPage?.data.length}
+                params={generateParamsString(searchParams)}
+              />
+            </>
+          )}
+          {results?.count === 0 && <CenterMessage title="Nothing" subtitle="There are no anime in your List" />}
+          <div className="lg-container">
+            <Title className="px-6 mb-3 md:mb-6">Popular Anime</Title>
+            <CardGrid className="px-3 lg:px-0" data={popular} mobileSlider />
           </div>
-        </main>
-      </Layout>
-    </>
+        </div>
+      </main>
+    </Layout>
   )
 }
 

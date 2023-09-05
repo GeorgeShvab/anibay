@@ -30,7 +30,7 @@ const CarouselItem: FC<Props> = ({
       onMouseLeave={() => onMouseLeave(id)}
       onMouseEnter={() => onMouseEnter(id)}
     >
-      <div className="h-[450px] md:h-[280px] w-[100vw] md:w-[600px] lg:w-[700px] xl:w-[900px] relative md:static">
+      <div className="h-[500px] md:h-[280px] w-[100vw] md:w-[600px] lg:w-[700px] xl:w-[900px] relative md:static">
         <Image
           src={image}
           alt={title}
@@ -46,7 +46,7 @@ const CarouselItem: FC<Props> = ({
           fill
         />
         <div
-          className={`h-[450px] md:h-[280px] w-[100vw] md:w-[600px] lg:w-[700px] xl:w-[900px] main-poster-gradient absolute left-0 top-0 right-0 bottom-0 transition-all ${
+          className={`h-[500px] md:h-[280px] w-[100vw] md:w-[600px] lg:w-[700px] xl:w-[900px] main-poster-gradient absolute left-0 top-0 right-0 bottom-0 transition-all ${
             isSelected ? '' : 'pointer-events-none'
           }`}
         >
