@@ -3,6 +3,7 @@ import nunjucks from 'nunjucks'
 import TokenService from './TokenService'
 import emailVerification from '@/templates/email-verification'
 import passwordReset from '@/templates/password-reset'
+import Mail from 'nodemailer/lib/mailer'
 
 const SERVICE_EMAIL_ADDRESS = process.env.SERVICE_EMAIL_ADDRESS
 const SERVICE_EMAIL_PASSWORD = process.env.SERVICE_EMAIL_PASSWORD
@@ -25,16 +26,6 @@ const MailService = {
 
       await TokenService.saveToken(email, token, userId)
 
-      const transporter = nodemailer.createTransport({
-        host: SERVICE_EMAIL_HOST,
-        port: Number(SERVICE_EMAIL_PORT),
-        secure: false,
-        auth: {
-          user: SERVICE_EMAIL_ADDRESS,
-          pass: SERVICE_EMAIL_PASSWORD,
-        },
-      })
-
       var mailOptions = {
         from: `"AniBay" ${SERVICE_EMAIL_ADDRESS}`,
         to: email,
@@ -48,12 +39,7 @@ const MailService = {
         text: 'Email verification',
       }
 
-      transporter.sendMail(mailOptions, (error: unknown, info: unknown) => {
-        if (error) {
-          console.log('Error. An email has not been sent.')
-          console.log(error)
-        }
-      })
+      await sendEmail(mailOptions)
     } catch (e) {
       console.log(e)
     }
@@ -64,16 +50,6 @@ const MailService = {
       const token = TokenService.generateToken()
 
       await TokenService.saveToken(email, token, userId)
-
-      const transporter = nodemailer.createTransport({
-        host: SERVICE_EMAIL_HOST,
-        port: Number(SERVICE_EMAIL_PORT),
-        secure: false,
-        auth: {
-          user: SERVICE_EMAIL_ADDRESS,
-          pass: SERVICE_EMAIL_PASSWORD,
-        },
-      })
 
       var mailOptions = {
         from: `"AniBay" ${SERVICE_EMAIL_ADDRESS}`,
@@ -87,16 +63,37 @@ const MailService = {
         text: 'Password reset',
       }
 
-      transporter.sendMail(mailOptions, (error: unknown, info: unknown) => {
-        if (error) {
-          console.log('Error. An email has not been sent.')
-          console.log(error)
-        }
-      })
+      await sendEmail(mailOptions)
     } catch (e) {
       console.log(e)
     }
   },
+}
+
+async function sendEmail(options: Mail.Options) {
+  const promise = new Promise((resolve, reject) => {
+    const transporter = nodemailer.createTransport({
+      host: SERVICE_EMAIL_HOST,
+      port: Number(SERVICE_EMAIL_PORT),
+      secure: false,
+      auth: {
+        user: SERVICE_EMAIL_ADDRESS,
+        pass: SERVICE_EMAIL_PASSWORD,
+      },
+    })
+
+    transporter.sendMail(options, (error: unknown, info: unknown) => {
+      if (error) {
+        console.log('Error. An email has not been sent.')
+        console.log(error)
+        reject(error)
+      } else {
+        resolve(info)
+      }
+    })
+  })
+
+  return promise
 }
 
 export default MailService
