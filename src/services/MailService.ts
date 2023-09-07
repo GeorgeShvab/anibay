@@ -36,7 +36,7 @@ const MailService = {
       })
 
       var mailOptions = {
-        from: '"AniBay Service" anibay.service@hotmail.com',
+        from: `"AniBay" ${SERVICE_EMAIL_ADDRESS}`,
         to: email,
         name: 'AniBay Service',
         subject: 'Email verification',
@@ -76,7 +76,7 @@ const MailService = {
       })
 
       var mailOptions = {
-        from: '"AniBay Service" anibay.service@hotmail.com',
+        from: `"AniBay" ${SERVICE_EMAIL_ADDRESS}`,
         to: email,
         name: 'AniBay Service',
         subject: 'Password reset',
