@@ -19,7 +19,7 @@ import Link from 'next/link'
 const Home: FC = async () => {
   const session = await getServerSession(authOptions)
 
-  const latestEpisodesPromise = EpisodeService.getLatestEpisodes(8)
+  const latestEpisodesPromise = EpisodeService.getLatestEpisodes(3)
 
   const popularPromise = AnimeService.getRandomPopular(session?.user.id, 10)
   const genresPromise = GenreService.getAll()
@@ -56,9 +56,9 @@ const Home: FC = async () => {
         </div>
         <div className="z-10 relative">
           <div className="lg-container mb-5 md:mb-8 block md:flex gap-8">
-            <div className="flex-[3_0_72%] mb-6 md:mb-0">
+            <div className="flex-[3_0_60%] mb-6 md:mb-0">
               <Title className="px-6 mb-3 md:mb-4 !text-lg !font-semibold">Latest Episodes</Title>
-              <div className="px-3 lg:px-0 grid grid-flow-col auto-cols-[auto] md:grid-flow-row md:auto-cols-auto md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-3 overflow-auto md:overflow-visible no-scrollbar">
+              <div className="px-3 lg:px-0 grid grid-flow-col auto-cols-[auto] md:grid-flow-row md:auto-cols-auto md:grid-cols-3 gap-2 md:gap-3 overflow-auto md:overflow-visible no-scrollbar">
                 {latestEpisodes.map((item) => (
                   <Episode key={item.id} {...item} />
                 ))}
@@ -123,7 +123,7 @@ const Home: FC = async () => {
 export default Home
 
 export const metadata: Metadata = {
-  title: `Anibay`,
+  title: `AniBay`,
   description:
     'Anibay: Your daily dose of premium anime content, made by fans, for fans. Explore thousands of top-quality titles today!',
   openGraph: {
