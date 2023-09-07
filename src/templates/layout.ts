@@ -15,7 +15,7 @@ export default `<body style="background: #efefef; padding: 16px">
 >
   <tr>
     <td align="center">
-      <img alt="Anibay" src="{{serverAddress}}/full-logo.png" width="100px" height="35px" />
+      <img alt="Anibay" src="{{serverAddress}}/full-logo.png" width="100px" height="30.5px" />
     </td>
   </tr>
   <tr>
