@@ -46,6 +46,7 @@ const config: Config = {
         'screen-intro': 'var(--screen-intro)',
         20: '20rem',
         120: '30rem',
+        footer: 'calc(100vh - var(--footer-height))',
       },
       width: {
         120: '30rem',

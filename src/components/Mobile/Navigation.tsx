@@ -1,10 +1,8 @@
 'use client'
 
-import usePage from '@/hooks/usePage'
 import throttle from '@/utils/throttle'
 import Link from 'next/link'
 import { FC, memo, useEffect, useState } from 'react'
-import Logo from '../Logo'
 import AuthClickProtection from '../AuthClickProtection'
 import { usePathname } from 'next/navigation'
 

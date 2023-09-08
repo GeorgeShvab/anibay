@@ -18,6 +18,7 @@
     --card: 22 22 22;
 
     --header-height: 64px;
+    --footer-height: 104px;
   }
 }
 
@@ -209,6 +210,7 @@
   :root {
     --screen-intro: calc(100vh - 88px);
     --header-height: 88px;
+    --footer-height: 136px;
   }
 }
 
