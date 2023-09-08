@@ -18,6 +18,7 @@ import Title from '@/components/Title'
 import PosterGrid from '@/components/Anime/PosterGrid'
 import { cookies } from 'next/headers'
 import Genres from '@/components/Genre/Genres'
+import Image from 'next/image'
 
 const getLastWatchedEpisode = (animeId: string): string | undefined => {
   const cookiesStore = cookies()
@@ -50,7 +51,7 @@ const WatchPage: FC<types.PageProps<{ id: string }, { episode?: string }>> = asy
 
   const episodesPromise = EpisodeService.getEpisodesByAnime(id)
 
-  const popularPromise = AnimeService.getRandomPopular(session?.user?.id, 10)
+  const popularPromise = AnimeService.getRandomPopular(session?.user?.id, 6)
 
   const [anime, episodes, related, popular] = await Promise.all([
     animePromise,
@@ -62,64 +63,87 @@ const WatchPage: FC<types.PageProps<{ id: string }, { episode?: string }>> = asy
   if (!anime) return null
 
   return (
-    <>
-      <Layout>
-        <main className="md:pt-header relative">
-          <BackgroundImage url={anime.image} />
-          <Actions isBookmarked={anime.isBookmarked} id={anime.id} />
-          <div>
-            <div className="md:pt-8 lg:pt-12 md:pt-12 lg:pt-20">
-              <div className="container gap-0 mb-3 md:flex lg:gap-24 md:gap-8 md:mb-12 justify-between">
-                <div className="pt-2 flex-initial md:flex flex-col relative mb-3 md:mb-0">
-                  <div>
-                    <h1 className="text-2xl font-semibold mb-1 md:mb-2 md:text-5xl text-white">{anime.title}</h1>
-                    <SubTitleText
-                      totalEpisodes={anime.totalEpisodes}
-                      releaseDate={anime.releaseDate}
-                      status={anime.status}
-                      rating={anime.rating}
-                    />
-                    <Genres data={anime.genres} className="mb-4 md:mb-8 flex-wrap [&>a]:text-sm md:gap-3" />
-                    <div className="rounded bg-dark md:hidden shadow-3xl">
-                      <MobileDescription description={anime.description} />
-                    </div>
+    <Layout>
+      <main className="relative">
+        <div className="h-[420px] md:h-[550px] w-full absolute z-[-1] hidden md:block">
+          <Image
+            src={anime.cover || anime.image}
+            alt="Background"
+            className="w-full h-full"
+            style={{
+              objectFit: 'cover',
+            }}
+            fill
+            priority
+          />
+          <div className="search-gradient w-full h-full absolute inset-0 backdrop-blur"></div>
+        </div>
+        <div className="h-[420px] md:h-[550px] w-full absolute z-[-1] md:hidden">
+          <Image
+            src={anime.image}
+            alt="Background"
+            className="w-full h-full"
+            style={{
+              objectFit: 'cover',
+            }}
+            fill
+            priority
+          />
+          <div className="w-full h-full absolute inset-0 main-poster-gradient"></div>
+        </div>
+        <Actions isBookmarked={anime.isBookmarked} id={anime.id} />
+        <div className="pt-[350px] md:pt-header">
+          <div className="md:pt-8 lg:pt-12 md:pt-12 lg:pt-20">
+            <div className="container gap-0 mb-3 md:flex lg:gap-24 md:gap-8 md:mb-12 justify-between">
+              <div className="pt-2 flex-initial md:flex flex-col relative mb-3 md:mb-0">
+                <div>
+                  <h1 className="text-2xl font-semibold mb-1 md:mb-2 md:text-5xl text-white">{anime.title}</h1>
+                  <SubTitleText
+                    totalEpisodes={anime.totalEpisodes}
+                    releaseDate={anime.releaseDate}
+                    status={anime.status}
+                    rating={anime.rating}
+                  />
+                  <Genres data={anime.genres} className="mb-4 md:mb-8 flex-wrap [&>a]:text-sm md:gap-3" />
+                  <div className="rounded bg-dark md:hidden shadow-3xl">
+                    <MobileDescription description={anime.description} />
                   </div>
-                  <p
-                    className="text-neutral-300 rounded p-2 hidden md:block"
-                    dangerouslySetInnerHTML={{ __html: anime.description }}
-                  ></p>
                 </div>
-                <div className="flex-[0_0_315px] hidden md:block relative">
-                  <div className="absolute right-[calc(100%+12px)]">
-                    <BookmarkIcon id={anime.id} isBookmarked={anime.isBookmarked} />
-                  </div>
-                  <Poster alt={anime.title} url={anime.image} />
-                </div>
+                <p
+                  className="text-neutral-300 rounded p-2 hidden md:block"
+                  dangerouslySetInnerHTML={{ __html: anime.description }}
+                ></p>
               </div>
-              <div className="container !mb-6 lg:!mb-12">
-                <Player
-                  episodes={episodes as any}
-                  id={anime.id}
-                  title={anime.title}
-                  type={anime.type as types.AnimeType}
-                  episode={lastEpisode}
-                />
-              </div>
-              {!!related.length && (
-                <div className="lg-container mb-6 md:mb-10">
-                  <Title className="px-6 mb-3 md:mb-6">Related Anime</Title>
-                  <CardGrid className="px-3 lg:px-0" data={related} mobileSlider />
+              <div className="flex-[0_0_315px] hidden md:block relative">
+                <div className="absolute right-[calc(100%+12px)]">
+                  <BookmarkIcon id={anime.id} isBookmarked={anime.isBookmarked} />
                 </div>
-              )}
-              <div className="lg-container">
-                <Title className="px-6 mb-3 md:mb-6">Popular Anime</Title>
-                <PosterGrid className="px-3 lg:px-0" data={popular} />
+                <Poster alt={anime.title} url={anime.image} />
               </div>
             </div>
+            <div className="container !mb-6 lg:!mb-12">
+              <Player
+                episodes={episodes as any}
+                id={anime.id}
+                title={anime.title}
+                type={anime.type as types.AnimeType}
+                episode={lastEpisode}
+              />
+            </div>
+            {!!related.length && (
+              <div className="lg-container mb-6 md:mb-10">
+                <Title className="px-6 mb-3 md:mb-6">Related Anime</Title>
+                <CardGrid className="px-3 lg:px-0" data={related} mobileSlider />
+              </div>
+            )}
+            <div className="lg-container">
+              <Title className="px-6 mb-3 md:mb-6">Popular Anime</Title>
+              <PosterGrid className="px-3 lg:px-0" data={popular} />
+            </div>
           </div>
-        </main>
-      </Layout>
-    </>
+        </div>
+      </main>
+    </Layout>
   )
 }
 

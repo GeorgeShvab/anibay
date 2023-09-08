@@ -19,7 +19,7 @@ const Layout: FC<Props> = ({ children, simpleHeader = false }) => {
   return (
     <div className="relative font-rubik min-h-screen">
       <div className="absolute bg-black z-1- top-0 bottom-0 left-0 right-0" />
-      {simpleHeader ? <SimpleHeader /> : <Header />}
+      {simpleHeader ? <SimpleHeader /> : <Header page={page} />}
       <Navigation page={page} />
       <LoadingBar className="fixed" />
       {children}
