@@ -29,7 +29,7 @@ const Nav: FC<Props> = (props) => {
             href="/"
             className={page === 'home' ? 'text-white scale-105' : 'text-gray-400 hover:text-gray-200 transition-colors'}
           >
-            <span>Home</span>
+            <span className="whitespace-nowrap">Home</span>
           </Link>
           <span
             className={`absolute bg-red rounded-full h-[4px] w-[24px] top-[120%] left-1/2 translate-x-[-50%] ${
@@ -44,7 +44,7 @@ const Nav: FC<Props> = (props) => {
               page === 'search' ? 'text-white scale-105' : 'text-gray-400 hover:text-gray-200 transition-colors'
             }
           >
-            <span>Search</span>
+            <span className="whitespace-nowrap">Search</span>
           </Link>
           <span
             className={`absolute bg-red rounded-full h-[4px] w-[24px] top-[120%] left-1/2 translate-x-[-50%] ${
@@ -59,7 +59,7 @@ const Nav: FC<Props> = (props) => {
               page === 'movies' ? 'text-white scale-105' : 'text-gray-400 hover:text-gray-200 transition-colors'
             }
           >
-            <span>Movies</span>
+            <span className="whitespace-nowrap">Movies</span>
           </Link>
           <span
             className={`absolute bg-red rounded-full h-[4px] w-[24px] top-[120%] left-1/2 translate-x-[-50%] ${
@@ -74,7 +74,7 @@ const Nav: FC<Props> = (props) => {
               page === 'series' ? 'text-white scale-105' : 'text-gray-400 hover:text-gray-200 transition-colors'
             }
           >
-            <span>TV Series</span>
+            <span className="whitespace-nowrap">TV Series</span>
           </Link>
           <span
             className={`absolute bg-red rounded-full h-[4px] w-[24px] top-[120%] left-1/2 translate-x-[-50%] ${
@@ -87,7 +87,7 @@ const Nav: FC<Props> = (props) => {
             href="/list"
             className={page === 'list' ? 'text-white scale-105' : 'text-gray-400 hover:text-gray-200 transition-colors'}
           >
-            <span>My List</span>
+            <span className="whitespace-nowrap">My List</span>
           </Link>
           <span
             className={`absolute bg-red rounded-full h-[4px] w-[24px] top-[120%] left-1/2 translate-x-[-50%] ${

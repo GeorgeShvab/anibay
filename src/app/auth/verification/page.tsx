@@ -57,7 +57,7 @@ export const metadata: Metadata = {
   title: `Email verification`,
   description: 'Complete registration by verifying your email',
   openGraph: {
-    images: ['/auth-bg.png'],
+    images: ['/og-image.png'],
     title: 'Complete registration by verifying your email',
     description: 'Complete registration by verifying your email',
     type: 'website',

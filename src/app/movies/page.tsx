@@ -86,7 +86,7 @@ export const metadata: Metadata = {
   title: `Movies`,
   description: `Thousands of subbed anime movies in a good quality. Completely free.`,
   openGraph: {
-    images: ['/auth-bg.png'],
+    images: ['/og-image.png'],
     title: 'Movies',
     description: 'Thousands of subbed anime movies in a good quality. Completely free.',
     type: 'website',

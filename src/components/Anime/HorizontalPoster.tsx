@@ -1,7 +1,7 @@
 import { Anime } from '@/types'
 import Link from 'next/link'
 import { FC } from 'react'
-import Stars from '../Stars'
+import Stars from '../Stars/Stars'
 import Image from 'next/image'
 
 const HorizontalPoster: FC<Anime> = ({ rating, title, image, id, totalEpisodes, cover, releaseDate }) => {

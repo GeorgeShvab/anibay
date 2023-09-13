@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   title: `Signin`,
   description: 'Sign in on Anibay',
   openGraph: {
-    images: ['/auth-bg.png'],
+    images: ['/og-image.png'],
     title: 'Sign in on Anibay',
     description: 'Sign in on Anibay',
     type: 'website',

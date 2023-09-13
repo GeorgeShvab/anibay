@@ -68,7 +68,7 @@ export const metadata: Metadata = {
   title: `Page not found`,
   description: 'This page does not exist',
   openGraph: {
-    images: ['/auth-bg.png'],
+    images: ['/og-image.png'],
     title: 'Page not found',
     description: 'This page is not exist',
     type: 'website',

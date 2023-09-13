@@ -4,7 +4,7 @@ import { Anime } from '@/types'
 import Link from 'next/link'
 import { FC } from 'react'
 import Image from 'next/image'
-import Stars from '../Stars'
+import Stars from '../Stars/Stars'
 
 const Card: FC<Anime> = ({ title, id, image, totalEpisodes, releaseDate, rating }) => {
   return (

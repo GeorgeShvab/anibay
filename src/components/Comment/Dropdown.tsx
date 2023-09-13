@@ -4,7 +4,7 @@ import axios from '@/axios'
 import { Menu, Transition } from '@headlessui/react'
 import { FC, useState, MouseEvent } from 'react'
 import { usePopper } from 'react-popper'
-import Dialog from '@/ui/Dialog'
+import Dialog from '@/ui/Dialog/Dialog'
 
 interface Props {
   isAuthor: boolean
