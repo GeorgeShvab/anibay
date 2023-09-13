@@ -25,8 +25,6 @@ interface Props {
 }
 
 const Player: FC<Props> = ({ title, episodes, type, id, episode }) => {
-  //const episode = useSearchParams()?.get('episode')
-
   let initialEpisode
 
   if (episode && episodes.find((item) => item.id === episode)) {
@@ -120,6 +118,19 @@ const Player: FC<Props> = ({ title, episodes, type, id, episode }) => {
                   onDuration={handleDuration}
                   onEnded={handleEnded}
                   progressInterval={250}
+                  onError={(e) => {
+                    if (e === 'hlsError') {
+                      value.setVideoState({
+                        episode: {
+                          ...value.videoState.episode,
+                          sources: value.videoState.episode.sources.map((item) => ({
+                            ...item,
+                            url: `${process.env.SERVER_ADDRESS}/api/proxy/${item.url}`,
+                          })),
+                        },
+                      })
+                    }
+                  }}
                 />
               </div>
               <Controls />

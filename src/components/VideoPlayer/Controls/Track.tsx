@@ -1,7 +1,7 @@
 import formatPlayerTime from '@/utils/formatPlayerTime'
 import throttle from '@/utils/throttle'
-import { FC, LegacyRef, MouseEvent, TouchEvent, memo, useCallback, useMemo, useRef, useState, Component } from 'react'
-import ReactPlayerType, { ReactPlayerProps } from 'react-player'
+import { FC, MouseEvent, TouchEvent, useCallback, useMemo, useRef, useState } from 'react'
+import ReactPlayerType from 'react-player'
 import { usePlayer } from '../hooks/usePlayerContext'
 import dynamic from 'next/dynamic'
 
@@ -148,14 +148,14 @@ const Track: FC = () => {
     [duration]
   )
 
-  const canvas1 = useRef<HTMLCanvasElement>(null)
+  const canvasEl = useRef<HTMLCanvasElement>(null)
 
   function extractFrameAndSave() {
-    if (!canvas1.current || !hiddenPlayerRef.current) return
+    if (!canvasEl.current || !hiddenPlayerRef.current) return
 
-    const context = canvas1.current.getContext('2d')
+    const context = canvasEl.current.getContext('2d')
 
-    const canvas = canvas1.current
+    const canvas = canvasEl.current
 
     const video = hiddenPlayerRef.current.getInternalPlayer() as HTMLVideoElement
 
@@ -187,7 +187,7 @@ const Track: FC = () => {
             className="absolute z-50 bottom-8 translate-x-[-50%] flex flex-col gap-3 items-center"
             style={{ left: (framePreview?.percents || 0) * 100 + '%' }}
           >
-            <canvas id="myCanvas" className="rounded" ref={canvas1} />
+            <canvas id="myCanvas" className="rounded" ref={canvasEl} />
             <span className="text-white text-xs">{formatPlayerTime(framePreview.seconds)}</span>
           </div>
         )}
@@ -199,7 +199,7 @@ const Track: FC = () => {
           onMouseLeave={handleMouseUp}
           onTouchMove={handleTouchMove}
           onTouchEnd={handleMouseUp}
-          className="py-2 lg:py-3 group"
+          className="py-2 lg:py-3 group pl-1.5 lg:pl-0"
         >
           <div className="h-1 group-hover bg-white/20 rounded-lg relative overflow-hidden">
             <span
@@ -242,4 +242,4 @@ const Track: FC = () => {
   )
 }
 
-export default memo(Track)
+export default Track

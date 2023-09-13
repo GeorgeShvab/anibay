@@ -1,7 +1,7 @@
 import { Anime } from '@/types'
 import { FC } from 'react'
 import Image from 'next/image'
-import Stars from '../Stars'
+import Stars from '../Stars/Stars'
 import PlayButton from '../PlayButton'
 
 interface Props extends Anime {

@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   title: `Request password reset`,
   description: 'Request password reset to gain access to your account',
   openGraph: {
-    images: ['/auth-bg.png'],
+    images: ['/og-image.png'],
     title: 'Request password reset to gain access to your account',
     description: 'Request password reset to gain access to your account',
     type: 'website',

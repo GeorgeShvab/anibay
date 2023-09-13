@@ -1,4 +1,4 @@
-import { FC, memo } from 'react'
+import { FC } from 'react'
 
 interface PropsType {
   playing: boolean
@@ -44,4 +44,4 @@ const PlayPauseButton: FC<PropsType> = ({ playing, onPause, onPlay }) => {
   )
 }
 
-export default memo(PlayPauseButton)
+export default PlayPauseButton

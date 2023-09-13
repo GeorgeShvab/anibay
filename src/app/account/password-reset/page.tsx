@@ -37,7 +37,7 @@ export const metadata: Metadata = {
   title: `Password reset`,
   description: 'Reset your password',
   openGraph: {
-    images: ['/auth-bg.png'],
+    images: ['/og-image.png'],
     title: 'Reset your password',
     description: 'Reset your password',
     type: 'website',

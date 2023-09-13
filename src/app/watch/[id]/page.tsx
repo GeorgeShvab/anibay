@@ -19,6 +19,7 @@ import PosterGrid from '@/components/Anime/PosterGrid'
 import { cookies } from 'next/headers'
 import Genres from '@/components/Genre/Genres'
 import Image from 'next/image'
+import Episode from '@/components/Episode/PreviewEpisode'
 
 const getLastWatchedEpisode = (animeId: string): string | undefined => {
   const cookiesStore = cookies()
@@ -65,7 +66,7 @@ const WatchPage: FC<types.PageProps<{ id: string }, { episode?: string }>> = asy
   return (
     <Layout>
       <main className="relative">
-        <div className="h-[420px] md:h-[550px] w-full absolute z-[-1] hidden md:block">
+        <div className="h-[450px] md:h-[550px] w-full absolute z-[-1] hidden md:block">
           <Image
             src={anime.cover || anime.image}
             alt="Background"
@@ -78,7 +79,7 @@ const WatchPage: FC<types.PageProps<{ id: string }, { episode?: string }>> = asy
           />
           <div className="search-gradient w-full h-full absolute inset-0 backdrop-blur"></div>
         </div>
-        <div className="h-[420px] md:h-[550px] w-full absolute z-[-1] md:hidden">
+        <div className="h-[450px] md:h-[550px] w-full absolute z-[-1] md:hidden">
           <Image
             src={anime.image}
             alt="Background"
@@ -92,7 +93,7 @@ const WatchPage: FC<types.PageProps<{ id: string }, { episode?: string }>> = asy
           <div className="w-full h-full absolute inset-0 main-poster-gradient"></div>
         </div>
         <Actions isBookmarked={anime.isBookmarked} id={anime.id} />
-        <div className="pt-[350px] md:pt-header">
+        <div className="pt-[400px] md:pt-header">
           <div className="md:pt-8 lg:pt-12 md:pt-12 lg:pt-20">
             <div className="container gap-0 mb-3 md:flex lg:gap-24 md:gap-8 md:mb-12 justify-between">
               <div className="pt-2 flex-initial md:flex flex-col relative mb-3 md:mb-0">
@@ -157,7 +158,7 @@ export async function generateMetadata({ params }: types.PageProps<{ id: string 
       title: 'Page Not Found',
       description: 'Current page is not exists',
       openGraph: {
-        images: ['/auth-bg.png'],
+        images: ['/og-image.png'],
         title: 'Page Not Found',
         description: 'Page Not Found',
         type: 'website',

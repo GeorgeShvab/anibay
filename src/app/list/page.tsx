@@ -96,7 +96,7 @@ export const metadata: Metadata = {
   title: `Your List`,
   description: `Anime saved to watch later in your list`,
   openGraph: {
-    images: ['/auth-bg.png'],
+    images: ['/og-image.png'],
     title: 'Your List',
     description: 'Anime saved to watch later in your list',
     type: 'website',

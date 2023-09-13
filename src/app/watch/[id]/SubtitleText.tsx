@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import Rating from './Rating'
-import Stars from '@/components/Stars'
+import Stars from '@/components/Stars/Stars'
 
 interface PropsType {
   releaseDate: number

@@ -127,7 +127,7 @@ export const metadata: Metadata = {
   description:
     'Anibay: Your daily dose of premium anime content, made by fans, for fans. Explore thousands of top-quality titles today!',
   openGraph: {
-    images: ['/auth-bg.png'],
+    images: ['/og-image.png'],
     title: 'Anibay',
     description:
       'Anibay: Your daily dose of premium anime content, made by fans, for fans. Explore thousands of top-quality titles today!',
