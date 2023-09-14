@@ -24,8 +24,8 @@ const CarouselItem: FC<Props> = ({
 }) => {
   return (
     <div
-      className={`left-0 right-0 top-0 bottom-0 absolute md:rounded-lg overflow-hidden md:relative transition-all duration-500 basis-[100vw] md:basis-[600px] lg:basis-[700px] xl:basis-[900px] ${
-        isSelected ? 'md:grow-1 md:shrink-0 z-10 opacity-100' : 'md:grow-0 md:shrink-1 z-0 opacity-0 md:opacity-100'
+      className={`left-0 right-0 top-0 bottom-0 md:rounded-lg overflow-hidden relative transition-all duration-500 basis-[100vw] md:basis-[600px] lg:basis-[700px] xl:basis-[900px] ${
+        isSelected ? 'grow-1 shrink-0' : 'grow-0 shrink-1'
       }`}
       onMouseLeave={() => onMouseLeave(id)}
       onMouseEnter={() => onMouseEnter(id)}

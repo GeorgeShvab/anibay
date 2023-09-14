@@ -212,7 +212,7 @@ const Track: FC = () => {
             />
           </div>
           <span
-            className="rounded-full bg-white z-10 block w-2.5 h-2.5 absolute top-1/2 translate-x-[-50%] translate-y-[-50%]"
+            className="rounded-full bg-white z-10 block w-2.5 h-2.5 absolute top-1/2 lg:translate-x-[-50%] translate-y-[-50%]"
             style={{
               left: playedPercentages * 100 + '%',
             }}
