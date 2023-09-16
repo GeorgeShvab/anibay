@@ -16,4 +16,5 @@ export default {
   PASSWORD_IS_REQUIRED: 'Password is required',
   INVALID_PASSWORD_MIN_LENGTH: 'Password must be at least 3 characters long',
   INVALID_PASSWORD_MAX_LENGTH: 'Password must be less than 100 characters long',
+  INCORRECT_OLD_PASSWORD: 'Incorrect old password',
 }

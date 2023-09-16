@@ -5,10 +5,16 @@ import UserSignupFirstStepDTO from '@/dto/user/signup-first-step.dto'
 import { UserSignupDTO } from '@/dto/user/user-signup.dto'
 import UserService from '@/services/UserService'
 import TokenService from '@/services/TokenService'
-import { BadRequestException, Body, Catch, NotFoundException, Post, createHandler } from 'next-api-decorators'
+import { BadRequestException, Body, Catch, NotFoundException, Patch, Post, createHandler } from 'next-api-decorators'
 import MailService from '@/services/MailService'
 import PasswordResetDTO from '@/dto/user/password-reset.dto'
 import RequestPasswordResetDTO from '@/dto/user/request-password-reset.dto'
+import UpdatePasswordDTO from '@/dto/user/update-password.dto'
+import { type JwtUser } from '@/types'
+import User from '@/utils/decorators/user/User'
+import Protected from '@/utils/decorators/Protected'
+import messages from '@/locales/messages'
+import UpdateNameDTO from '@/dto/user/update-name.dto'
 
 @Catch(BadRequestExceptionHandler, CustomBadRequestException)
 class UserController {
@@ -54,6 +60,24 @@ class UserController {
     if (!user) throw new NotFoundException()
 
     await UserService.updatePassword(user.id, body.password)
+  }
+
+  @Patch('/update/password')
+  @Protected()
+  async updatePassword(@Body(ValidationPipe) body: UpdatePasswordDTO, @User() user: JwtUser) {
+    const isValid = await UserService.validate(user.email, body.oldPassword)
+
+    if (!isValid) {
+      throw new CustomBadRequestException('Old password is incorrect', { oldPassword: messages.INCORRECT_OLD_PASSWORD })
+    }
+
+    await UserService.updatePassword(user.id, body.password)
+  }
+
+  @Patch('/update/name')
+  @Protected()
+  async updateName(@Body(ValidationPipe) body: UpdateNameDTO, @User() user: JwtUser) {
+    return await UserService.update({ name: body.name, username: body.username, id: user.id })
   }
 }
 

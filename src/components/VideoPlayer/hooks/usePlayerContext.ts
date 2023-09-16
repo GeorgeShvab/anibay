@@ -27,6 +27,7 @@ export interface VideoState {
   id: string
   isLoading: boolean
   isControlsShown: boolean
+  isError: boolean
 }
 
 interface ContextState {
@@ -67,6 +68,7 @@ const initialVideoState: VideoState = {
   isLoading: false,
   isControlsShown: true,
   episode: {} as any,
+  isError: false,
 }
 
 export const PlayerContext = createContext<ContextState>({
@@ -98,10 +100,6 @@ export const usePlayerContext = (
   defaultState: Partial<VideoState> & { player: RefObject<ReactPlayer>; container: RefObject<HTMLDivElement> }
 ): ContextState => {
   const { player, container, ...initialState } = defaultState
-
-  const pathname = usePathname()
-
-  const router = useRouter()
 
   const [state, setState] = useState<VideoState>({
     ...initialVideoState,
@@ -153,8 +151,6 @@ export const usePlayerContext = (
   }
 
   const toEpisode = (id: string) => {
-    //router.push(pathname + '?episode=' + id, { scroll: false })
-
     setVideoState((prev) => {
       let quality
 

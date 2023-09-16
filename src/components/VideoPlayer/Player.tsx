@@ -13,6 +13,7 @@ import Hooks from './hooks/Hooks'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import dynamic from 'next/dynamic'
 import getHighestQuality from './getHighestquality'
+import axios from 'axios'
 
 const ReactPlayerWrapper = dynamic(() => import('./ReactPlayerWrapper'), { ssr: false })
 
@@ -76,6 +77,26 @@ const Player: FC<Props> = ({ title, episodes, type, id, episode }) => {
     })
   }
 
+  const handleError = async () => {
+    try {
+      await axios.get(
+        value.videoState.episode.sources.find((item) => item.quality === value.videoState.choosedQuality)?.url as string
+      )
+    } catch (e: any) {
+      if (e.code === 'ERR_NETWORK' && window.navigator.onLine) {
+        value.setVideoState({
+          episode: {
+            ...value.videoState.episode,
+            sources: value.videoState.episode.sources.map((item) => ({
+              ...item,
+              url: `${process.env.SERVER_ADDRESS}/api/proxy/${item.url}`,
+            })),
+          },
+        })
+      }
+    }
+  }
+
   return (
     <PlayerProvider value={value}>
       <div className="rounded overflow-hidden bg-dark shadow-3xl pb-2">
@@ -118,19 +139,7 @@ const Player: FC<Props> = ({ title, episodes, type, id, episode }) => {
                   onDuration={handleDuration}
                   onEnded={handleEnded}
                   progressInterval={250}
-                  onError={(e) => {
-                    if (e === 'hlsError') {
-                      value.setVideoState({
-                        episode: {
-                          ...value.videoState.episode,
-                          sources: value.videoState.episode.sources.map((item) => ({
-                            ...item,
-                            url: `${process.env.SERVER_ADDRESS}/api/proxy/${item.url}`,
-                          })),
-                        },
-                      })
-                    }
-                  }}
+                  onError={handleError}
                 />
               </div>
               <Controls />
