@@ -1,3 +1,4 @@
+import { User } from '@/types'
 import prisma from '../../prisma/prisma'
 import bcrypt from 'bcrypt'
 
@@ -78,6 +79,14 @@ const UserService = {
     const salt = await bcrypt.genSalt()
 
     return await bcrypt.hash(password, salt)
+  },
+
+  async update(params: Partial<Pick<User, 'name' | 'username' | 'bio' | 'avatar'>> & { id: number }) {
+    console.log(params)
+    return await prisma.user.update({
+      where: { id: params.id },
+      data: params,
+    })
   },
 }
 

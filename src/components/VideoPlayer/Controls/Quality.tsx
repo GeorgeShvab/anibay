@@ -40,17 +40,23 @@ const Quality: FC<PropsType> = ({ handleChangeQuality, sources, choosedQuality }
           />
         </svg>
         <ul className="flex justify-between max-w-[230px]">
-          {shownSources.map((item) => (
-            <li
-              key={item.quality}
-              onClick={() => handleChangeQuality(item.quality)}
-              className={`py-1 ${
-                item.quality === choosedQuality ? 'text-red font-semibold' : 'text-neutral-300'
-              } text-right cursor-pointer px-2`}
-            >
-              <span>{item.quality}</span>
-            </li>
-          ))}
+          {shownSources
+            .reduce<Source[]>(
+              (state, curr) =>
+                state.findIndex((item) => item.quality === curr.quality) === -1 ? [...state, curr] : state,
+              []
+            )
+            .map((item) => (
+              <li
+                key={item.quality}
+                onClick={() => handleChangeQuality(item.quality)}
+                className={`py-1 ${
+                  item.quality === choosedQuality ? 'text-red font-semibold' : 'text-neutral-300'
+                } text-right cursor-pointer px-2`}
+              >
+                <span>{item.quality}</span>
+              </li>
+            ))}
         </ul>
       </div>
     </div>
