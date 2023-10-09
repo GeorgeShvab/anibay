@@ -89,7 +89,11 @@ const AuthClickProtection: FC<Props> = ({ element = 'div', children, fallback, c
                       </div>
                     </div>
                     <div className="flex-[0_0_45%] p-3 pl-0 hidden md:block">
-                      <img src={image} alt="Best anime in one click" className="w-full object-cover rounded-xl" />
+                      <img
+                        src={'/auth-image.png'}
+                        alt="Best anime in one click"
+                        className="w-full object-cover rounded-xl"
+                      />
                     </div>
                   </div>
                 </Dialog.Panel>
