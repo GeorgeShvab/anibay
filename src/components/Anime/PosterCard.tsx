@@ -12,14 +12,7 @@ const Card: FC<Anime> = ({ title, id, image, totalEpisodes, releaseDate, rating 
       href={`/watch/${id}`}
       className="group relative w-full h-72 md:h-80 lg:h-[360px] block rounded-lg overflow-hidden group md:hover:scale-[1.025] transition-all shadow-xl bg-dark md:hover:bg-dark-light transition-all cursor-pointer"
     >
-      <Image
-        src={image}
-        alt={title}
-        className={`w-full h-full`}
-        style={{ objectFit: 'cover', width: '100%', height: '100%' }}
-        sizes=""
-        fill
-      />
+      <img src={image} alt={title} className="w-full h-full object-cover w-full h-full" />
       <div className="card-image absolute left-0 top-0 right-0 bottom-0 rounded-lg overflow-hidden shadow-2xl flex flex-col justify-end px-2.5 py-2 md:py-3 md:px-3.5">
         <h4 className="text-white font-bold mb-1 leading-5">{title}</h4>
         <div className="flex gap-3 mb-2 items-center">

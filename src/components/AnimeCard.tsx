@@ -22,7 +22,7 @@ const AnimeCard: FC<Anime & { className?: string; containerClassName?: string }>
           }`}
         >
           <div className="relative h-64 md:h-20 w-auto rounded-t overflow-hidden shadow-2xl">
-            <Image src={image} alt={title} style={{ objectFit: 'cover' }} fill />
+            <img src={image} alt={title} className="object-cover" />
           </div>
           <div className="p-2 md:p-3">
             <h3 className="text-neutral-100 font-medium text-0.5xs md:text-[15px] mb-1 md:mb-2">{title}</h3>

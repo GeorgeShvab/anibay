@@ -31,20 +31,8 @@ const CarouselItem: FC<Props> = ({
       onMouseEnter={() => onMouseEnter(id)}
     >
       <div className="h-[500px] md:h-[280px] w-[100vw] md:w-[600px] lg:w-[700px] xl:w-[900px] relative md:static">
-        <Image
-          src={image}
-          alt={title}
-          className={`w-full h-full md:hidden`}
-          style={{ objectFit: 'cover', width: '100%', height: '100%' }}
-          fill
-        />
-        <Image
-          src={cover || image}
-          alt={title}
-          className={`w-full h-full hidden md:block`}
-          style={{ objectFit: 'cover', width: '100%', height: '100%' }}
-          fill
-        />
+        <img src={image} alt={title} className={`w-full h-full md:hidden object-cover`} />
+        <img src={cover || image} alt={title} className={`w-full h-full hidden md:block object-cover`} />
         <div
           className={`h-[500px] md:h-[280px] w-[100vw] md:w-[600px] lg:w-[700px] xl:w-[900px] main-poster-gradient absolute left-0 top-0 right-0 bottom-0 transition-all ${
             isSelected ? '' : 'pointer-events-none'

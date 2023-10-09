@@ -24,7 +24,7 @@ const HorizontalCard: FC<Anime<{ isBookmarked: boolean }>> = ({
       <Link href={`/watch/${id}`} className="h-full block">
         <div className="flex gap-5">
           <div className="relative min-h-full w-24 rounded overflow-hidden shadow-2xl">
-            <Image src={image} alt={title} style={{ objectFit: 'cover' }} fill />
+            <img src={image} alt={title} className="object-cover" />
           </div>
           <div className={`flex-1 py-1 pr-2 flex flex-col justify-between`}>
             <div className="mb-6">

@@ -67,29 +67,11 @@ const WatchPage: FC<types.PageProps<{ id: string }, { episode?: string }>> = asy
     <Layout>
       <main className="relative">
         <div className="h-[450px] md:h-[550px] w-full absolute z-[-1] hidden md:block">
-          <Image
-            src={anime.cover || anime.image}
-            alt="Background"
-            className="w-full h-full"
-            style={{
-              objectFit: 'cover',
-            }}
-            fill
-            priority
-          />
+          <img src={anime.cover || anime.image} alt="Background" className="w-full h-full object-cover" />
           <div className="search-gradient w-full h-full absolute inset-0 backdrop-blur"></div>
         </div>
         <div className="h-[450px] md:h-[550px] w-full absolute z-[-1] md:hidden">
-          <Image
-            src={anime.image}
-            alt="Background"
-            className="w-full h-full"
-            style={{
-              objectFit: 'cover',
-            }}
-            fill
-            priority
-          />
+          <img src={anime.image} alt="Background" className="w-full h-full object-cover" />
           <div className="w-full h-full absolute inset-0 main-poster-gradient"></div>
         </div>
         <Actions isBookmarked={anime.isBookmarked} id={anime.id} />

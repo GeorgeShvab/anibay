@@ -51,16 +51,7 @@ const Search: FC<types.PageProps<{}, { query: string; page: string; genre: strin
       <Layout>
         <main className="">
           <div className="h-[420px] md:h-[650px] w-full absolute z-[-1]">
-            <Image
-              src={bg}
-              alt="Background"
-              className="w-full h-full"
-              quality={50}
-              style={{
-                objectFit: 'cover',
-              }}
-              priority
-            />
+            <img src={'/big-image.png'} alt="Background" className="w-full h-full object-cover" />
             <div className="search-gradient w-full h-full absolute inset-0"></div>
           </div>
           <div className="search-poster h-[370px] md:h-[600px] flex flex-col items-center justify-center px-3">

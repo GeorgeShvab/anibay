@@ -36,13 +36,7 @@ const Card: FC<Anime> = ({ title, id, image, totalEpisodes, releaseDate, rating,
                 </svg>
               </button>
             </div>
-            <Image
-              src={image}
-              alt={title}
-              style={{ objectFit: 'cover' }}
-              className="group-hover:blur-sm transition-all"
-              fill
-            />
+            <img src={image} alt={title} className="group-hover:blur-sm transition-all object-cover" />
           </div>
           <div className="py-2.5 px-2.5 flex-1 flex flex-col justify-between">
             <div className="mb-6">
